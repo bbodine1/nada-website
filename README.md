@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# North Alabama Drone Applicators Website
 
-## Getting Started
+Marketing and lead-capture website for collecting early-interest from growers in North Alabama for the Fall 2026 launch.
 
-First, run the development server:
+## Features
+
+- Single-page landing experience focused on agricultural drone spraying and spreading.
+- Lead interest form for Madison, Limestone, Morgan, Cullman, and Lawrence counties.
+- Server-side lead endpoint with validation, honeypot filtering, and basic rate limiting.
+- Dual integration: Supabase storage + GoHighLevel contact sync.
+
+## Local setup
+
+1. Copy `.env.local.example` to `.env.local`.
+2. Fill in all required credentials:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+GHL_API_KEY=
+GHL_LOCATION_ID=
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Install dependencies and run the app:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+## Supabase table setup
 
-To learn more about Next.js, take a look at the following resources:
+Create this table before testing form submissions:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sql
+create table if not exists public.interest_leads (
+  id bigserial primary key,
+  full_name text not null,
+  email text not null,
+  phone text,
+  county text not null,
+  crop_types text not null,
+  acreage_range text,
+  preferred_contact_method text,
+  notes text,
+  consent boolean not null default false,
+  source text not null default 'website',
+  submitted_at timestamptz not null default now()
+);
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Recommended index:
 
-## Deploy on Vercel
+```sql
+create index if not exists interest_leads_submitted_at_idx
+  on public.interest_leads (submitted_at desc);
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## GoHighLevel notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `GHL_API_KEY` must have contact write permissions.
+- `GHL_LOCATION_ID` must match your target sub-account location.
+- The integration sends source/tags and basic custom field values.
+- Ensure corresponding custom fields exist in GoHighLevel if you want those values mapped.
+
+## Deploy
+
+- Deploy to Vercel.
+- Add the same environment variables in the Vercel project settings.
+- Run one production form submission and confirm:
+  - a new row exists in `interest_leads`
+  - a contact appears in GoHighLevel
+
+## MCP setup check (Supabase + GoHighLevel)
+
+This project includes a local `.mcp.json` with both MCP servers configured:
+- `supabase`
+- `ghl-mcp`
+
+After restarting Cursor:
+
+1. Open this project folder in Cursor.
+2. Confirm MCP servers appear as connected for this workspace.
+3. Run a quick Supabase MCP call (for example, list projects/tables) to verify auth.
+4. Run a quick GoHighLevel MCP call (for example, list/search contacts) to verify auth.
+
+If one fails:
+- Verify token values in `.mcp.json`.
+- Confirm the GoHighLevel `locationId` matches your target sub-account.
+- Restart Cursor again after any credential changes.

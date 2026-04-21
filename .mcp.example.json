@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@supabase/mcp-server-supabase@latest",
+        "--access-token",
+        "YOUR_SUPABASE_ACCESS_TOKEN"
+      ]
+    },
+    "ghl-mcp": {
+      "url": "https://services.leadconnectorhq.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer YOUR_GHL_API_TOKEN",
+        "locationId": "YOUR_GHL_LOCATION_ID"
+      }
+    }
+  }
+}
