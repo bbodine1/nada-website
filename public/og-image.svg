@@ -1,0 +1,15 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#1e3a0f"/>
+  <path d="M0 280C160 250 260 320 420 295C560 275 630 210 800 225C930 236 1050 300 1200 290V630H0V280Z" fill="#2d5016"/>
+  <path d="M0 390C170 360 270 435 450 410C640 384 730 325 900 340C1020 350 1110 398 1200 390V630H0V390Z" fill="#6f923c"/>
+  <text x="80" y="180" fill="#f9f6f0" font-size="56" font-family="Georgia, serif" font-weight="700">
+    North Alabama Drone Applicators
+  </text>
+  <text x="80" y="245" fill="#f9f6f0" font-size="42" font-family="Georgia, serif" font-weight="700">
+    See Every Acre. Protect Every Yield.
+  </text>
+  <rect x="80" y="300" width="370" height="60" rx="10" fill="#d4a017"/>
+  <text x="105" y="339" fill="#1a1a1a" font-size="32" font-family="Arial, sans-serif" font-weight="700">
+    Fall 2026 Early Access
+  </text>
+</svg>

@@ -1,102 +1,310 @@
-import { LeadInterestForm } from "@/components/lead-interest-form";
+import Image from 'next/image'
+
+import { FaqAccordion } from '@/components/faq-accordion'
+import { LeadInterestForm } from '@/components/lead-interest-form'
+import { RevealOnScroll } from '@/components/reveal-on-scroll'
 
 export default function Home() {
-  return (
-    <div className="bg-zinc-50 text-zinc-900">
-      <main className="mx-auto max-w-6xl px-6 py-12 sm:px-10 lg:px-12">
-        <section className="grid gap-10 lg:grid-cols-2 lg:gap-14">
-          <div className="space-y-6">
-            <p className="inline-flex rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-800">
-              North Alabama Drone Applicators
-            </p>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-              Precision drone spraying and spreading for North Alabama farms.
-            </h1>
-            <p className="text-lg leading-8 text-zinc-700">
-              We are launching for the Fall 2026 season and building a priority
-              list now. If your operation is in Madison, Limestone, Morgan,
-              Cullman, or Lawrence County, join early to get first access to our
-              services.
-            </p>
-            <div className="grid gap-3 rounded-2xl border border-zinc-200 bg-white p-5 sm:grid-cols-2">
-              <div>
-                <p className="text-sm font-semibold text-zinc-800">Why drones</p>
-                <p className="text-sm text-zinc-600">
-                  Reduce soil compaction and reach wet or difficult ground.
-                </p>
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-zinc-800">Who we serve</p>
-                <p className="text-sm text-zinc-600">
-                  Row crops, pasture operations, and diversified farms.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div id="interest-form">
-            <LeadInterestForm />
-          </div>
-        </section>
+	return (
+		<div className="bg-[#f9f6f0] text-[#1a1a1a]">
+			<main>
+				<section className="relative flex min-h-screen items-end overflow-hidden">
+					<video
+						className="absolute inset-0 h-full w-full object-cover"
+						autoPlay
+						muted
+						loop
+						playsInline
+						preload="metadata"
+						poster="/hero-fallback.svg"
+					>
+						<source
+							src="/video/farm-spraying.mp4"
+							type="video/mp4"
+						/>
+					</video>
+					<Image
+						src="/hero-fallback.svg"
+						alt="Drone flying over row crops at golden hour"
+						fill
+						className="object-cover md:hidden"
+						priority
+					/>
+					<div className="hero-overlay absolute inset-0" />
+					<div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-12 pt-24 sm:px-10 lg:px-12">
+						<RevealOnScroll className="max-w-3xl">
+							<h1 className="font-heading text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+								See Every Acre. Protect Every Yield.
+							</h1>
+							<p className="mt-5 text-lg leading-8 text-[#e8e8e8] sm:text-xl">
+								Agricultural drone services built for North Alabama farmers - from stand counts in April to spray
+								applications in August.
+							</p>
+							<div className="mt-8 flex flex-col gap-3 sm:flex-row">
+								<a
+									href="#lead-form"
+									data-track="hero-primary-cta"
+									className="inline-flex items-center justify-center rounded-md bg-[#d4a017] px-6 py-3 font-semibold text-[#1a1a1a] hover:brightness-95"
+								>
+									Get Early Access →
+								</a>
+								<a
+									href="#explainer"
+									data-track="hero-secondary-cta"
+									className="inline-flex items-center justify-center rounded-md border border-white/70 px-6 py-3 font-semibold text-white hover:bg-white/10"
+								>
+									Watch How It Works ↓
+								</a>
+							</div>
+						</RevealOnScroll>
+						<div className="mt-12 grid gap-3 rounded-xl bg-black/30 p-4 text-sm text-white sm:grid-cols-3">
+							<p>✓ FAA Certified Pilots</p>
+							<p>✓ Serving Limestone, Madison and Lawrence Counties</p>
+							<p>✓ NDVI Mapping and Spray Applications</p>
+						</div>
+					</div>
+				</section>
 
-        <section className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            "Fast turnarounds during narrow spray windows.",
-            "Targeted coverage with low-impact field access.",
-            "Drift-conscious operation and planning.",
-            "Service area dedicated to North Alabama growers.",
-          ].map((benefit) => (
-            <article
-              key={benefit}
-              className="rounded-xl border border-zinc-200 bg-white p-4 text-sm text-zinc-700"
-            >
-              {benefit}
-            </article>
-          ))}
-        </section>
+				<section className="section-pad bg-[#f9f6f0]">
+					<div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
+						<RevealOnScroll>
+							<h2 className="font-heading text-3xl font-bold text-[#1e3a0f] sm:text-4xl">
+								North Alabama Farming Is Getting Harder. Your Tools Should Get Smarter.
+							</h2>
+						</RevealOnScroll>
+						<div className="mt-8 grid gap-5 lg:grid-cols-3">
+							{[
+								{
+									icon: '🌿',
+									title: 'Missed Spray Windows',
+									body: 'Ground rigs cannot always get in after rain. Drones fly when equipment cannot, helping you protect timing and yield.',
+								},
+								{
+									icon: '📉',
+									title: 'Crop Stress You Cannot See',
+									body: 'NDVI mapping can flag weak spots before visible damage in the field so you can act earlier with your agronomy team.',
+								},
+								{
+									icon: '💸',
+									title: 'Rising Input Costs',
+									body: 'Precision application helps target where treatment is needed so you use less product and protect margins.',
+								},
+							].map(item => (
+								<RevealOnScroll key={item.title}>
+									<article className="topo-card rounded-xl p-6">
+										<p className="text-2xl">{item.icon}</p>
+										<h3 className="mt-3 font-heading text-2xl font-semibold text-[#2d5016]">{item.title}</h3>
+										<p className="mt-3 text-[#4c4c4c]">{item.body}</p>
+									</article>
+								</RevealOnScroll>
+							))}
+						</div>
+					</div>
+				</section>
 
-        <section className="mt-14 rounded-2xl bg-white p-8 shadow-sm">
-          <h2 className="text-2xl font-bold">Counties we plan to serve</h2>
-          <p className="mt-3 text-zinc-700">
-            Madison, Limestone, Morgan, Cullman, and Lawrence counties are our
-            core launch area. Joining now helps us prioritize routes and staffing
-            ahead of the 2026 season.
-          </p>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {["Madison", "Limestone", "Morgan", "Cullman", "Lawrence"].map(
-              (county) => (
-                <span
-                  key={county}
-                  className="rounded-full bg-zinc-100 px-3 py-1 text-sm font-medium text-zinc-700"
-                >
-                  {county}
-                </span>
-              ),
-            )}
-          </div>
-        </section>
+				<section
+					id="services"
+					className="section-pad bg-white"
+				>
+					<div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
+						<RevealOnScroll>
+							<h2 className="font-heading text-3xl font-bold text-[#2d5016] sm:text-4xl">What We Do In Your Fields</h2>
+						</RevealOnScroll>
 
-        <section className="mt-14 rounded-2xl border border-green-200 bg-green-50 p-8">
-          <h2 className="text-2xl font-bold text-green-900">
-            Get on the Fall 2026 priority list
-          </h2>
-          <p className="mt-3 max-w-2xl text-green-900/90">
-            Share your email and a few operation details so we can contact you
-            first when bookings open. Early interest helps us shape service
-            schedules by county and crop type.
-          </p>
-          <a
-            href="#interest-form"
-            className="mt-5 inline-flex rounded-md bg-green-700 px-5 py-2 font-semibold text-white hover:bg-green-800"
-          >
-            Submit interest
-          </a>
-        </section>
+						<div className="mt-10 grid items-center gap-8 lg:grid-cols-2">
+							<Image
+								src="/service-spray.svg"
+								alt="Drone spraying over cotton rows at dusk"
+								width={700}
+								height={460}
+								className="h-full w-full rounded-xl object-cover shadow-[0_4px_24px_rgba(30,58,15,0.10)]"
+								loading="lazy"
+							/>
+							<RevealOnScroll>
+								<h3 className="font-heading text-2xl font-bold text-[#2d5016]">Precision Spray Applications</h3>
+								<p className="mt-4 text-[#4c4c4c]">
+									We support cotton, corn, soybeans, and wheat with fungicide, herbicide, and foliar nutrient
+									applications. Drone applications are especially useful near homes, drainage ditches, and parts of the
+									field where ground rigs struggle.
+								</p>
+							</RevealOnScroll>
+						</div>
 
-        <footer className="mt-16 border-t border-zinc-200 pt-6 text-sm text-zinc-600">
-          North Alabama Drone Applicators | Serving North Alabama agricultural
-          operations.
-        </footer>
-      </main>
-    </div>
-  );
+						<div className="mt-10 grid items-center gap-8 lg:grid-cols-2">
+							<RevealOnScroll className="lg:order-1">
+								<h3 className="font-heading text-2xl font-bold text-[#2d5016]">Crop Scouting and NDVI Mapping</h3>
+								<p className="mt-4 text-[#4c4c4c]">
+									Multispectral mapping helps identify stand gaps, pest pressure, and possible nutrient issues earlier.
+									You receive georeferenced maps you can use with your agronomist or co-op for decisions in-season.
+								</p>
+							</RevealOnScroll>
+							<Image
+								src="/service-ndvi.svg"
+								alt="Tablet showing NDVI field map"
+								width={700}
+								height={460}
+								className="h-full w-full rounded-xl object-cover shadow-[0_4px_24px_rgba(30,58,15,0.10)] lg:order-2"
+								loading="lazy"
+							/>
+						</div>
+					</div>
+				</section>
+
+				<section
+					id="explainer"
+					className="section-pad bg-[#f9f6f0]"
+				>
+					<div className="mx-auto max-w-4xl px-6 sm:px-10">
+						<RevealOnScroll>
+							<h2 className="text-center font-heading text-3xl font-bold text-[#2d5016] sm:text-4xl">
+								See It Working In The Field
+							</h2>
+						</RevealOnScroll>
+						<RevealOnScroll className="mt-7 overflow-hidden rounded-xl bg-white p-3 shadow-[0_4px_24px_rgba(30,58,15,0.10)]">
+							<div className="relative aspect-video">
+								<iframe
+									className="h-full w-full rounded-lg"
+									src="https://www.youtube.com/embed/wclYf3jyw3g?si=IdLlh8I9F-kP6rCc"
+									title="North Alabama drone field explainer"
+									loading="lazy"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+									allowFullScreen
+								/>
+							</div>
+						</RevealOnScroll>
+						<div className="mt-8 grid gap-4 text-center sm:grid-cols-3">
+							{[
+								['262%', 'More food produced per acre today vs. 1950.'],
+								['Up to 40%', 'Potential reduction in chemical inputs with precision application.'],
+								['2 to 3 weeks', 'Earlier crop stress detection versus visual scouting alone.'],
+							].map(([stat, detail]) => (
+								<RevealOnScroll
+									key={stat}
+									className="rounded-xl border border-[#e3ddd0] bg-white p-5"
+								>
+									<p className="font-heading text-3xl font-bold text-[#1e3a0f]">{stat}</p>
+									<p className="mt-2 text-sm text-[#4c4c4c]">{detail}</p>
+								</RevealOnScroll>
+							))}
+						</div>
+					</div>
+				</section>
+
+				<section className="section-pad bg-white">
+					<div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
+						<RevealOnScroll>
+							<h2 className="font-heading text-3xl font-bold text-[#2d5016] sm:text-4xl">
+								Farmers Across North Alabama Are Paying Attention
+							</h2>
+						</RevealOnScroll>
+						<div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+							{[
+								{
+									quote:
+										'I was skeptical at first, but the NDVI map showed thin spots I would not have caught early enough.',
+									name: 'J. Hartselle',
+									county: 'Limestone County',
+									crop: 'Cotton and Corn',
+								},
+								{
+									quote:
+										'After rain, we still got coverage done on schedule. That timing made a real difference for us.',
+									name: 'R. Tanner',
+									county: 'Madison County',
+									crop: 'Soybeans and Wheat',
+								},
+								{
+									quote: 'The map layers gave us better conversations with our co-op about where to focus first.',
+									name: 'C. Green',
+									county: 'Lawrence County',
+									crop: 'Corn and Hay',
+								},
+							].map(testimonial => (
+								<RevealOnScroll
+									key={testimonial.name}
+									className="rounded-xl border border-[#e3ddd0] bg-[#fefdfa] p-5 shadow-[0_4px_24px_rgba(30,58,15,0.10)]"
+								>
+									<p className="text-[#3f3f3f]">“{testimonial.quote}”</p>
+									<p className="mt-4 font-semibold text-[#1a1a1a]">{testimonial.name}</p>
+									<p className="text-sm text-[#6b6b6b]">
+										{testimonial.county} • {testimonial.crop}
+									</p>
+								</RevealOnScroll>
+							))}
+						</div>
+						<div className="mt-7 grid gap-3 text-center text-sm text-[#6b6b6b] sm:grid-cols-3">
+							<div className="rounded-md border border-[#e3ddd0] bg-white p-3">
+								Alabama Farmers Federation (Placeholder)
+							</div>
+							<div className="rounded-md border border-[#e3ddd0] bg-white p-3">Auburn Extension (Placeholder)</div>
+							<div className="rounded-md border border-[#e3ddd0] bg-white p-3">Local Co-op Partner (Placeholder)</div>
+						</div>
+					</div>
+				</section>
+
+				<section
+					id="lead-form"
+					className="section-pad relative overflow-hidden bg-[#1e3a0f]"
+				>
+					<Image
+						src="/form-bg.svg"
+						alt=""
+						fill
+						className="object-cover opacity-10"
+						aria-hidden
+					/>
+					<div className="relative z-10 mx-auto max-w-4xl px-6 sm:px-10">
+						<RevealOnScroll>
+							<h2 className="font-heading text-3xl font-bold text-white sm:text-4xl">
+								Reserve Your Free Field Assessment
+							</h2>
+							<p className="mt-4 text-[#d3ebc9]">
+								We are onboarding a limited number of farms in North Alabama for Fall 2026. Secure your spot now with no
+								commitment required.
+							</p>
+						</RevealOnScroll>
+						<div className="mt-8">
+							<LeadInterestForm />
+						</div>
+					</div>
+				</section>
+
+				<section className="section-pad bg-[#f9f6f0]">
+					<div className="mx-auto max-w-4xl px-6 sm:px-10">
+						<RevealOnScroll>
+							<h2 className="font-heading text-3xl font-bold text-[#2d5016] sm:text-4xl">
+								Questions From North Alabama Farmers
+							</h2>
+						</RevealOnScroll>
+						<div className="mt-7">
+							<FaqAccordion />
+						</div>
+					</div>
+				</section>
+
+				<footer className="border-t border-[#d9d3c6] bg-white">
+					<div className="mx-auto flex max-w-6xl flex-col gap-5 px-6 py-8 text-sm text-[#5a5a5a] sm:px-10 lg:px-12">
+						<p className="font-heading text-xl text-[#1e3a0f]">North Alabama Drone Applicators</p>
+						<p>Agricultural drone services for Tennessee Valley farms.</p>
+						<div className="flex flex-wrap gap-4">
+							<a href="#services">Services</a>
+							<a href="#lead-form">About</a>
+							<a href="#lead-form">Contact</a>
+						</div>
+						<p>Privacy Policy | © 2025 North Alabama Drone Applicators</p>
+					</div>
+				</footer>
+
+				<div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#d9d3c6] bg-white p-3 md:hidden">
+					<a
+						href="#lead-form"
+						data-track="mobile-sticky-cta"
+						className="inline-flex w-full items-center justify-center rounded-md bg-[#d4a017] px-4 py-3 font-semibold text-[#1a1a1a]"
+					>
+						Reserve Your Free Assessment →
+					</a>
+				</div>
+			</main>
+		</div>
+	)
 }

@@ -4,11 +4,15 @@ import { upsertGhlContact } from "@/lib/ghl";
 import { getSupabaseAdminClient } from "@/lib/supabase";
 
 const allowedCounties = new Set([
+  "Colbert",
+  "DeKalb",
+  "Jackson",
+  "Marshall",
   "Madison",
   "Limestone",
   "Morgan",
-  "Cullman",
   "Lawrence",
+  "Other",
 ]);
 
 const ipRequestStore = new Map<string, number[]>();
@@ -47,8 +51,8 @@ function validatePayload(body: LeadPayload) {
   const fullName = asTrimmedString(body.fullName);
   const email = asTrimmedString(body.email).toLowerCase();
   const phone = asTrimmedString(body.phone) || null;
-  const county = asTrimmedString(body.county);
-  const cropTypes = asTrimmedString(body.cropTypes);
+  const county = asTrimmedString(body.county) || "Other";
+  const cropTypes = asTrimmedString(body.cropTypes) || "Not provided";
   const acreageRange = asTrimmedString(body.acreageRange) || null;
   const preferredContactMethod = asTrimmedString(body.preferredContactMethod) || null;
   const notes = asTrimmedString(body.notes) || null;
@@ -64,14 +68,8 @@ function validatePayload(body: LeadPayload) {
   if (!isValidEmail(email)) {
     throw new Error("Please provide a valid email address.");
   }
-  if (!allowedCounties.has(county)) {
+  if (county && !allowedCounties.has(county)) {
     throw new Error("Please select a valid county in our service area.");
-  }
-  if (!cropTypes) {
-    throw new Error("Please provide at least one crop type.");
-  }
-  if (!consent) {
-    throw new Error("Consent is required to submit this form.");
   }
 
   return {
@@ -83,7 +81,7 @@ function validatePayload(body: LeadPayload) {
     acreageRange,
     preferredContactMethod,
     notes,
-    consent,
+      consent,
   };
 }
 

@@ -12,8 +12,8 @@ type GhlLeadPayload = {
   fullName: string;
   email: string;
   phone: string | null;
-  county: string;
-  cropTypes: string;
+  county: string | null;
+  cropTypes: string | null;
   acreageRange: string | null;
   preferredContactMethod: string | null;
   notes: string | null;
@@ -25,6 +25,7 @@ export async function upsertGhlContact(payload: GhlLeadPayload) {
 
   const [firstName, ...lastNameParts] = payload.fullName.trim().split(" ");
   const lastName = lastNameParts.join(" ");
+  const countyTag = payload.county?.toLowerCase() ?? "north-alabama";
 
   const response = await fetch(`${GHL_BASE_URL}/contacts/upsert`, {
     method: "POST",
@@ -39,11 +40,11 @@ export async function upsertGhlContact(payload: GhlLeadPayload) {
       lastName: lastName || undefined,
       email: payload.email,
       phone: payload.phone || undefined,
-      tags: ["north-alabama-drone-applicators", "fall-2026-interest", payload.county.toLowerCase()],
+      tags: ["north-alabama-drone-applicators", "fall-2026-interest", countyTag],
       source: "website_lead_form",
       customFields: [
-        { key: "county", field_value: payload.county },
-        { key: "crop_types", field_value: payload.cropTypes },
+        { key: "county", field_value: payload.county || "Other" },
+        { key: "crop_types", field_value: payload.cropTypes || "Not provided" },
         { key: "acreage_range", field_value: payload.acreageRange || "" },
         {
           key: "preferred_contact_method",
