@@ -1,6 +1,7 @@
 import Image from 'next/image'
 
 import { FaqAccordion } from '@/components/faq-accordion'
+import { HeroVideo } from '@/components/hero-video'
 import { LeadInterestForm } from '@/components/lead-interest-form'
 import { RevealOnScroll } from '@/components/reveal-on-scroll'
 
@@ -9,27 +10,7 @@ export default function Home() {
 		<div className="bg-[#f9f6f0] text-[#1a1a1a]">
 			<main>
 				<section className="relative flex min-h-screen items-end overflow-hidden">
-					<video
-						className="absolute inset-0 h-full w-full object-cover"
-						autoPlay
-						muted
-						loop
-						playsInline
-						preload="metadata"
-						poster="/hero-fallback.svg"
-					>
-						<source
-							src="/video/farm-spraying.mp4"
-							type="video/mp4"
-						/>
-					</video>
-					<Image
-						src="/hero-fallback.svg"
-						alt="Drone flying over row crops at golden hour"
-						fill
-						className="object-cover md:hidden"
-						priority
-					/>
+					<HeroVideo />
 					<div className="hero-overlay absolute inset-0" />
 					<div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-12 pt-24 sm:px-10 lg:px-12">
 						<RevealOnScroll className="max-w-3xl">
