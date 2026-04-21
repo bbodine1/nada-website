@@ -5,14 +5,11 @@ import { upsertGhlContact } from "@/lib/ghl";
 import { getSupabaseAdminClient } from "@/lib/supabase";
 
 const allowedCounties = new Set([
-  "Colbert",
-  "DeKalb",
-  "Jackson",
-  "Marshall",
-  "Madison",
-  "Limestone",
-  "Morgan",
+  "Cullman",
   "Lawrence",
+  "Limestone",
+  "Madison",
+  "Morgan",
   "Other",
 ]);
 

@@ -36,7 +36,7 @@ const faqItems = [
   {
     question: "What if I just want to learn more?",
     answer:
-      "That is what the list is for. You will get local updates on our Fall 2026 launch and how we are routing across Limestone, Madison, Morgan, Lawrence, Colbert, and nearby counties.",
+      "That is what the list is for. You will get local updates on our Fall 2026 launch and how we are routing across Madison, Limestone, Morgan, Cullman, and Lawrence Counties in Alabama—our only service area.",
   },
 ];
 

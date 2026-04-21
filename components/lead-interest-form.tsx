@@ -6,15 +6,11 @@ type FormState = "idle" | "submitting" | "success" | "error";
 type StepState = 1 | 2;
 
 const countyOptions = [
+  "Cullman",
+  "Lawrence",
   "Limestone",
   "Madison",
   "Morgan",
-  "Lawrence",
-  "Colbert",
-  "Marshall",
-  "Jackson",
-  "DeKalb",
-  "Other",
 ] as const;
 
 const cropOptions = ["Cotton", "Corn", "Soybeans", "Wheat", "Hay/Forage", "Other"] as const;

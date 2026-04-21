@@ -13,7 +13,7 @@ const problemCards = [
 	{
 		icon: '📉',
 		title: 'Thin Stands Before You Walk Every Row',
-		body: 'From cotton around Limestone and Lawrence to corn and beans across Madison and Morgan, multispectral maps flag weak areas and variability before you see it from the truck window—so you and your agronomist can prioritize scouting and inputs.',
+		body: 'From cotton around Limestone and Lawrence to corn and beans across Madison, Morgan, and Cullman, multispectral maps flag weak areas and variability before you see it from the truck window—so you and your agronomist can prioritize scouting and inputs.',
 	},
 	{
 		icon: '💸',
@@ -54,7 +54,7 @@ const testimonials = [
 	{
 		quote: 'Gave our co-op something concrete to look at—where to go first on double-crop beans.',
 		name: 'C. Green',
-		county: 'Colbert County',
+		county: 'Cullman County',
 		crop: 'Corn and double-crop soybeans',
 	},
 ] as const
@@ -71,7 +71,7 @@ export default function Home() {
 						loop
 						playsInline
 						preload="metadata"
-						poster="/hero-fallback.svg"
+						poster="/hero-fallback.jpg"
 					>
 						<source
 							src="/video/farm-spraying.mp4"
@@ -79,7 +79,7 @@ export default function Home() {
 						/>
 					</video>
 					<Image
-						src="/hero-fallback.svg"
+						src="/hero-fallback.jpg"
 						alt="Drone flying over row crops at golden hour"
 						fill
 						className="object-cover md:hidden"
@@ -124,7 +124,7 @@ export default function Home() {
 						</div>
 						<div className="mt-12 grid gap-3 rounded-xl bg-black/30 p-4 text-sm text-white sm:grid-cols-3">
 							<p>✓ FAA Certified Pilots</p>
-							<p>✓ Serving Limestone, Madison and Lawrence Counties</p>
+							<p>✓ Madison, Limestone, Morgan, Cullman & Lawrence Counties, Alabama</p>
 							<p>✓ NDVI Mapping and Spray Applications</p>
 						</div>
 					</div>
@@ -138,8 +138,8 @@ export default function Home() {
 							</h2>
 							<p className="mt-4 max-w-3xl text-lg text-[#4c4c4c]">
 								Between river bottoms, rolling ground, and humidity off the Gulf, the Tennessee Valley keeps you
-								guessing. Limestone to Colbert, Madison to Morgan—same problems: narrow spray windows, rising input
-								costs, and fields that don’t all behave the same.
+								guessing. Across Madison, Limestone, Morgan, Cullman, and Lawrence Counties—same problems: narrow spray
+								windows, rising input costs, and fields that don’t all behave the same.
 							</p>
 						</RevealOnScroll>
 						<div className="mt-8 grid gap-5 lg:grid-cols-3">
@@ -257,9 +257,9 @@ export default function Home() {
 								Farmers Across North Alabama Are Paying Attention
 							</h2>
 							<p className="mt-3 max-w-3xl text-[#4c4c4c]">
-								We’re building our Fall 2026 route map now—Limestone, Madison, Morgan, Lawrence, Colbert, and
-								neighboring counties. Join the priority list and you’ll hear from us as we add fields (example quotes
-								below are placeholders).
+								We’re building our Fall 2026 route map for Madison, Limestone, Morgan, Cullman, and Lawrence Counties in
+								Alabama only. Join the priority list and you’ll hear from us as we add fields (example quotes below are
+								placeholders).
 							</p>
 						</RevealOnScroll>
 						<div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -335,9 +335,6 @@ export default function Home() {
 							<a href="#services">Services</a>
 							<a href="#lead-form">About</a>
 							<a href="#lead-form">Contact</a>
-							<a href="#">Facebook</a>
-							<a href="#">Instagram</a>
-							<a href="#">YouTube</a>
 						</div>
 						<p>Privacy Policy | © 2025 North Alabama Drone Applicators</p>
 					</div>
