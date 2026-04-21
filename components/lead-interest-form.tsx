@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 
 type FormState = "idle" | "submitting" | "success" | "error";
+type StepState = 1 | 2;
 
 const countyOptions = [
   "Limestone",
@@ -19,11 +20,54 @@ const countyOptions = [
 const cropOptions = ["Cotton", "Corn", "Soybeans", "Wheat", "Hay/Forage", "Other"] as const;
 
 export function LeadInterestForm() {
+  const [step, setStep] = useState<StepState>(1);
+  const [isStepOneCaptured, setIsStepOneCaptured] = useState(false);
   const [state, setState] = useState<FormState>("idle");
-  const [showOptionalFields, setShowOptionalFields] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleStepOneCapture(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setState("submitting");
+    setErrorMessage("");
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const firstName = String(formData.get("firstName") ?? "").trim();
+
+    const payload = {
+      stage: "step1_capture",
+      fullName: firstName,
+      email: formData.get("email"),
+      consent: true,
+      companyName: formData.get("companyName"),
+    };
+
+    try {
+      const response = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const data = (await response.json()) as { error?: string };
+        throw new Error(data.error ?? "Could not save step 1. Please try again.");
+      }
+
+      setIsStepOneCaptured(true);
+      setStep(2);
+      setState("idle");
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Could not submit the form. Please try again.";
+      setErrorMessage(message);
+      setState("error");
+    }
+  }
+
+  async function handleFinalSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setState("submitting");
     setErrorMessage("");
@@ -35,6 +79,7 @@ export function LeadInterestForm() {
     const selectedCrops = formData.getAll("primaryCrops").map((crop) => String(crop));
 
     const payload = {
+      stage: "final_submit",
       fullName: [firstName, lastName].filter(Boolean).join(" "),
       email: formData.get("email"),
       phone: formData.get("phone"),
@@ -67,7 +112,8 @@ export function LeadInterestForm() {
       }
 
       form.reset();
-      setShowOptionalFields(false);
+      setIsStepOneCaptured(false);
+      setStep(1);
       setState("success");
     } catch (error) {
       const message =
@@ -81,7 +127,7 @@ export function LeadInterestForm() {
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={step === 1 ? handleStepOneCapture : handleFinalSubmit}
       className="space-y-4 rounded-xl border border-[#cfccbf] bg-white p-6 shadow-[0_4px_24px_rgba(30,58,15,0.10)]"
     >
       <input
@@ -121,26 +167,29 @@ export function LeadInterestForm() {
         />
       </div>
 
-      <button
-        type="submit"
-        data-track="form-submit-primary"
-        disabled={state === "submitting"}
-        className="w-full rounded-md bg-[#d4a017] px-4 py-2.5 font-semibold text-[#1a1a1a] transition hover:brightness-95 disabled:opacity-60"
-      >
-        {state === "submitting" ? "Submitting..." : "Reserve My Spot →"}
-      </button>
+      {step === 1 && (
+        <>
+          <button
+            type="submit"
+            data-track="form-step1-next"
+            disabled={state === "submitting"}
+            className="w-full rounded-md bg-[#d4a017] px-4 py-2.5 font-semibold text-[#1a1a1a] transition hover:brightness-95 disabled:opacity-60"
+          >
+            {state === "submitting" ? "Saving..." : "Next Step (Optional Details) →"}
+          </button>
+          <p className="text-sm text-[#4c4c4c]">
+            Step 1 saves your name and email. Step 2 is optional, but please click
+            submit there to complete your request.
+          </p>
+        </>
+      )}
 
-      <button
-        type="button"
-        data-track="form-optional-toggle"
-        onClick={() => setShowOptionalFields((current) => !current)}
-        className="text-left text-sm font-medium text-[#2d5016] underline"
-      >
-        + Tell us about your operation (optional - helps us prepare)
-      </button>
-
-      {showOptionalFields && (
+      {step === 2 && (
         <div className="space-y-4 rounded-lg border border-[#d8d5c9] bg-[#fbfaf6] p-4">
+          <p className="rounded-md bg-[#eef5e9] p-3 text-sm text-[#2d5016]">
+            Step 2 is optional. Add any details that help us prepare, then click
+            submit below.
+          </p>
           <div>
             <label
               htmlFor="lastName"
@@ -270,6 +319,24 @@ export function LeadInterestForm() {
               className="w-full rounded-md border border-[#ccc8bb] px-3 py-2"
             />
           </div>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <button
+              type="submit"
+              data-track="form-step2-submit"
+              disabled={state === "submitting"}
+              className="w-full rounded-md bg-[#d4a017] px-4 py-2.5 font-semibold text-[#1a1a1a] transition hover:brightness-95 disabled:opacity-60"
+            >
+              {state === "submitting" ? "Submitting..." : "Submit My Request"}
+            </button>
+            <button
+              type="button"
+              data-track="form-step2-back"
+              onClick={() => setStep(1)}
+              className="w-full rounded-md border border-[#bdb7a8] px-4 py-2.5 font-semibold text-[#3f3f3f]"
+            >
+              Back
+            </button>
+          </div>
         </div>
       )}
 
@@ -281,6 +348,11 @@ export function LeadInterestForm() {
         <p className="text-sm font-medium text-[#2d5016]">
           You&apos;re on the list! We&apos;ll be in touch before the season kicks
           off.
+        </p>
+      )}
+      {isStepOneCaptured && step === 2 && (
+        <p className="text-sm font-medium text-[#2d5016]">
+          Step 1 saved. You can fill optional details below and click submit.
         </p>
       )}
       {state === "error" && (

@@ -19,6 +19,9 @@ SUPABASE_URL=
 SUPABASE_SERVICE_ROLE_KEY=
 GHL_API_KEY=
 GHL_LOCATION_ID=
+RESEND_API_KEY=
+RESEND_FROM_EMAIL=
+ADMIN_NOTIFICATION_EMAIL=
 ```
 
 3. Install dependencies and run the app:
@@ -64,6 +67,15 @@ create index if not exists interest_leads_submitted_at_idx
 - `GHL_LOCATION_ID` must match your target sub-account location.
 - The integration sends source/tags and basic custom field values.
 - Ensure corresponding custom fields exist in GoHighLevel if you want those values mapped.
+
+## Email notification notes
+
+- `RESEND_API_KEY` should be a valid Resend API key.
+- `RESEND_FROM_EMAIL` should be a verified sender in Resend (for example `North Alabama Drone Applicators <updates@yourdomain.com>`).
+- `ADMIN_NOTIFICATION_EMAIL` is the address that receives new lead alerts.
+- On final form submit, the app sends:
+  - a confirmation email to the submitter
+  - an admin alert email with lead details
 
 ## Deploy
 

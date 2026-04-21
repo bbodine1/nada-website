@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { sendSubmissionEmails } from "@/lib/email";
 import { upsertGhlContact } from "@/lib/ghl";
 import { getSupabaseAdminClient } from "@/lib/supabase";
 
@@ -18,6 +19,7 @@ const allowedCounties = new Set([
 const ipRequestStore = new Map<string, number[]>();
 
 type LeadPayload = {
+  stage?: unknown;
   fullName?: unknown;
   email?: unknown;
   phone?: unknown;
@@ -48,6 +50,8 @@ function isRateLimited(ip: string): boolean {
 }
 
 function validatePayload(body: LeadPayload) {
+  const stage =
+    asTrimmedString(body.stage) === "step1_capture" ? "step1_capture" : "final_submit";
   const fullName = asTrimmedString(body.fullName);
   const email = asTrimmedString(body.email).toLowerCase();
   const phone = asTrimmedString(body.phone) || null;
@@ -73,6 +77,7 @@ function validatePayload(body: LeadPayload) {
   }
 
   return {
+    stage,
     fullName,
     email,
     phone,
@@ -99,7 +104,38 @@ export async function POST(request: NextRequest) {
     const parsed = validatePayload(body);
     const supabase = getSupabaseAdminClient();
 
-    const { error } = await supabase.from("interest_leads").insert({
+    if (parsed.stage === "step1_capture") {
+      const { error } = await supabase.from("interest_leads").insert({
+        full_name: parsed.fullName,
+        email: parsed.email,
+        phone: null,
+        county: "Other",
+        crop_types: "Not provided",
+        acreage_range: null,
+        preferred_contact_method: null,
+        notes: "Captured at step 1",
+        consent: true,
+        source: "website_step1",
+        submitted_at: new Date().toISOString(),
+      });
+
+      if (error) {
+        throw new Error(`Database insert failed: ${error.message}`);
+      }
+
+      return NextResponse.json({ ok: true, captured: true });
+    }
+
+    const { data: existingLead } = await supabase
+      .from("interest_leads")
+      .select("id")
+      .eq("email", parsed.email)
+      .order("submitted_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    let error: { message: string } | null = null;
+    const leadPayload = {
       full_name: parsed.fullName,
       email: parsed.email,
       phone: parsed.phone,
@@ -109,15 +145,33 @@ export async function POST(request: NextRequest) {
       preferred_contact_method: parsed.preferredContactMethod,
       notes: parsed.notes,
       consent: parsed.consent,
-      source: "website",
+      source: "website_final",
       submitted_at: new Date().toISOString(),
-    });
+    };
+
+    if (existingLead?.id) {
+      const updateResult = await supabase
+        .from("interest_leads")
+        .update(leadPayload)
+        .eq("id", existingLead.id);
+      error = updateResult.error;
+    } else {
+      const insertResult = await supabase.from("interest_leads").insert(leadPayload);
+      error = insertResult.error;
+    }
 
     if (error) {
       throw new Error(`Database insert failed: ${error.message}`);
     }
 
     await upsertGhlContact(parsed);
+    await sendSubmissionEmails({
+      firstName: parsed.fullName.split(" ")[0] || "there",
+      email: parsed.email,
+      county: parsed.county,
+      cropTypes: parsed.cropTypes,
+      primaryInterest: parsed.preferredContactMethod || "Not provided",
+    });
 
     return NextResponse.json({ ok: true });
   } catch (error) {
