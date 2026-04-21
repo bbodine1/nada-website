@@ -48,17 +48,31 @@ export function FaqAccordion() {
       {faqItems.map((item, index) => {
         const isOpen = openIndex === index;
         return (
-          <div key={item.question} className="overflow-hidden rounded-xl border border-[#d9d3c6] bg-white">
+          <div
+            key={item.question}
+            className="accordion-item"
+            data-open={isOpen}
+          >
             <button
               type="button"
-              className="flex w-full items-center justify-between px-5 py-4 text-left text-base font-semibold text-[#1a1a1a]"
+              className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left"
               aria-expanded={isOpen}
               onClick={() => setOpenIndex(isOpen ? null : index)}
             >
-              {item.question}
-              <span className="text-xl text-[#6b6b6b]">{isOpen ? "−" : "+"}</span>
+              <span className="font-heading text-lg font-semibold text-[color:var(--foreground)]">
+                {item.question}
+              </span>
+              <span className="accordion-chevron">
+                <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M8 3v10M3 8h10" strokeLinecap="round" />
+                </svg>
+              </span>
             </button>
-            {isOpen && <p className="px-5 pb-5 text-[#4c4c4c]">{item.answer}</p>}
+            <div className="accordion-content">
+              <div>
+                <p className="px-5 pb-5 text-[color:var(--fg-muted)]">{item.answer}</p>
+              </div>
+            </div>
           </div>
         );
       })}

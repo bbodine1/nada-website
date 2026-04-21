@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist_Mono, Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -40,7 +43,16 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${playfair.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      {/* suppressHydrationWarning: browser extensions often inject attributes on <body> before hydration */}
+      <body
+        className="flex min-h-full flex-col bg-[color:var(--background)]"
+        suppressHydrationWarning
+      >
+        <span id="top" />
+        <SiteHeader />
+        <main className="flex-1">{children}</main>
+        <SiteFooter />
+      </body>
     </html>
   );
 }
