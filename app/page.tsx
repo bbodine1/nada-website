@@ -4,6 +4,61 @@ import { FaqAccordion } from '@/components/faq-accordion'
 import { LeadInterestForm } from '@/components/lead-interest-form'
 import { RevealOnScroll } from '@/components/reveal-on-scroll'
 
+const problemCards = [
+	{
+		icon: '🌿',
+		title: 'Tennessee Valley Weather Doesn’t Wait',
+		body: 'Pop-up showers and humid air leave red clay holding water—sometimes the rig can’t roll for days. When the window opens, you need a pass that isn’t tied to someone else’s queue. Drone application can go when ground equipment still can’t.',
+	},
+	{
+		icon: '📉',
+		title: 'Thin Stands Before You Walk Every Row',
+		body: 'From cotton around Limestone and Lawrence to corn and beans across Madison and Morgan, multispectral maps flag weak areas and variability before you see it from the truck window—so you and your agronomist can prioritize scouting and inputs.',
+	},
+	{
+		icon: '💸',
+		title: 'Every Gallon Has to Earn Its Keep',
+		body: 'Margins are tight. Targeted application means putting product where the field needs it—not blanketing every acre the same way. That protects yield potential without throwing chemistry at ground that doesn’t need it.',
+	},
+] as const
+
+const explainerStats = [
+	{
+		label: 'Yield pressure',
+		detail: 'Farmers today grow far more per acre than a generation ago—precision tools are a big part of that story.',
+	},
+	{
+		label: 'Less waste',
+		detail:
+			'Many operations see better use of crop protection products when applications are timed and placed with precision.',
+	},
+	{
+		label: 'Earlier eyes',
+		detail: 'Scouting layers often surface stress days to weeks before you’d catch it on a windshield survey alone.',
+	},
+] as const
+
+const testimonials = [
+	{
+		quote: 'The map showed thin cotton spots I wouldn’t have walked to in time. Saved us a guess on replant.',
+		name: 'J. Hartselle',
+		county: 'Limestone County',
+		crop: 'Cotton and corn',
+	},
+	{
+		quote: 'After a gully washer, we still got a fungicide pass in when the rig couldn’t have touched it.',
+		name: 'R. Tanner',
+		county: 'Madison County',
+		crop: 'Soybeans and wheat',
+	},
+	{
+		quote: 'Gave our co-op something concrete to look at—where to go first on double-crop beans.',
+		name: 'C. Green',
+		county: 'Colbert County',
+		crop: 'Corn and double-crop soybeans',
+	},
+] as const
+
 export default function Home() {
 	return (
 		<div className="bg-[#f9f6f0] text-[#1a1a1a]">
@@ -16,7 +71,7 @@ export default function Home() {
 						loop
 						playsInline
 						preload="metadata"
-						poster="/hero-fallback.jpg"
+						poster="/hero-fallback.svg"
 					>
 						<source
 							src="/video/farm-spraying.mp4"
@@ -24,10 +79,9 @@ export default function Home() {
 						/>
 					</video>
 					<Image
-						src="/hero-fallback.jpg"
+						src="/hero-fallback.svg"
 						alt="Drone flying over row crops at golden hour"
 						fill
-						sizes="(max-width: 767px) 100vw, 0px"
 						className="object-cover md:hidden"
 						priority
 					/>
@@ -82,25 +136,14 @@ export default function Home() {
 							<h2 className="font-heading text-3xl font-bold text-[#1e3a0f] sm:text-4xl">
 								North Alabama Farming Is Getting Harder. Your Tools Should Get Smarter.
 							</h2>
+							<p className="mt-4 max-w-3xl text-lg text-[#4c4c4c]">
+								Between river bottoms, rolling ground, and humidity off the Gulf, the Tennessee Valley keeps you
+								guessing. Limestone to Colbert, Madison to Morgan—same problems: narrow spray windows, rising input
+								costs, and fields that don’t all behave the same.
+							</p>
 						</RevealOnScroll>
 						<div className="mt-8 grid gap-5 lg:grid-cols-3">
-							{[
-								{
-									icon: '🌿',
-									title: 'Missed Spray Windows',
-									body: 'Ground rigs cannot always get in after rain. Drones fly when equipment cannot, helping you protect timing and yield.',
-								},
-								{
-									icon: '📉',
-									title: 'Crop Stress You Cannot See',
-									body: 'NDVI mapping can flag weak spots before visible damage in the field so you can act earlier with your agronomy team.',
-								},
-								{
-									icon: '💸',
-									title: 'Rising Input Costs',
-									body: 'Precision application helps target where treatment is needed so you use less product and protect margins.',
-								},
-							].map(item => (
+							{problemCards.map(item => (
 								<RevealOnScroll key={item.title}>
 									<article className="topo-card rounded-xl p-6">
 										<p className="text-2xl">{item.icon}</p>
@@ -120,6 +163,10 @@ export default function Home() {
 					<div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
 						<RevealOnScroll>
 							<h2 className="font-heading text-3xl font-bold text-[#2d5016] sm:text-4xl">What We Do In Your Fields</h2>
+							<p className="mt-3 max-w-3xl text-[#4c4c4c]">
+								We fly for you—you don’t buy the drone, fuel it, or chase regulations alone. Built for North Alabama
+								rotations: cotton, corn, soybeans, wheat, and hay where it fits your operation.
+							</p>
 						</RevealOnScroll>
 
 						<div className="mt-10 grid items-center gap-8 lg:grid-cols-2">
@@ -134,9 +181,10 @@ export default function Home() {
 							<RevealOnScroll>
 								<h3 className="font-heading text-2xl font-bold text-[#2d5016]">Precision Spray Applications</h3>
 								<p className="mt-4 text-[#4c4c4c]">
-									We support cotton, corn, soybeans, and wheat with fungicide, herbicide, and foliar nutrient
-									applications. Drone applications are especially useful near homes, drainage ditches, and parts of the
-									field where ground rigs struggle.
+									Fungicide, herbicide, and foliar passes on cotton, corn, soybeans, and wheat—plus hay and forage where
+									it makes sense. Aerial application shines on end rows, tree lines, ditches, and patches where a ground
+									rig tears ground or can’t turn without hitting a fence or a neighbor’s place—common layouts across
+									North Alabama.
 								</p>
 							</RevealOnScroll>
 						</div>
@@ -145,8 +193,9 @@ export default function Home() {
 							<RevealOnScroll className="lg:order-1">
 								<h3 className="font-heading text-2xl font-bold text-[#2d5016]">Crop Scouting and NDVI Mapping</h3>
 								<p className="mt-4 text-[#4c4c4c]">
-									Multispectral mapping helps identify stand gaps, pest pressure, and possible nutrient issues earlier.
-									You receive georeferenced maps you can use with your agronomist or co-op for decisions in-season.
+									Multispectral and NDVI-style layers help spot stand gaps, variability, and stress patterns while you
+									still have time to react. You get maps you can lay on the tailgate with your agronomist, crop
+									consultant, or co-op—real numbers for a real plan, not a generic satellite screenshot.
 								</p>
 							</RevealOnScroll>
 							<Image
@@ -170,6 +219,10 @@ export default function Home() {
 							<h2 className="text-center font-heading text-3xl font-bold text-[#2d5016] sm:text-4xl">
 								See It Working In The Field
 							</h2>
+							<p className="mx-auto mt-4 max-w-2xl text-center text-[#4c4c4c]">
+								Smarter spraying is about timing, placement, and less waste—not buzzwords. Here’s the kind of impact
+								growers chase across the Valley when application fits the field, not the other way around.
+							</p>
 						</RevealOnScroll>
 						<RevealOnScroll className="mt-7 overflow-hidden rounded-xl bg-white p-3 shadow-[0_4px_24px_rgba(30,58,15,0.10)]">
 							<div className="relative aspect-video">
@@ -184,17 +237,13 @@ export default function Home() {
 							</div>
 						</RevealOnScroll>
 						<div className="mt-8 grid gap-4 text-center sm:grid-cols-3">
-							{[
-								['262%', 'More food produced per acre today vs. 1950.'],
-								['Up to 40%', 'Potential reduction in chemical inputs with precision application.'],
-								['2 to 3 weeks', 'Earlier crop stress detection versus visual scouting alone.'],
-							].map(([stat, detail]) => (
+							{explainerStats.map(row => (
 								<RevealOnScroll
-									key={stat}
+									key={row.label}
 									className="rounded-xl border border-[#e3ddd0] bg-white p-5"
 								>
-									<p className="font-heading text-3xl font-bold text-[#1e3a0f]">{stat}</p>
-									<p className="mt-2 text-sm text-[#4c4c4c]">{detail}</p>
+									<p className="font-heading text-xl font-bold text-[#1e3a0f]">{row.label}</p>
+									<p className="mt-2 text-sm text-[#4c4c4c]">{row.detail}</p>
 								</RevealOnScroll>
 							))}
 						</div>
@@ -207,30 +256,14 @@ export default function Home() {
 							<h2 className="font-heading text-3xl font-bold text-[#2d5016] sm:text-4xl">
 								Farmers Across North Alabama Are Paying Attention
 							</h2>
+							<p className="mt-3 max-w-3xl text-[#4c4c4c]">
+								We’re building our Fall 2026 route map now—Limestone, Madison, Morgan, Lawrence, Colbert, and
+								neighboring counties. Join the priority list and you’ll hear from us as we add fields (example quotes
+								below are placeholders).
+							</p>
 						</RevealOnScroll>
 						<div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-							{[
-								{
-									quote:
-										'I was skeptical at first, but the NDVI map showed thin spots I would not have caught early enough.',
-									name: 'J. Hartselle',
-									county: 'Limestone County',
-									crop: 'Cotton and Corn',
-								},
-								{
-									quote:
-										'After rain, we still got coverage done on schedule. That timing made a real difference for us.',
-									name: 'R. Tanner',
-									county: 'Madison County',
-									crop: 'Soybeans and Wheat',
-								},
-								{
-									quote: 'The map layers gave us better conversations with our co-op about where to focus first.',
-									name: 'C. Green',
-									county: 'Lawrence County',
-									crop: 'Corn and Hay',
-								},
-							].map(testimonial => (
+							{testimonials.map(testimonial => (
 								<RevealOnScroll
 									key={testimonial.name}
 									className="rounded-xl border border-[#e3ddd0] bg-[#fefdfa] p-5 shadow-[0_4px_24px_rgba(30,58,15,0.10)]"
@@ -240,6 +273,7 @@ export default function Home() {
 									<p className="text-sm text-[#6b6b6b]">
 										{testimonial.county} • {testimonial.crop}
 									</p>
+									<p className="mt-2 text-xs text-[#9a9a9a]">Placeholder quote</p>
 								</RevealOnScroll>
 							))}
 						</div>
@@ -258,7 +292,6 @@ export default function Home() {
 						src="/form-bg.svg"
 						alt=""
 						fill
-						sizes="100vw"
 						className="object-cover opacity-10"
 						aria-hidden
 					/>
@@ -268,12 +301,15 @@ export default function Home() {
 								Reserve Your Free Field Assessment
 							</h2>
 							<p className="mt-4 text-[#d3ebc9]">
-								We are onboarding a limited number of farms in North Alabama for Fall 2026. Secure your spot now with no
-								commitment required.
+								North Alabama Drone Applicators is a managed service—we bring certified pilots and insured equipment to
+								your farm, not a shopping list for you to buy. We’re onboarding a limited number of Tennessee Valley
+								operations for Fall 2026: spray, mapping, or both. No contract today—just a conversation about your
+								acres and your windows.
 							</p>
 						</RevealOnScroll>
 						<p className="mt-6 text-sm text-[#d3ebc9]">
-							The form is at the top of this page so you can submit quickly from mobile or desktop.
+							Use the form at the top of this page from your truck or office—we route leads by county and crop so when
+							the season gets busy, you’re already on the list.
 						</p>
 					</div>
 				</section>
@@ -299,6 +335,9 @@ export default function Home() {
 							<a href="#services">Services</a>
 							<a href="#lead-form">About</a>
 							<a href="#lead-form">Contact</a>
+							<a href="#">Facebook</a>
+							<a href="#">Instagram</a>
+							<a href="#">YouTube</a>
 						</div>
 						<p>Privacy Policy | © 2025 North Alabama Drone Applicators</p>
 					</div>
