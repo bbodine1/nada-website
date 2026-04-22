@@ -27,6 +27,7 @@ type LeadPayload = {
   notes?: unknown;
   consent?: unknown;
   companyName?: unknown;
+  requestPdf?: unknown;
 };
 
 function asTrimmedString(value: unknown): string {
@@ -59,6 +60,7 @@ function validatePayload(body: LeadPayload) {
   const notes = asTrimmedString(body.notes) || null;
   const consent = body.consent === true;
   const companyName = asTrimmedString(body.companyName);
+  const requestPdf = body.requestPdf === true;
 
   if (companyName) {
     throw new Error("Spam submission rejected.");
@@ -83,7 +85,8 @@ function validatePayload(body: LeadPayload) {
     acreageRange,
     preferredContactMethod,
     notes,
-      consent,
+    consent,
+    requestPdf,
   };
 }
 
@@ -102,6 +105,9 @@ export async function POST(request: NextRequest) {
     const supabase = getSupabaseAdminClient();
 
     if (parsed.stage === "step1_capture") {
+      const step1Notes = parsed.requestPdf
+        ? "Captured at step 1 | PDF requested"
+        : "Captured at step 1";
       const { error } = await supabase.from("interest_leads").insert({
         full_name: parsed.fullName,
         email: parsed.email,
@@ -110,7 +116,7 @@ export async function POST(request: NextRequest) {
         crop_types: "Not provided",
         acreage_range: null,
         preferred_contact_method: null,
-        notes: "Captured at step 1",
+        notes: step1Notes,
         consent: true,
         source: "website_step1",
         submitted_at: new Date().toISOString(),
@@ -132,6 +138,9 @@ export async function POST(request: NextRequest) {
       .maybeSingle();
 
     let error: { message: string } | null = null;
+    const notesWithPdf = [parsed.notes, parsed.requestPdf ? "PDF requested: yes" : "PDF requested: no"]
+      .filter(Boolean)
+      .join("\n");
     const leadPayload = {
       full_name: parsed.fullName,
       email: parsed.email,
@@ -140,7 +149,7 @@ export async function POST(request: NextRequest) {
       crop_types: parsed.cropTypes,
       acreage_range: parsed.acreageRange,
       preferred_contact_method: parsed.preferredContactMethod,
-      notes: parsed.notes,
+      notes: notesWithPdf || null,
       consent: parsed.consent,
       source: "website_final",
       submitted_at: new Date().toISOString(),
@@ -161,13 +170,23 @@ export async function POST(request: NextRequest) {
       throw new Error(`Database insert failed: ${error.message}`);
     }
 
-    await upsertGhlContact(parsed);
+    await upsertGhlContact({
+      fullName: parsed.fullName,
+      email: parsed.email,
+      phone: parsed.phone,
+      county: parsed.county,
+      cropTypes: parsed.cropTypes,
+      acreageRange: parsed.acreageRange,
+      preferredContactMethod: parsed.preferredContactMethod,
+      notes: notesWithPdf || null,
+    });
     await sendSubmissionEmails({
       firstName: parsed.fullName.split(" ")[0] || "there",
       email: parsed.email,
       county: parsed.county,
       cropTypes: parsed.cropTypes,
       primaryInterest: parsed.preferredContactMethod || "Not provided",
+      requestPdf: parsed.requestPdf,
     });
 
     return NextResponse.json({ ok: true });

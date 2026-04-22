@@ -24,11 +24,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://northalabamadroneapplicators.com"),
   title: "Agricultural Drone Services - North Alabama",
   description:
-    "North Alabama Drone Applicators provides precision spray applications and NDVI crop mapping for Tennessee Valley farms.",
+    "North Alabama Drone Applicators: drone spraying and spreading for Tennessee Valley farms. Fall 2026 priority list and free overview PDF.",
   openGraph: {
     title: "Agricultural Drone Services - North Alabama",
     description:
-      "Reserve your free field assessment for Fall 2026 drone spray applications and crop scouting.",
+      "Reserve your spot for Fall 2026 drone spray and spread services. Request the free Spray + Spread overview PDF.",
     images: ["/og-image.svg"],
   },
 };

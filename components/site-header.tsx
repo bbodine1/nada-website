@@ -78,9 +78,10 @@ export function SiteHeader() {
           <a
             href="#lead-form"
             data-track="header-cta"
+            aria-label="Reserve my spot on the interest list"
             className="btn btn-accent hidden px-4 py-2 text-sm md:inline-flex"
           >
-            Get Early Access
+            Reserve My Spot
           </a>
           <button
             type="button"
@@ -121,8 +122,9 @@ export function SiteHeader() {
               href="#lead-form"
               onClick={() => setOpen(false)}
               className="btn btn-accent mt-2 w-full"
+              aria-label="Reserve my spot on the interest list"
             >
-              Get Early Access
+              Reserve My Spot
             </a>
           </div>
         </div>

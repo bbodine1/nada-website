@@ -14,29 +14,39 @@ const faqItems = [
       "Often, yes. After heavy rain, river-bottom ground and red clay can stay too wet for heavy equipment while the spray window is still open. Drone application can go in many of those situations—exactly when timing matters for cotton, corn, and beans in North Alabama.",
   },
   {
+    question: "What can you spread?",
+    answer:
+      "This season we’re focused on dry spreading for agricultural use—examples include cover crop seed, dry fertilizer, lime, and pasture overseeding. Tell us your program and acres; we’ll confirm what fits your operation and labels.",
+  },
+  {
+    question: "Is drone application as accurate as a ground rig?",
+    answer:
+      "Modern ag drones are built for precise application when operated to label and field conditions. Ground rigs still excel in some situations—we’ll be straight about what makes sense for your acres, terrain, and product.",
+  },
+  {
     question: "Is it legal?",
     answer:
       "Yes. Our pilots operate under FAA Part 107 and carry insurance suited to commercial agricultural work. If you have field-specific rules or neighbor notifications, we plan with you up front.",
   },
   {
-    question: "What products can you apply?",
+    question: "What products can you apply (spray)?",
     answer:
       "We focus on labeled agricultural uses—herbicides, fungicides, insecticides, and foliar nutrients—according to product labels and your crop consultant’s recommendation. Tell us your program and we’ll confirm what fits your acres.",
   },
   {
-    question: "What crops do you cover?",
+    question: "What are you booking for this season?",
     answer:
-      "Cotton, corn, soybeans, wheat, hay, and most row-crop rotations common in the Tennessee Valley. If you grow it here, we can usually help with spray, scouting, or both.",
+      "Fall 2026: drone spraying and drone spreading only for our North Alabama service area. Other services may return in future seasons—join the list to hear when we expand the lineup.",
   },
   {
     question: "How much does it cost?",
     answer:
-      "Pricing depends on acreage, terrain, product, and how many passes you need in a season. Join the list and we’ll quote your operation—no pressure, no obligation.",
+      "Pricing depends on acreage, terrain, product, and whether you need spray, spread, or both. Request the overview PDF and join the list—we’ll follow up with indicative ranges and a field-specific conversation. No pressure, no obligation.",
   },
   {
     question: "What if I just want to learn more?",
     answer:
-      "That is what the list is for. You will get local updates on our Fall 2026 launch and how we are routing across Madison, Limestone, Morgan, Cullman, and Lawrence Counties in Alabama—our only service area.",
+      "That’s what the form is for. Tell us you’re interested, check the box for the Spray + Spread overview PDF, and we’ll email it after you submit. You’ll also get local updates on our Fall 2026 launch across Madison, Limestone, Morgan, Cullman, and Lawrence Counties—our only service area.",
   },
 ];
 

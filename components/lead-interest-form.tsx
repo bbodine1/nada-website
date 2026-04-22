@@ -15,11 +15,16 @@ const countyOptions = [
 
 const cropOptions = ["Cotton", "Corn", "Soybeans", "Wheat", "Hay/Forage", "Other"] as const;
 
+const PDF_PATH = "/downloads/nada-spray-spread-overview.pdf";
+
 export function LeadInterestForm() {
   const [step, setStep] = useState<StepState>(1);
   const [isStepOneCaptured, setIsStepOneCaptured] = useState(false);
   const [state, setState] = useState<FormState>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [requestPdf, setRequestPdf] = useState(true);
+  /** Snapshot for success UI after `requestPdf` is reset for the next visitor */
+  const [successIncludedPdf, setSuccessIncludedPdf] = useState(false);
 
   async function handleStepOneCapture(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -36,6 +41,7 @@ export function LeadInterestForm() {
       email: formData.get("email"),
       consent: true,
       companyName: formData.get("companyName"),
+      requestPdf,
     };
 
     try {
@@ -93,6 +99,7 @@ export function LeadInterestForm() {
         .join("\n"),
       consent: true,
       companyName: formData.get("companyName"),
+      requestPdf,
     };
 
     try {
@@ -107,9 +114,11 @@ export function LeadInterestForm() {
         throw new Error(data.error ?? "Submission failed. Please try again.");
       }
 
+      setSuccessIncludedPdf(requestPdf);
       form.reset();
       setIsStepOneCaptured(false);
       setStep(1);
+      setRequestPdf(true);
       setState("success");
     } catch (error) {
       const message =
@@ -138,10 +147,10 @@ export function LeadInterestForm() {
       <div className="mb-5 flex items-center justify-between">
         <div>
           <p className="font-heading text-xl font-semibold text-[color:var(--color-primary)]">
-            Reserve your spot
+            Get the Fall 2026 spray + spread overview
           </p>
           <p className="mt-1 text-sm text-[color:var(--fg-muted)]">
-            Fall 2026 priority list — no obligation.
+            Tell us a little about your acres and we&apos;ll send the guide—no obligation.
           </p>
         </div>
         <StepIndicator current={step} />
@@ -168,6 +177,22 @@ export function LeadInterestForm() {
 
       {step === 1 && (
         <div className="mt-5 space-y-3">
+          <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-sunk)] px-3 py-3 text-sm text-[color:var(--fg-muted)]">
+            <input
+              type="checkbox"
+              checked={requestPdf}
+              onChange={(e) => setRequestPdf(e.target.checked)}
+              className="mt-0.5 accent-[color:var(--color-primary)]"
+            />
+            <span>
+              <span className="font-medium text-[color:var(--foreground)]">
+                Email me the Spray + Spread Overview PDF
+              </span>
+              <span className="mt-0.5 block text-xs text-[color:var(--fg-subtle)]">
+                Benefits, preliminary cost per acre, and where we&apos;re headed—after you submit.
+              </span>
+            </span>
+          </label>
           <button
             type="submit"
             data-track="form-step1-next"
@@ -177,7 +202,8 @@ export function LeadInterestForm() {
             {state === "submitting" ? "Saving..." : "Continue →"}
           </button>
           <p className="text-xs text-[color:var(--fg-subtle)]">
-            Step 1 saves your name and email. Step 2 is optional, but please click submit to complete your request.
+            Step 1 saves your name and email. Step 2 is optional—submit to finish and get the PDF link if selected
+            above.
           </p>
         </div>
       )}
@@ -231,9 +257,9 @@ export function LeadInterestForm() {
             </select>
           </div>
           <fieldset>
-            <legend className="field-label">Primary Interest</legend>
+            <legend className="field-label">Primary interest this season</legend>
             <div className="grid gap-2 sm:grid-cols-2">
-              {["Spray Applications", "Crop Mapping/Scouting", "Both", "Just Learning"].map(
+              {["Spraying", "Spreading", "Both", "Just Learning"].map(
                 (option) => (
                   <label
                     key={option}
@@ -297,12 +323,27 @@ export function LeadInterestForm() {
         <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 text-[color:var(--color-primary)]" fill="currentColor">
           <path d="M8 1a4 4 0 0 0-4 4v2H3.5A1.5 1.5 0 0 0 2 8.5v5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 12.5 7H12V5a4 4 0 0 0-4-4Zm-2.5 6V5a2.5 2.5 0 0 1 5 0v2h-5Z" />
         </svg>
-        We respect your privacy. No spam—just updates on our North Alabama launch.
+        Submit once. We&apos;ll confirm by email{requestPdf ? " and send the guide" : ""}. No spam—just updates on our North Alabama launch.
       </p>
       {state === "success" && (
-        <p className="mt-3 rounded-lg bg-[color:var(--color-primary-100)] px-3 py-2 text-sm font-medium text-[color:var(--color-primary)]">
-          You&apos;re on the list! We&apos;ll be in touch before the season kicks off.
-        </p>
+        <div className="mt-3 space-y-3 rounded-lg bg-[color:var(--color-primary-100)] px-3 py-3 text-sm font-medium text-[color:var(--color-primary)]">
+          <p>You&apos;re on the list! We&apos;ll be in touch before the season kicks off.</p>
+          {successIncludedPdf && (
+            <p>
+              <a
+                href={PDF_PATH}
+                download
+                data-track="form-success-pdf-download"
+                className="inline-flex items-center gap-2 font-semibold underline underline-offset-2 hover:no-underline"
+              >
+                Download the Spray + Spread Overview (PDF)
+              </a>
+              <span className="mt-1 block text-xs font-normal text-[color:var(--color-primary)]/90">
+                Check your inbox—we&apos;ll send this link by email too.
+              </span>
+            </p>
+          )}
+        </div>
       )}
       {isStepOneCaptured && step === 2 && state !== "success" && (
         <p className="mt-3 rounded-lg bg-[color:var(--color-primary-100)] px-3 py-2 text-sm font-medium text-[color:var(--color-primary)]">

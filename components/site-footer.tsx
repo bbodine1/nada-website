@@ -1,9 +1,9 @@
 const serviceAreas = ["Madison", "Limestone", "Morgan", "Cullman", "Lawrence"];
 const services = [
-  { label: "Precision Spray", href: "#services" },
-  { label: "NDVI Crop Mapping", href: "#services" },
-  { label: "Field Scouting", href: "#services" },
+  { label: "Drone Spraying", href: "#services" },
+  { label: "Drone Spreading", href: "#services" },
   { label: "Fall 2026 Priority List", href: "#lead-form" },
+  { label: "Free Spray + Spread Guide", href: "#spray-spread-guide" },
 ];
 
 export function SiteFooter() {
@@ -32,13 +32,13 @@ export function SiteFooter() {
             <div>
               <p className="font-heading text-xl text-white">North Alabama Drone Applicators</p>
               <p className="text-xs uppercase tracking-[0.2em] text-[#c9d3b7]">
-                Fly. Scout. Spray. Smarter.
+                Spray. Spread. On your acres.
               </p>
             </div>
           </div>
           <p className="mt-5 max-w-md text-sm leading-relaxed text-[#d4d6c3]">
-            A managed drone service for row-crop farmers across the Tennessee Valley — certified
-            pilots, insured equipment, and data you can lay on the tailgate.
+            Managed drone spray and spreading for row-crop and pasture acres across the Tennessee Valley — certified
+            pilots, insured equipment, routes built for North Alabama.
           </p>
           <div className="mt-5 flex flex-wrap gap-2 text-xs">
             <span className="chip chip-dark">FAA Part 107</span>
