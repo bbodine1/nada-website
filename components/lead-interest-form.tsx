@@ -213,14 +213,10 @@ export function LeadInterestForm() {
           <p className="rounded-lg bg-[color:var(--color-primary-100)] px-3 py-2 text-xs font-medium text-[color:var(--color-primary)]">
             Step 2 is optional — add any details that help us prepare.
           </p>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4">
             <div>
               <label htmlFor="lastName" className="field-label">Last Name</label>
               <input id="lastName" name="lastName" className="field" />
-            </div>
-            <div>
-              <label htmlFor="phone" className="field-label">Phone (Optional)</label>
-              <input id="phone" name="phone" type="tel" className="field" />
             </div>
           </div>
           <div>

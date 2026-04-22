@@ -9,6 +9,7 @@ const problemCards = [
 	{
 		icon: (
 			<svg
+				aria-hidden="true"
 				viewBox="0 0 24 24"
 				className="h-5 w-5"
 				fill="none"
@@ -37,6 +38,7 @@ const problemCards = [
 	{
 		icon: (
 			<svg
+				aria-hidden="true"
 				viewBox="0 0 24 24"
 				className="h-5 w-5"
 				fill="none"
@@ -61,6 +63,7 @@ const problemCards = [
 	{
 		icon: (
 			<svg
+				aria-hidden="true"
 				viewBox="0 0 24 24"
 				className="h-5 w-5"
 				fill="none"
@@ -179,6 +182,7 @@ export default function Home() {
 										fill="none"
 										stroke="currentColor"
 										strokeWidth="2"
+										aria-hidden="true"
 									>
 										<path
 											d="M4 10h12M12 5l5 5-5 5"
@@ -222,6 +226,7 @@ export default function Home() {
 				>
 					<span>Scroll</span>
 					<svg
+						aria-hidden="true"
 						viewBox="0 0 16 16"
 						className="h-3.5 w-3.5 animate-bounce"
 						fill="none"
@@ -271,6 +276,7 @@ export default function Home() {
 									<div className="mt-auto pt-5">
 										<p className="flex items-start gap-2 border-t border-[color:var(--border)] pt-4 text-sm font-medium text-[color:var(--color-primary)]">
 											<svg
+												aria-hidden="true"
 												viewBox="0 0 16 16"
 												className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--color-accent)]"
 												fill="currentColor"
@@ -341,6 +347,7 @@ export default function Home() {
 									>
 										<span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-primary-100)] text-[color:var(--color-primary)]">
 											<svg
+												aria-hidden="true"
 												viewBox="0 0 16 16"
 												className="h-3 w-3"
 												fill="currentColor"
@@ -391,6 +398,7 @@ export default function Home() {
 									>
 										<span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-primary-100)] text-[color:var(--color-primary)]">
 											<svg
+												aria-hidden="true"
 												viewBox="0 0 16 16"
 												className="h-3 w-3"
 												fill="currentColor"
@@ -447,6 +455,7 @@ export default function Home() {
 									>
 										<span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-primary-100)] text-[color:var(--color-primary)]">
 											<svg
+												aria-hidden="true"
 												viewBox="0 0 16 16"
 												className="h-3 w-3"
 												fill="currentColor"
@@ -467,6 +476,7 @@ export default function Home() {
 								>
 									Request the PDF — join the list
 									<svg
+										aria-hidden="true"
 										viewBox="0 0 20 20"
 										className="h-4 w-4"
 										fill="none"
@@ -544,6 +554,7 @@ export default function Home() {
 						>
 							<span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[color:var(--color-primary)] text-[color:var(--color-accent-100)]">
 								<svg
+									aria-hidden="true"
 									viewBox="0 0 24 24"
 									className="h-5 w-5"
 									fill="none"
@@ -604,6 +615,7 @@ export default function Home() {
 								className="flex h-full flex-col rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-white p-7 shadow-[var(--shadow-sm)]"
 							>
 								<svg
+									aria-hidden="true"
 									viewBox="0 0 32 32"
 									className="h-8 w-8 text-[color:var(--color-accent)]"
 									fill="currentColor"
@@ -619,9 +631,10 @@ export default function Home() {
 										</p>
 									</div>
 									<div className="flex gap-0.5 text-[color:var(--color-accent)]">
-										{Array.from({ length: 5 }).map((_, i) => (
+										{[1, 2, 3, 4, 5].map(star => (
 											<svg
-												key={i}
+												aria-hidden="true"
+												key={star}
 												viewBox="0 0 20 20"
 												className="h-3.5 w-3.5"
 												fill="currentColor"
@@ -690,6 +703,7 @@ export default function Home() {
 								>
 									<span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-accent)] text-[color:var(--color-primary)]">
 										<svg
+											aria-hidden="true"
 											viewBox="0 0 16 16"
 											className="h-3 w-3"
 											fill="currentColor"
@@ -710,6 +724,7 @@ export default function Home() {
 							>
 								Reserve My Spot
 								<svg
+									aria-hidden="true"
 									viewBox="0 0 20 20"
 									className="h-4 w-4"
 									fill="none"

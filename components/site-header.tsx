@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const navLinks = [
-  { href: "#services", label: "Services" },
-  { href: "#explainer", label: "How It Works" },
-  { href: "#testimonials", label: "Growers" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#services", label: "Services" },
+  { href: "/#explainer", label: "How It Works" },
+  { href: "/#testimonials", label: "Growers" },
+  { href: "/#faq", label: "FAQ" },
 ];
 
 export function SiteHeader() {
@@ -31,7 +31,7 @@ export function SiteHeader() {
     >
       <div className="container-page flex h-16 items-center justify-between">
         <Link
-          href="#top"
+          href="/#top"
           className="group flex items-center gap-2.5"
           aria-label="North Alabama Drone Applicators"
         >
@@ -76,7 +76,7 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           <a
-            href="#lead-form"
+            href="/#lead-form"
             data-track="header-cta"
             aria-label="Reserve my spot on the interest list"
             className="btn btn-accent hidden px-4 py-2 text-sm md:inline-flex"
@@ -119,7 +119,7 @@ export function SiteHeader() {
               </a>
             ))}
             <a
-              href="#lead-form"
+              href="/#lead-form"
               onClick={() => setOpen(false)}
               className="btn btn-accent mt-2 w-full"
               aria-label="Reserve my spot on the interest list"

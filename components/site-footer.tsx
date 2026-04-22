@@ -89,9 +89,10 @@ export function SiteFooter() {
         <div className="container-page flex flex-col items-start justify-between gap-3 py-6 text-xs text-[#c9d3b7] md:flex-row md:items-center">
           <p>© {new Date().getFullYear()} North Alabama Drone Applicators. All rights reserved.</p>
           <div className="flex flex-wrap gap-5">
-            <a href="#lead-form" className="hover:text-white">Contact</a>
-            <a href="#faq" className="hover:text-white">FAQ</a>
-            <a href="#top" className="hover:text-white">Privacy</a>
+            <a href="/#lead-form" className="hover:text-white">Contact</a>
+            <a href="/#faq" className="hover:text-white">FAQ</a>
+            <a href="/privacy" className="hover:text-white">Privacy</a>
+            <a href="/terms" className="hover:text-white">Terms</a>
           </div>
         </div>
       </div>
