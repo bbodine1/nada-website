@@ -90,6 +90,9 @@ export function LeadInterestForm() {
       acreageRange: formData.get("acreageRange"),
       preferredContactMethod: formData.get("primaryInterest"),
       notes: [
+        formData.get("droneAcreage")
+          ? `Acres considered for drone this season: ${String(formData.get("droneAcreage"))}`
+          : "",
         formData.get("notes"),
         formData.get("howHeard")
           ? `How heard about us: ${String(formData.get("howHeard"))}`
@@ -147,10 +150,10 @@ export function LeadInterestForm() {
       <div className="mb-5 flex items-center justify-between">
         <div>
           <p className="font-heading text-xl font-semibold text-[color:var(--color-primary)]">
-            Get the Fall 2026 spray + spread overview
+            Request your Fall 2026 field-fit assessment
           </p>
           <p className="mt-1 text-sm text-[color:var(--fg-muted)]">
-            Tell us a little about your acres and we&apos;ll send the guide—no obligation.
+            Step 1 gets your evaluation started. Step 2 adds optional details for a tighter estimate.
           </p>
         </div>
         <StepIndicator current={step} />
@@ -189,7 +192,7 @@ export function LeadInterestForm() {
                 Email me the Spray + Spread Overview PDF
               </span>
               <span className="mt-0.5 block text-xs text-[color:var(--fg-subtle)]">
-                Benefits, preliminary cost per acre, and where we&apos;re headed—after you submit.
+                Includes application-fit guidance, indicative cost ranges, and launch details.
               </span>
             </span>
           </label>
@@ -202,7 +205,7 @@ export function LeadInterestForm() {
             {state === "submitting" ? "Saving..." : "Continue →"}
           </button>
           <p className="text-xs text-[color:var(--fg-subtle)]">
-            Step 1 saves your name and email. Step 2 is optional—submit to finish and get the PDF link if selected
+            Step 1 saves your request. Step 2 is optional—submit to finish and get the PDF link if selected
             above.
           </p>
         </div>
@@ -211,7 +214,7 @@ export function LeadInterestForm() {
       {step === 2 && (
         <div className="mt-5 space-y-4 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface-sunk)] p-5">
           <p className="rounded-lg bg-[color:var(--color-primary-100)] px-3 py-2 text-xs font-medium text-[color:var(--color-primary)]">
-            Step 2 is optional — add any details that help us prepare.
+            Step 2 is optional — add details so we can tighten your field-fit and cost-range guidance.
           </p>
           <div className="grid gap-4">
             <div>
@@ -251,6 +254,17 @@ export function LeadInterestForm() {
               <option value="500_1000">500 – 1,000 ac</option>
               <option value="1000_plus">1,000+ ac</option>
             </select>
+          </div>
+          <div>
+            <label htmlFor="droneAcreage" className="field-label">
+              Acres you&apos;d consider for drone this season (optional)
+            </label>
+            <input
+              id="droneAcreage"
+              name="droneAcreage"
+              className="field"
+              placeholder="Example: 120"
+            />
           </div>
           <fieldset>
             <legend className="field-label">Primary interest this season</legend>
@@ -319,11 +333,12 @@ export function LeadInterestForm() {
         <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 text-[color:var(--color-primary)]" fill="currentColor">
           <path d="M8 1a4 4 0 0 0-4 4v2H3.5A1.5 1.5 0 0 0 2 8.5v5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 12.5 7H12V5a4 4 0 0 0-4-4Zm-2.5 6V5a2.5 2.5 0 0 1 5 0v2h-5Z" />
         </svg>
-        Submit once. We&apos;ll confirm by email{requestPdf ? " and send the guide" : ""}. No spam—just updates on our North Alabama launch.
+        Submit once. We&apos;ll confirm by email{requestPdf ? " and send the guide" : ""}. Expect a practical field-fit
+        follow-up, not a hard sales sequence.
       </p>
       {state === "success" && (
         <div className="mt-3 space-y-3 rounded-lg bg-[color:var(--color-primary-100)] px-3 py-3 text-sm font-medium text-[color:var(--color-primary)]">
-          <p>You&apos;re on the list! We&apos;ll be in touch before the season kicks off.</p>
+          <p>Request received. We&apos;ll follow up with field-fit guidance and indicative ranges for your acres.</p>
           {successIncludedPdf && (
             <p>
               <a
@@ -343,7 +358,7 @@ export function LeadInterestForm() {
       )}
       {isStepOneCaptured && step === 2 && state !== "success" && (
         <p className="mt-3 rounded-lg bg-[color:var(--color-primary-100)] px-3 py-2 text-sm font-medium text-[color:var(--color-primary)]">
-          Step 1 saved. Optional details below — click submit to finish.
+          Step 1 saved. Optional details below help us provide a tighter evaluation.
         </p>
       )}
       {state === "error" && (

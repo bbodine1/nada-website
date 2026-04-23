@@ -278,10 +278,10 @@ export function ExitIntentPopup() {
           <form onSubmit={handleSubmit} className="relative space-y-4">
             <div>
               <p id="exit-intent-title" className="font-heading text-2xl font-semibold text-[color:var(--color-primary)]">
-                Before you go, grab the Fall 2026 spray + spread guide.
+                Before you go, request your field-fit + cost guide.
               </p>
               <p className="mt-2 text-sm text-[color:var(--fg-muted)]">
-                Share your details and county so we can route your request and send the PDF.
+                Share your details and county so we can route your request and send the PDF with indicative ranges.
               </p>
             </div>
 
@@ -349,11 +349,11 @@ export function ExitIntentPopup() {
             <div className="flex flex-col gap-3 sm:flex-row">
               <button
                 type="submit"
-                data-track="exit-intent-submit"
+                data-track="exit-intent-submit-guide"
                 disabled={formState === "submitting"}
                 className="btn btn-accent w-full disabled:opacity-60"
               >
-                {formState === "submitting" ? "Submitting..." : "Send Me the Guide"}
+                {formState === "submitting" ? "Submitting..." : "Send My Field-Fit Guide"}
               </button>
               <button
                 type="button"

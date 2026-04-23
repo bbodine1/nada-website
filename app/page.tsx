@@ -145,6 +145,51 @@ const trustItems = [
 	},
 ] as const
 
+const opsComparison = [
+	{
+		approach: 'Ground Rig',
+		access: 'Strong on dry, open ground; limited when fields stay soft after rain.',
+		precision: 'Good section control, but harder in irregular edges and tight wet pockets.',
+		risk: 'Highest compaction and rut risk in soft Tennessee Valley conditions.',
+		speed: 'Fast once in-field, slower when weather or soil delays access.',
+		bestFit: 'Broad-acre passes when field conditions support equipment traffic.',
+	},
+	{
+		approach: 'Traditional Aerial',
+		access: 'Excellent access regardless of soil trafficability.',
+		precision: 'Strong on broad passes; less flexible for small or odd-shaped patches.',
+		risk: 'No wheel traffic, so no compaction from application equipment.',
+		speed: 'Very fast coverage when aircraft slot and route are available.',
+		bestFit: 'Large acre blocks and time-sensitive full-field applications.',
+	},
+	{
+		approach: 'Drone Application',
+		access: 'Excellent in wet fields, end rows, and areas where rigs cannot travel.',
+		precision: 'High control on irregular boundaries, turn rows, and targeted zones.',
+		risk: 'No wheel traffic in-crop and minimal ground disturbance at treatment area.',
+		speed: 'Fast to launch for focused jobs; scales through coordinated route planning.',
+		bestFit: 'Field edges, wet zones, patch treatment, and weather-tight spray/spread windows.',
+	},
+] as const
+
+const economicProofPoints = [
+	{
+		title: 'Timing protection when rain stalls rigs',
+		detail:
+			'Indicative outcome: preserve a fungicide or foliar timing window on acres that stay too soft for ground entry. Value depends on crop stage, pressure, and field access.',
+	},
+	{
+		title: 'Compaction and rework reduction',
+		detail:
+			'Indicative outcome: fewer rut repairs and less stand disturbance in wet pockets, end rows, and soft headlands compared with heavy in-field traffic.',
+	},
+	{
+		title: 'Better use of partial-field passes',
+		detail:
+			'Indicative outcome: target irregular or hard-to-reach acres without paying for a blanket pass. Final quote and economics are field-specific.',
+	},
+] as const
+
 export default function Home() {
 	return (
 		<div className="text-[color:var(--foreground)]">
@@ -160,22 +205,22 @@ export default function Home() {
 								Fall 2026 · North Alabama
 							</span>
 							<h1 className="mt-5 font-heading text-4xl font-semibold text-white sm:text-5xl lg:text-6xl">
-								Drone spraying and spreading.
+								You already know crop application.
 								<br />
-								<span className="gradient-text">Built for North Alabama farms.</span>
+								<span className="gradient-text">See where drone passes win on your acres.</span>
 							</h1>
 							<p className="mt-5 max-w-xl text-lg leading-8 text-[#e8e8e8]">
-								This season we&apos;re flying precision spray and dry spreading only—liquid chemistry when the window
-								opens, and seed, fertilizer, lime, and pasture overseeding where it fits your operation. Tell us
-								you&apos;re interested; we&apos;ll follow up with details and routing for Fall 2026.
+								We work with experienced North Alabama growers and applicators to map where drone spraying and
+								spreading outperforms rigs or traditional aerial. Share your operation details and we&apos;ll follow up
+								with a practical field-fit and cost-range conversation for Fall 2026 routing.
 							</p>
 							<div className="mt-8 flex flex-wrap gap-3">
 								<CtaButton
-									data-track="hero-primary-cta"
-									aria-label="Reserve my spot on the interest list"
+									data-track="hero-cta-field-fit"
+									aria-label="Request my field-fit assessment"
 									className="btn btn-accent"
 								>
-									Reserve My Spot
+									Get My Field-Fit Assessment
 									<svg
 										viewBox="0 0 20 20"
 										className="h-4 w-4"
@@ -192,11 +237,11 @@ export default function Home() {
 									</svg>
 								</CtaButton>
 								<CtaButton
-									data-track="hero-secondary-cta"
-									aria-label="Get the free spray and spread guide—submit the form"
+									data-track="hero-cta-cost-range"
+									aria-label="Request spray and spread cost ranges"
 									className="btn btn-outline"
 								>
-									Download the Free Guide
+									Request Cost Ranges + Guide
 								</CtaButton>
 							</div>
 
@@ -239,6 +284,98 @@ export default function Home() {
 						/>
 					</svg>
 				</a>
+			</section>
+
+			{/* Operations Comparison ---------------------------------------- */}
+			<section
+				id="comparison"
+				className="section-pad bg-[color:var(--background)]"
+			>
+				<div className="container-page">
+					<RevealOnScroll>
+						<span className="eyebrow eyebrow-dot">Operational Fit Comparison</span>
+						<h2 className="mt-4 max-w-3xl font-heading text-3xl font-semibold text-[color:var(--color-primary)] sm:text-4xl">
+							Where each application approach fits best.
+						</h2>
+						<p className="mt-4 max-w-3xl text-lg text-[color:var(--fg-muted)]">
+							You do not need to replace proven tools. Use drones where access, precision, and timing pressure make
+							the biggest difference on your acres.
+						</p>
+					</RevealOnScroll>
+
+					<div className="mt-10 grid gap-5 lg:grid-cols-3">
+						{opsComparison.map(item => (
+							<RevealOnScroll
+								key={item.approach}
+								className="rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-white p-6 shadow-[var(--shadow-sm)]"
+							>
+								<p className="font-heading text-xl font-semibold text-[color:var(--color-primary)]">{item.approach}</p>
+								<ul className="mt-4 space-y-3 text-sm text-[color:var(--fg-muted)]">
+									<li>
+										<span className="font-semibold text-[color:var(--foreground)]">Access:</span> {item.access}
+									</li>
+									<li>
+										<span className="font-semibold text-[color:var(--foreground)]">Precision:</span> {item.precision}
+									</li>
+									<li>
+										<span className="font-semibold text-[color:var(--foreground)]">Compaction Risk:</span> {item.risk}
+									</li>
+									<li>
+										<span className="font-semibold text-[color:var(--foreground)]">Turn-Around:</span> {item.speed}
+									</li>
+									<li>
+										<span className="font-semibold text-[color:var(--foreground)]">Best Fit:</span> {item.bestFit}
+									</li>
+								</ul>
+							</RevealOnScroll>
+						))}
+					</div>
+					<div className="mt-8">
+						<CtaButton
+							data-track="comparison-cta-evaluate"
+							aria-label="Request field-fit comparison for my acres"
+							className="btn btn-accent"
+						>
+							Request My Field Comparison
+						</CtaButton>
+					</div>
+				</div>
+			</section>
+
+			{/* Economics ----------------------------------------------------- */}
+			<section className="section-pad bg-white">
+				<div className="container-page">
+					<RevealOnScroll>
+						<span className="eyebrow eyebrow-dot">Economic Reality</span>
+						<h2 className="mt-4 max-w-3xl font-heading text-3xl font-semibold text-[color:var(--color-primary)] sm:text-4xl">
+							What drone application can protect or save.
+						</h2>
+						<p className="mt-4 max-w-3xl text-lg text-[color:var(--fg-muted)]">
+							These are indicative field outcomes, not blanket promises. Final pricing and ROI are field-dependent and
+							quoted per job.
+						</p>
+					</RevealOnScroll>
+					<div className="mt-10 grid gap-5 md:grid-cols-3">
+						{economicProofPoints.map(point => (
+							<RevealOnScroll
+								key={point.title}
+								className="rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-[color:var(--surface-muted)] p-6"
+							>
+								<p className="font-heading text-lg font-semibold text-[color:var(--color-primary)]">{point.title}</p>
+								<p className="mt-3 text-sm text-[color:var(--fg-muted)]">{point.detail}</p>
+							</RevealOnScroll>
+						))}
+					</div>
+					<div className="mt-8">
+						<CtaButton
+							data-track="economics-cta-guide"
+							aria-label="Get indicative spray and spread ranges by field"
+							className="btn btn-accent inline-flex"
+						>
+							Get Indicative Cost Ranges
+						</CtaButton>
+					</div>
+				</div>
 			</section>
 
 			{/* Problems ------------------------------------------------------ */}
@@ -468,11 +605,11 @@ export default function Home() {
 							</ul>
 							<div className="mt-8">
 								<CtaButton
-									data-track="guide-section-cta"
-									aria-label="Request the spray and spread PDF via the interest form"
+									data-track="guide-cta-request-pdf"
+									aria-label="Request the spray and spread PDF and field-fit review"
 									className="btn btn-accent inline-flex"
 								>
-									Request the PDF — join the list
+									Request the PDF + Field Review
 									<svg
 										aria-hidden="true"
 										viewBox="0 0 20 20"
@@ -593,15 +730,15 @@ export default function Home() {
 							</h2>
 							<p className="mt-4 text-[color:var(--fg-muted)]">
 								We’re building our Fall 2026 route map for spray and spread across Madison, Limestone, Morgan, Cullman,
-								and Lawrence Counties—Alabama only. Join the list, request the PDF, and we’ll follow up (example quotes
-								below are placeholders).
+								and Lawrence Counties—Alabama only. Share your acres and goals, and we&apos;ll follow up with a practical
+								field-fit conversation.
 							</p>
 						</div>
 						<CtaButton
 							className="btn btn-ghost"
-							data-track="testimonials-cta"
+							data-track="testimonials-cta-field-fit"
 						>
-							Reserve my spot
+							Request a field-fit call
 						</CtaButton>
 					</RevealOnScroll>
 
@@ -645,16 +782,12 @@ export default function Home() {
 						))}
 					</div>
 
-					<div className="mt-10 grid gap-3 text-center text-xs uppercase tracking-[0.18em] text-[color:var(--fg-subtle)] sm:grid-cols-3">
-						<div className="rounded-md border border-dashed border-[color:var(--border-strong)] bg-white px-3 py-4">
-							Alabama Farmers Federation
-						</div>
-						<div className="rounded-md border border-dashed border-[color:var(--border-strong)] bg-white px-3 py-4">
-							Auburn Extension
-						</div>
-						<div className="rounded-md border border-dashed border-[color:var(--border-strong)] bg-white px-3 py-4">
-							Local Co-op Partner
-						</div>
+					<div className="mt-10 rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-white p-5 text-sm text-[color:var(--fg-muted)]">
+						<p className="font-semibold text-[color:var(--foreground)]">Built for practical, no-hype decisions.</p>
+						<p className="mt-2">
+							We&apos;ll tell you where drone passes likely help, where your current rig or aircraft remains the better
+							play, and what indicative per-acre ranges look like before you commit to anything.
+						</p>
 					</div>
 				</div>
 			</section>
@@ -682,7 +815,7 @@ export default function Home() {
 							Fall 2026 · Early Access
 						</span>
 						<h2 className="mt-4 font-heading text-3xl font-semibold text-white sm:text-4xl lg:text-[2.75rem]">
-							Reserve your free field assessment.
+							Request a free field-fit assessment.
 						</h2>
 						<p className="mt-5 max-w-xl text-[#d3ebc9]">
 							North Alabama Drone Applicators is a managed service—we bring certified pilots and insured equipment to
@@ -715,11 +848,11 @@ export default function Home() {
 						</ul>
 						<div className="mt-8">
 							<CtaButton
-								data-track="final-cta"
-								aria-label="Reserve my spot on the interest list"
+								data-track="final-cta-field-fit"
+								aria-label="Request my field-fit assessment"
 								className="btn btn-accent"
 							>
-								Reserve My Spot
+								Get My Field-Fit Assessment
 								<svg
 									aria-hidden="true"
 									viewBox="0 0 20 20"
@@ -778,7 +911,7 @@ export default function Home() {
 						</h2>
 						<p className="mt-4 text-[color:var(--fg-muted)]">
 							Short, direct answers to the things growers ask most often. Not here? Drop it in the notes field when you
-							join the list.
+							request your field-fit assessment.
 						</p>
 					</RevealOnScroll>
 					<div className="mt-10">
@@ -790,11 +923,11 @@ export default function Home() {
 			{/* Mobile sticky CTA --------------------------------------------- */}
 			<div className="fixed inset-x-0 bottom-0 z-40 border-t border-[color:var(--border)] bg-white/95 p-3 backdrop-blur md:hidden">
 				<CtaButton
-					data-track="mobile-sticky-cta"
-					aria-label="Reserve my spot and request the spray and spread guide"
+					data-track="mobile-sticky-cta-field-fit"
+					aria-label="Request field-fit assessment and spray spread guide"
 					className="btn btn-accent w-full"
 				>
-					Reserve My Spot &amp; Get the Guide →
+					Get Field-Fit + Cost Guide →
 				</CtaButton>
 			</div>
 		</div>

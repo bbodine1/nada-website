@@ -77,11 +77,11 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <Link
             href="/#lead-form"
-            data-track="header-cta"
-            aria-label="Reserve my spot on the interest list"
+            data-track="header-cta-field-fit"
+            aria-label="Request my field-fit assessment"
             className="btn btn-accent hidden px-4 py-2 text-sm md:inline-flex"
           >
-            Reserve My Spot
+            Get Field-Fit Assessment
           </Link>
           <button
             type="button"
@@ -130,9 +130,9 @@ export function SiteHeader() {
               href="/#lead-form"
               onClick={() => setOpen(false)}
               className="btn btn-accent mt-2 w-full"
-              aria-label="Reserve my spot on the interest list"
+              aria-label="Request my field-fit assessment"
             >
-              Reserve My Spot
+              Get Field-Fit Assessment
             </Link>
           </div>
         </div>
