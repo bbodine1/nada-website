@@ -1,5 +1,6 @@
 import Image from 'next/image'
 
+import { CtaButton } from '@/components/cta-lead-popup'
 import { HeroVideo } from '@/components/hero-video'
 import { FaqAccordion } from '@/components/faq-accordion'
 import { LeadInterestForm } from '@/components/lead-interest-form'
@@ -169,8 +170,7 @@ export default function Home() {
 								you&apos;re interested; we&apos;ll follow up with details and routing for Fall 2026.
 							</p>
 							<div className="mt-8 flex flex-wrap gap-3">
-								<a
-									href="#lead-form"
+								<CtaButton
 									data-track="hero-primary-cta"
 									aria-label="Reserve my spot on the interest list"
 									className="btn btn-accent"
@@ -190,15 +190,14 @@ export default function Home() {
 											strokeLinejoin="round"
 										/>
 									</svg>
-								</a>
-								<a
-									href="#lead-form"
+								</CtaButton>
+								<CtaButton
 									data-track="hero-secondary-cta"
 									aria-label="Get the free spray and spread guide—submit the form"
 									className="btn btn-outline"
 								>
 									Download the Free Guide
-								</a>
+								</CtaButton>
 							</div>
 
 							<div className="mt-10 flex flex-wrap items-center gap-2 text-sm text-white/85">
@@ -468,8 +467,7 @@ export default function Home() {
 								))}
 							</ul>
 							<div className="mt-8">
-								<a
-									href="#lead-form"
+								<CtaButton
 									data-track="guide-section-cta"
 									aria-label="Request the spray and spread PDF via the interest form"
 									className="btn btn-accent inline-flex"
@@ -489,7 +487,7 @@ export default function Home() {
 											strokeLinejoin="round"
 										/>
 									</svg>
-								</a>
+								</CtaButton>
 							</div>
 						</RevealOnScroll>
 					</div>
@@ -599,13 +597,12 @@ export default function Home() {
 								below are placeholders).
 							</p>
 						</div>
-						<a
-							href="#lead-form"
+						<CtaButton
 							className="btn btn-ghost"
 							data-track="testimonials-cta"
 						>
 							Reserve my spot
-						</a>
+						</CtaButton>
 					</RevealOnScroll>
 
 					<div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -717,8 +714,7 @@ export default function Home() {
 							))}
 						</ul>
 						<div className="mt-8">
-							<a
-								href="#lead-form"
+							<CtaButton
 								data-track="final-cta"
 								aria-label="Reserve my spot on the interest list"
 								className="btn btn-accent"
@@ -738,7 +734,7 @@ export default function Home() {
 										strokeLinejoin="round"
 									/>
 								</svg>
-							</a>
+							</CtaButton>
 						</div>
 					</div>
 
@@ -793,14 +789,13 @@ export default function Home() {
 
 			{/* Mobile sticky CTA --------------------------------------------- */}
 			<div className="fixed inset-x-0 bottom-0 z-40 border-t border-[color:var(--border)] bg-white/95 p-3 backdrop-blur md:hidden">
-				<a
-					href="#lead-form"
+				<CtaButton
 					data-track="mobile-sticky-cta"
 					aria-label="Reserve my spot and request the spray and spread guide"
 					className="btn btn-accent w-full"
 				>
 					Reserve My Spot &amp; Get the Guide →
-				</a>
+				</CtaButton>
 			</div>
 		</div>
 	)

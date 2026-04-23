@@ -3,7 +3,9 @@ import { Geist_Mono, Inter, Playfair_Display } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
+import { CtaLeadPopup, CtaPopupProvider } from "@/components/cta-lead-popup";
 import { ExitIntentPopup } from "@/components/exit-intent-popup";
+import { InPageAnchorHandler } from "@/components/in-page-anchor-handler";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
@@ -51,11 +53,15 @@ export default function RootLayout({
         className="flex min-h-full flex-col bg-[color:var(--background)]"
         suppressHydrationWarning
       >
-        <span id="top" />
-        <SiteHeader />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
-        <ExitIntentPopup />
+        <CtaPopupProvider>
+          <InPageAnchorHandler />
+          <span id="top" />
+          <SiteHeader />
+          <main className="flex-1">{children}</main>
+          <SiteFooter />
+          <ExitIntentPopup />
+          <CtaLeadPopup />
+        </CtaPopupProvider>
         <Script
           id="leadconnector-chat-widget"
           src="https://widgets.leadconnectorhq.com/loader.js"
