@@ -25,7 +25,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://northalabamadroneapplicators.com"),
+  metadataBase: new URL("https://www.northaldroneapplicators.com"),
   title: "Agricultural Drone Services - North Alabama",
   description:
     "North Alabama Drone Applicators: drone spraying and spreading for Tennessee Valley farms. Fall 2026 priority list and free overview PDF.",
