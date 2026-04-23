@@ -3,6 +3,7 @@ import { Geist_Mono, Inter, Playfair_Display } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
+import { ExitIntentPopup } from "@/components/exit-intent-popup";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
@@ -54,6 +55,7 @@ export default function RootLayout({
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />
+        <ExitIntentPopup />
         <Script
           id="leadconnector-chat-widget"
           src="https://widgets.leadconnectorhq.com/loader.js"

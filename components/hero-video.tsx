@@ -41,6 +41,7 @@ export function HeroVideo() {
 				src={heroMedia.fallbackImageSrc}
 				alt={heroMedia.fallbackImageAlt}
 				fill
+				sizes="(max-width: 767px) 100vw, 0vw"
 				className="object-cover md:hidden"
 				priority
 			/>

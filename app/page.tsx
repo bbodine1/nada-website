@@ -668,6 +668,7 @@ export default function Home() {
 					src="/form-bg.svg"
 					alt=""
 					fill
+					sizes="100vw"
 					className="object-cover opacity-10"
 					aria-hidden
 				/>
