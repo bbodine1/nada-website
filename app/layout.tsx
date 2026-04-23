@@ -29,7 +29,49 @@ export const metadata: Metadata = {
   title: "Agricultural Drone Services - North Alabama",
   description:
     "North Alabama Drone Applicators: drone spraying and spreading for Tennessee Valley farms. Fall 2026 priority list and free overview PDF.",
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  manifest: "/favicon/site.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon/favicon.ico", type: "image/x-icon" },
+      { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [{ url: "/favicon/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/favicon/favicon.ico"],
+  },
   openGraph: {
+    title: "Agricultural Drone Services - North Alabama",
+    description:
+      "Reserve your spot for Fall 2026 drone spray and spread services. Request the free Spray + Spread overview PDF.",
+    url: "/",
+    siteName: "North Alabama Drone Applicators",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "North Alabama Drone Applicators social preview",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Agricultural Drone Services - North Alabama",
     description:
       "Reserve your spot for Fall 2026 drone spray and spread services. Request the free Spray + Spread overview PDF.",
