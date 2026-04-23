@@ -275,7 +275,14 @@ export function ExitIntentPopup() {
             </div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="relative space-y-4">
+          <form
+            onSubmit={handleSubmit}
+            autoComplete="off"
+            data-lpignore="true"
+            data-1p-ignore="true"
+            data-bwignore="true"
+            className="relative space-y-4"
+          >
             <div>
               <p id="exit-intent-title" className="font-heading text-2xl font-semibold text-[color:var(--color-primary)]">
                 Before you go, request your field-fit + cost guide.
@@ -290,6 +297,9 @@ export function ExitIntentPopup() {
               name="companyName"
               tabIndex={-1}
               autoComplete="off"
+              data-lpignore="true"
+              data-1p-ignore="true"
+              data-bwignore="true"
               className="hidden"
               value={companyName}
               onChange={(event) => setCompanyName(event.target.value)}
@@ -303,6 +313,10 @@ export function ExitIntentPopup() {
                 ref={firstInputRef}
                 id="exit-first-name"
                 name="firstName"
+                autoComplete="off"
+                data-lpignore="true"
+                data-1p-ignore="true"
+                data-bwignore="true"
                 required
                 value={firstName}
                 onChange={(event) => setFirstName(event.target.value)}
@@ -318,6 +332,10 @@ export function ExitIntentPopup() {
                 id="exit-email"
                 name="email"
                 type="email"
+                autoComplete="off"
+                data-lpignore="true"
+                data-1p-ignore="true"
+                data-bwignore="true"
                 required
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
@@ -332,6 +350,10 @@ export function ExitIntentPopup() {
               <select
                 id="exit-county"
                 name="county"
+                autoComplete="off"
+                data-lpignore="true"
+                data-1p-ignore="true"
+                data-bwignore="true"
                 required
                 value={county}
                 onChange={(event) => setCounty(event.target.value)}

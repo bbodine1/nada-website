@@ -136,6 +136,10 @@ export function LeadInterestForm() {
   return (
     <form
       onSubmit={step === 1 ? handleStepOneCapture : handleFinalSubmit}
+      autoComplete="off"
+      data-lpignore="true"
+      data-1p-ignore="true"
+      data-bwignore="true"
       className="relative overflow-hidden rounded-[var(--radius-xl)] border border-[color:var(--border)] bg-white p-6 shadow-[0_20px_60px_-20px_rgba(30,58,15,0.35)] sm:p-7"
     >
       <div
@@ -164,17 +168,20 @@ export function LeadInterestForm() {
         name="companyName"
         tabIndex={-1}
         autoComplete="off"
+        data-lpignore="true"
+        data-1p-ignore="true"
+        data-bwignore="true"
         className="hidden"
       />
 
       <div className="grid gap-4">
         <div>
           <label htmlFor="firstName" className="field-label">First Name</label>
-          <input id="firstName" name="firstName" required className="field" />
+          <input id="firstName" name="firstName" autoComplete="off" required className="field" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" />
         </div>
         <div>
           <label htmlFor="email" className="field-label">Email</label>
-          <input id="email" name="email" type="email" required className="field" />
+          <input id="email" name="email" type="email" autoComplete="off" required className="field" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" />
         </div>
       </div>
 
@@ -219,12 +226,12 @@ export function LeadInterestForm() {
           <div className="grid gap-4">
             <div>
               <label htmlFor="lastName" className="field-label">Last Name</label>
-              <input id="lastName" name="lastName" className="field" />
+              <input id="lastName" name="lastName" autoComplete="off" className="field" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" />
             </div>
           </div>
           <div>
             <label htmlFor="county" className="field-label">County</label>
-            <select id="county" name="county" className="field">
+            <select id="county" name="county" autoComplete="off" className="field" data-lpignore="true" data-1p-ignore="true" data-bwignore="true">
               <option value="">Select a county</option>
               {countyOptions.map((county) => (
                 <option key={county} value={county}>{county} County</option>
@@ -247,7 +254,7 @@ export function LeadInterestForm() {
           </fieldset>
           <div>
             <label htmlFor="acreageRange" className="field-label">Total Acreage</label>
-            <select id="acreageRange" name="acreageRange" className="field">
+            <select id="acreageRange" name="acreageRange" autoComplete="off" className="field" data-lpignore="true" data-1p-ignore="true" data-bwignore="true">
               <option value="">Select acreage</option>
               <option value="under_100">Under 100 ac</option>
               <option value="100_500">100 – 500 ac</option>
@@ -263,6 +270,10 @@ export function LeadInterestForm() {
               id="droneAcreage"
               name="droneAcreage"
               className="field"
+              autoComplete="off"
+              data-lpignore="true"
+              data-1p-ignore="true"
+              data-bwignore="true"
               placeholder="Example: 120"
             />
           </div>
@@ -289,7 +300,7 @@ export function LeadInterestForm() {
           </fieldset>
           <div>
             <label htmlFor="howHeard" className="field-label">How did you hear about us?</label>
-            <select id="howHeard" name="howHeard" className="field">
+            <select id="howHeard" name="howHeard" autoComplete="off" className="field" data-lpignore="true" data-1p-ignore="true" data-bwignore="true">
               <option value="">Select one</option>
               <option value="Facebook">Facebook</option>
               <option value="Word of Mouth">Word of Mouth</option>
@@ -304,6 +315,10 @@ export function LeadInterestForm() {
               id="notes"
               name="notes"
               rows={3}
+              autoComplete="off"
+              data-lpignore="true"
+              data-1p-ignore="true"
+              data-bwignore="true"
               placeholder="Anything else we should know about your operation?"
               className="field"
             />
