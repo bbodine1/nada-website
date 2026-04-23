@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og-image.svg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "North Alabama Drone Applicators social preview",
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     title: "Agricultural Drone Services - North Alabama",
     description:
       "Reserve your spot for Fall 2026 drone spray and spread services. Request the free Spray + Spread overview PDF.",
-    images: ["/og-image.svg"],
+    images: ["/og-image.png"],
   },
 };
 
