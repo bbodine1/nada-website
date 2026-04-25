@@ -4,6 +4,7 @@ import Link from 'next/link'
 const serviceAreas = ['Madison', 'Limestone', 'Morgan', 'Cullman', 'Lawrence']
 const services = [
 	{ label: 'Drone Spraying', href: '#services' },
+	{ label: 'Herbicide Application', href: '/herbicide-application' },
 	{ label: 'Drone Spreading', href: '#services' },
 	{ label: 'Fall 2026 Priority List', href: '#lead-form' },
 	{ label: 'Free Spray + Spread Guide', href: '#spray-spread-guide' },

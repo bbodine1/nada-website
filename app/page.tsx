@@ -193,6 +193,38 @@ const economicProofPoints = [
 export default function Home() {
 	return (
 		<div className="text-[color:var(--foreground)]">
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{
+					__html: JSON.stringify({
+						'@context': 'https://schema.org',
+						'@type': 'LocalBusiness',
+						name: 'North Alabama Drone Applicators',
+						url: 'https://www.northaldroneapplicators.com/',
+						description:
+							'Managed agricultural drone spraying and spreading for North Alabama farms, including herbicide, fungicide, foliar, seed, fertilizer, lime, and pasture applications.',
+						areaServed: ['Madison County, Alabama', 'Limestone County, Alabama', 'Morgan County, Alabama', 'Cullman County, Alabama', 'Lawrence County, Alabama'],
+						makesOffer: [
+							{
+								'@type': 'Offer',
+								itemOffered: {
+									'@type': 'Service',
+									name: 'Drone herbicide spraying',
+									serviceType: 'Agricultural herbicide application',
+								},
+							},
+							{
+								'@type': 'Offer',
+								itemOffered: {
+									'@type': 'Service',
+									name: 'Drone spreading',
+									serviceType: 'Agricultural dry product application',
+								},
+							},
+						],
+					}),
+				}}
+			/>
 			{/* Hero ---------------------------------------------------------- */}
 			<section className="relative flex min-h-[100vh] items-end overflow-hidden pt-20">
 				<HeroVideo />
@@ -243,6 +275,12 @@ export default function Home() {
 								>
 									Request Cost Ranges + Guide
 								</CtaButton>
+								<a
+									href="/herbicide-application"
+									className="btn btn-outline"
+								>
+									Compare Herbicide Options
+								</a>
 							</div>
 
 							<div className="mt-10 flex flex-wrap items-center gap-2 text-sm text-white/85">
