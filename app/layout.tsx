@@ -3,6 +3,7 @@ import { Geist_Mono, Inter, Playfair_Display } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
+import { Analytics } from "@vercel/analytics/next";
 import { CtaLeadPopup, CtaPopupProvider } from "@/components/cta-lead-popup";
 import { ExitIntentPopup } from "@/components/exit-intent-popup";
 import { InPageAnchorHandler } from "@/components/in-page-anchor-handler";
@@ -113,6 +114,7 @@ export default function RootLayout({
           data-widget-id="69e93c47a2b60a3c434db22a"
           strategy="afterInteractive"
         />
+        <Analytics />
       </body>
     </html>
   );
