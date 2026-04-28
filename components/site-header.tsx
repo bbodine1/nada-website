@@ -60,12 +60,12 @@ export function SiteHeader() {
           />
         </Link>
 
-        <nav className="hidden items-center gap-4 lg:flex xl:gap-6">
+        <nav className="hidden items-center gap-5 xl:flex">
           {navLinks.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`text-xs font-medium transition-colors xl:text-sm ${
+              className={`whitespace-nowrap text-sm font-medium transition-colors ${
                 scrolled
                   ? "text-[color:var(--fg-muted)] hover:text-[color:var(--color-primary)]"
                   : "text-white/80 hover:text-white"
@@ -81,17 +81,16 @@ export function SiteHeader() {
             href="/#lead-form"
             data-track="header-cta-field-fit"
             aria-label="Request my field-fit assessment"
-            className="btn btn-accent hidden px-3 py-2 text-xs lg:inline-flex xl:px-4 xl:text-sm"
+            className="btn btn-accent hidden px-4 py-2 text-sm xl:inline-flex"
           >
-            <span className="xl:hidden">Get Assessment</span>
-            <span className="hidden xl:inline">Get Field-Fit Assessment</span>
+            Get Field-Fit Assessment
           </Link>
           <button
             type="button"
             aria-expanded={open}
             aria-label="Toggle menu"
             onClick={() => setOpen((s) => !s)}
-            className={`inline-flex h-10 w-10 items-center justify-center rounded-lg md:hidden ${
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-lg xl:hidden ${
               scrolled
                 ? "bg-[color:var(--surface-muted)] text-[color:var(--color-primary)]"
                 : "bg-white/15 text-white ring-1 ring-white/30 backdrop-blur"
@@ -117,7 +116,7 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-[color:var(--border)] bg-[color:var(--background)] md:hidden">
+        <div className="border-t border-[color:var(--border)] bg-[color:var(--background)] xl:hidden">
           <div className="container-page flex flex-col gap-1 py-3">
             {navLinks.map((item) => (
               <Link
