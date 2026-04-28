@@ -32,7 +32,7 @@ export function SiteHeader() {
           : "bg-transparent"
       }`}
     >
-      <div className="container-page flex h-16 items-center justify-between lg:h-28">
+      <div className="container-page flex h-16 items-center justify-between lg:h-24 xl:h-28">
         <Link
           href="/#top"
           className="group relative flex items-center"
@@ -44,7 +44,7 @@ export function SiteHeader() {
             width={1900}
             height={649}
             priority
-            className={`h-auto w-[150px] transition-opacity duration-300 md:w-[200px] lg:w-[300px] ${
+            className={`h-auto w-[150px] transition-opacity duration-300 md:w-[190px] lg:w-[230px] xl:w-[300px] ${
               scrolled ? "opacity-0" : "opacity-100"
             }`}
           />
@@ -54,18 +54,18 @@ export function SiteHeader() {
             aria-hidden="true"
             width={1900}
             height={649}
-            className={`absolute left-0 top-1/2 h-auto w-[150px] -translate-y-1/2 transition-opacity duration-300 md:w-[200px] lg:w-[300px] ${
+            className={`absolute left-0 top-1/2 h-auto w-[150px] -translate-y-1/2 transition-opacity duration-300 md:w-[190px] lg:w-[230px] xl:w-[300px] ${
               scrolled ? "opacity-100" : "opacity-0"
             }`}
           />
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-5 xl:flex">
           {navLinks.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`text-sm font-medium transition-colors ${
+              className={`whitespace-nowrap text-sm font-medium transition-colors ${
                 scrolled
                   ? "text-[color:var(--fg-muted)] hover:text-[color:var(--color-primary)]"
                   : "text-white/80 hover:text-white"
@@ -81,7 +81,7 @@ export function SiteHeader() {
             href="/#lead-form"
             data-track="header-cta-field-fit"
             aria-label="Request my field-fit assessment"
-            className="btn btn-accent hidden px-4 py-2 text-sm md:inline-flex"
+            className="btn btn-accent hidden px-4 py-2 text-sm xl:inline-flex"
           >
             Get Field-Fit Assessment
           </Link>
@@ -90,7 +90,7 @@ export function SiteHeader() {
             aria-expanded={open}
             aria-label="Toggle menu"
             onClick={() => setOpen((s) => !s)}
-            className={`inline-flex h-10 w-10 items-center justify-center rounded-lg md:hidden ${
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-lg xl:hidden ${
               scrolled
                 ? "bg-[color:var(--surface-muted)] text-[color:var(--color-primary)]"
                 : "bg-white/15 text-white ring-1 ring-white/30 backdrop-blur"
@@ -116,7 +116,7 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-[color:var(--border)] bg-[color:var(--background)] md:hidden">
+        <div className="border-t border-[color:var(--border)] bg-[color:var(--background)] xl:hidden">
           <div className="container-page flex flex-col gap-1 py-3">
             {navLinks.map((item) => (
               <Link
