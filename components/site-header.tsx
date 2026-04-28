@@ -32,7 +32,7 @@ export function SiteHeader() {
           : "bg-transparent"
       }`}
     >
-      <div className="container-page flex h-16 items-center justify-between lg:h-28">
+      <div className="container-page flex h-16 items-center justify-between lg:h-24 xl:h-28">
         <Link
           href="/#top"
           className="group relative flex items-center"
@@ -44,7 +44,7 @@ export function SiteHeader() {
             width={1900}
             height={649}
             priority
-            className={`h-auto w-[150px] transition-opacity duration-300 md:w-[200px] lg:w-[300px] ${
+            className={`h-auto w-[150px] transition-opacity duration-300 md:w-[190px] lg:w-[230px] xl:w-[300px] ${
               scrolled ? "opacity-0" : "opacity-100"
             }`}
           />
@@ -54,18 +54,18 @@ export function SiteHeader() {
             aria-hidden="true"
             width={1900}
             height={649}
-            className={`absolute left-0 top-1/2 h-auto w-[150px] -translate-y-1/2 transition-opacity duration-300 md:w-[200px] lg:w-[300px] ${
+            className={`absolute left-0 top-1/2 h-auto w-[150px] -translate-y-1/2 transition-opacity duration-300 md:w-[190px] lg:w-[230px] xl:w-[300px] ${
               scrolled ? "opacity-100" : "opacity-0"
             }`}
           />
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-4 lg:flex xl:gap-6">
           {navLinks.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`text-sm font-medium transition-colors ${
+              className={`text-xs font-medium transition-colors xl:text-sm ${
                 scrolled
                   ? "text-[color:var(--fg-muted)] hover:text-[color:var(--color-primary)]"
                   : "text-white/80 hover:text-white"
@@ -81,9 +81,10 @@ export function SiteHeader() {
             href="/#lead-form"
             data-track="header-cta-field-fit"
             aria-label="Request my field-fit assessment"
-            className="btn btn-accent hidden px-4 py-2 text-sm md:inline-flex"
+            className="btn btn-accent hidden px-3 py-2 text-xs lg:inline-flex xl:px-4 xl:text-sm"
           >
-            Get Field-Fit Assessment
+            <span className="xl:hidden">Get Assessment</span>
+            <span className="hidden xl:inline">Get Field-Fit Assessment</span>
           </Link>
           <button
             type="button"
