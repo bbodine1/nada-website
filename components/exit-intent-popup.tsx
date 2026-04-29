@@ -278,6 +278,7 @@ export function ExitIntentPopup() {
           <form
             onSubmit={handleSubmit}
             autoComplete="off"
+            data-track-form="exit-intent-lead-form"
             data-lpignore="true"
             data-1p-ignore="true"
             data-bwignore="true"

@@ -6,6 +6,7 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { CtaLeadPopup, CtaPopupProvider } from "@/components/cta-lead-popup";
 import { ExitIntentPopup } from "@/components/exit-intent-popup";
+import { FormSubmitTracker } from "@/components/form-submit-tracker";
 import { InPageAnchorHandler } from "@/components/in-page-anchor-handler";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -100,6 +101,7 @@ export default function RootLayout({
       >
         <CtaPopupProvider>
           <InPageAnchorHandler />
+          <FormSubmitTracker />
           <span id="top" />
           <SiteHeader />
           <main className="flex-1">{children}</main>
