@@ -136,6 +136,7 @@ export function LeadInterestForm() {
   return (
     <form
       onSubmit={step === 1 ? handleStepOneCapture : handleFinalSubmit}
+      data-track-form={step === 1 ? "lead-interest-step-1" : "lead-interest-final"}
       autoComplete="off"
       data-lpignore="true"
       data-1p-ignore="true"
