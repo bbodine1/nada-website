@@ -1,14 +1,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-const serviceAreas = ['Madison', 'Limestone', 'Morgan', 'Cullman', 'Lawrence']
+import { localDroneServicePages } from '@/lib/service-areas'
+
 const services = [
-	{ label: 'Drone Spraying', href: '#services' },
+	{ label: 'Drone Spraying', href: '/#services' },
 	{ label: 'Crop Applicators', href: '/crop-applicators' },
 	{ label: 'Herbicide Application', href: '/herbicide-application' },
-	{ label: 'Drone Spreading', href: '#services' },
-	{ label: 'Fall 2026 Priority List', href: '#lead-form' },
-	{ label: 'Free Spray + Spread Guide', href: '#spray-spread-guide' },
+	{ label: 'Drone Spreading', href: '/#services' },
+	{ label: 'Fall 2026 Priority List', href: '/#lead-form' },
+	{ label: 'Free Spray + Spread Guide', href: '/#spray-spread-guide' },
 ]
 
 export function SiteFooter() {
@@ -61,9 +62,9 @@ export function SiteFooter() {
 				<div>
 					<p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#c9d3b7]">Service Area</p>
 					<ul className="mt-4 space-y-2 text-sm">
-						{serviceAreas.map(county => (
+						{localDroneServicePages.map(page => (
 							<li
-								key={county}
+								key={page.slug}
 								className="flex items-center gap-2 text-[#e8e6d8]/90"
 							>
 								<svg
@@ -76,7 +77,12 @@ export function SiteFooter() {
 										fill="currentColor"
 									/>
 								</svg>
-								{county} County, AL
+								<Link
+									href={`/local-services/${page.slug}`}
+									className="transition-colors hover:text-[color:var(--color-accent)]"
+								>
+									{page.county} County, AL
+								</Link>
 							</li>
 						))}
 					</ul>
