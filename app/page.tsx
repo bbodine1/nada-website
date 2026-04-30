@@ -1,10 +1,12 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { CtaButton } from '@/components/cta-lead-popup'
 import { HeroVideo } from '@/components/hero-video'
 import { FaqAccordion } from '@/components/faq-accordion'
 import { LeadInterestForm } from '@/components/lead-interest-form'
 import { RevealOnScroll } from '@/components/reveal-on-scroll'
+import { localDroneServicePages } from '@/lib/service-areas'
 
 const problemCards = [
 	{
@@ -585,6 +587,47 @@ export default function Home() {
 								))}
 							</ul>
 						</RevealOnScroll>
+					</div>
+				</div>
+			</section>
+
+			{/* Local Service Pages ------------------------------------------ */}
+			<section className="section-pad bg-[color:var(--surface-muted)]">
+				<div className="container-page">
+					<RevealOnScroll>
+						<span className="eyebrow eyebrow-dot">Local Service Pages</span>
+						<h2 className="mt-4 max-w-3xl font-heading text-3xl font-semibold text-[color:var(--color-primary)] sm:text-4xl">
+							County-specific drone spray and spread pages.
+						</h2>
+						<p className="mt-4 max-w-3xl text-lg text-[color:var(--fg-muted)]">
+							Start with the page for your county to see common crops, field conditions, use cases, and the right
+							next step for a practical field-fit review.
+						</p>
+					</RevealOnScroll>
+
+					<div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+						{localDroneServicePages.map(page => (
+							<RevealOnScroll
+								key={page.slug}
+								className="rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-white p-5 shadow-[var(--shadow-sm)]"
+							>
+								<p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--color-accent)]">
+									{page.county} County
+								</p>
+								<h3 className="mt-3 font-heading text-xl font-semibold text-[color:var(--color-primary)]">
+									{page.title}
+								</h3>
+								<p className="mt-3 text-sm leading-6 text-[color:var(--fg-muted)]">
+									{page.crops.slice(0, 3).join(', ')} and local field-fit review.
+								</p>
+								<Link
+									href={`/local-services/${page.slug}`}
+									className="mt-5 inline-flex text-sm font-semibold text-[color:var(--color-primary)] hover:text-[color:var(--color-accent)]"
+								>
+									View {page.county} page
+								</Link>
+							</RevealOnScroll>
+						))}
 					</div>
 				</div>
 			</section>
