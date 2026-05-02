@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
+/** Single source for mobile menu — keep order stable for familiarity. */
 const navLinks = [
   { href: "/#services", label: "Services" },
   { href: "/crop-applicators", label: "Crop Applicators" },
@@ -14,9 +15,24 @@ const navLinks = [
   { href: "/#faq", label: "FAQ" },
 ];
 
+const desktopPrimaryLinks = [
+  { href: "/crop-applicators", label: "Crop Applicators" },
+  { href: "/herbicide-application", label: "Herbicide" },
+  { href: "/news", label: "News" },
+];
+
+const desktopExploreLinks = [
+  { href: "/#services", label: "Services" },
+  { href: "/#explainer", label: "How It Works" },
+  { href: "/#testimonials", label: "Growers" },
+  { href: "/#faq", label: "FAQ" },
+];
+
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [exploreOpen, setExploreOpen] = useState(false);
+  const exploreRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -24,6 +40,42 @@ export function SiteHeader() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!exploreOpen) return;
+
+    const onPointerDown = (e: MouseEvent) => {
+      if (
+        exploreRef.current &&
+        !exploreRef.current.contains(e.target as Node)
+      ) {
+        setExploreOpen(false);
+      }
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setExploreOpen(false);
+    };
+
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [exploreOpen]);
+
+  const bareNavLinkClass = scrolled
+    ? "text-[color:var(--fg-muted)] hover:text-[color:var(--color-primary)]"
+    : "text-white/80 hover:text-white";
+
+  const dropdownPanelClass = scrolled
+    ? "border border-[color:var(--border)] bg-[color:var(--background)] shadow-lg ring-1 ring-black/5"
+    : "border border-white/25 bg-black/55 shadow-lg backdrop-blur-md ring-1 ring-white/10";
+
+  const dropdownItemClass = scrolled
+    ? "text-[color:var(--fg-muted)] hover:bg-[color:var(--surface-muted)] hover:text-[color:var(--color-primary)]"
+    : "text-white/90 hover:bg-white/10 hover:text-white";
 
   return (
     <header
@@ -62,20 +114,68 @@ export function SiteHeader() {
           />
         </Link>
 
-        <nav className="hidden items-center gap-5 xl:flex">
-          {navLinks.map((item) => (
+        <nav
+          aria-label="Primary"
+          className="hidden items-center gap-5 xl:flex"
+        >
+          {desktopPrimaryLinks.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`whitespace-nowrap text-sm font-medium transition-colors ${
-                scrolled
-                  ? "text-[color:var(--fg-muted)] hover:text-[color:var(--color-primary)]"
-                  : "text-white/80 hover:text-white"
-              }`}
+              className={`whitespace-nowrap text-sm font-medium transition-colors ${bareNavLinkClass}`}
             >
               {item.label}
             </Link>
           ))}
+
+          <div ref={exploreRef} className="relative">
+            <button
+              type="button"
+              id="desktop-nav-explore-trigger"
+              aria-expanded={exploreOpen}
+              aria-controls="desktop-nav-explore-panel"
+              aria-haspopup="true"
+              onClick={() => setExploreOpen((v) => !v)}
+              className={`inline-flex items-center gap-1 whitespace-nowrap text-sm font-medium transition-colors ${bareNavLinkClass}`}
+            >
+              Explore
+              <svg
+                viewBox="0 0 20 20"
+                aria-hidden="true"
+                className={`h-4 w-4 shrink-0 transition-transform duration-200 ${exploreOpen ? "rotate-180" : ""}`}
+              >
+                <path
+                  fill="currentColor"
+                  fillRule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.94a.75.75 0 111.08 1.04l-4.24 4.5a.75.75 0 01-1.08 0l-4.24-4.5a.75.75 0 01.02-1.06z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+
+            {exploreOpen ? (
+              <section
+                id="desktop-nav-explore-panel"
+                aria-labelledby="desktop-nav-explore-trigger"
+                className="absolute right-0 top-full z-50 min-w-48 pt-2"
+              >
+                <div
+                  className={`overflow-hidden rounded-lg py-1 ${dropdownPanelClass}`}
+                >
+                  {desktopExploreLinks.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setExploreOpen(false)}
+                      className={`block whitespace-nowrap px-4 py-2 text-sm font-medium transition-colors ${dropdownItemClass}`}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+          </div>
         </nav>
 
         <div className="flex items-center gap-2">
