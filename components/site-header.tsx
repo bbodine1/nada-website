@@ -45,6 +45,7 @@ export function SiteHeader() {
             width={1900}
             height={649}
             priority
+            loading="eager"
             className={`h-auto w-[150px] transition-opacity duration-300 md:w-[190px] lg:w-[230px] xl:w-[300px] ${
               scrolled ? "opacity-0" : "opacity-100"
             }`}
