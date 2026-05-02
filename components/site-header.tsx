@@ -8,6 +8,7 @@ const navLinks = [
   { href: "/#services", label: "Services" },
   { href: "/crop-applicators", label: "Crop Applicators" },
   { href: "/herbicide-application", label: "Herbicide" },
+  { href: "/news", label: "News" },
   { href: "/#explainer", label: "How It Works" },
   { href: "/#testimonials", label: "Growers" },
   { href: "/#faq", label: "FAQ" },
