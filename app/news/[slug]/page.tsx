@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -27,6 +28,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {};
   }
 
+  const socialImage = article.seoimage || article.heroimage || "/og-image.png";
+
   return {
     title: `${article.title} | North Alabama Drone Applicators`,
     description: article.description,
@@ -45,9 +48,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       tags: [article.category],
       images: [
         {
-          url: "/og-image.png",
-          secureUrl: "/og-image.png",
-          type: "image/png",
+          url: socialImage,
+          secureUrl: socialImage,
           width: 1200,
           height: 630,
           alt: article.title,
@@ -58,7 +60,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: "summary_large_image",
       title: article.title,
       description: article.description,
-      images: ["/og-image.png"],
+      images: [socialImage],
     },
   };
 }
@@ -91,25 +93,56 @@ export default async function ArticlePage({ params }: PageProps) {
       url: "https://www.northaldroneapplicators.com/",
     },
     mainEntityOfPage: `https://www.northaldroneapplicators.com/news/${article.slug}`,
+    ...(article.seoimage || article.heroimage
+      ? { image: article.seoimage || article.heroimage }
+      : {}),
   };
+
+  const articleJsonLd = JSON.stringify(jsonLd).replace(/</g, "\\u003c");
 
   return (
     <div className="text-[color:var(--foreground)]">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
+        suppressHydrationWarning
+      >
+        {articleJsonLd}
+      </script>
 
-      <section className="relative overflow-hidden bg-[color:var(--color-primary)] pt-28 text-white lg:pt-36">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-30"
-          style={{
-            backgroundImage:
-              "radial-gradient(760px 320px at 78% 18%, rgba(212,160,23,0.28), transparent 55%), radial-gradient(900px 380px at 10% 88%, rgba(255,255,255,0.12), transparent 60%)",
-          }}
-        />
-        <div className="container-page relative pb-16 pt-10 lg:pb-24">
+      <section
+        className={`relative overflow-hidden pt-28 text-white lg:pt-36 ${
+          article.heroimage
+            ? "flex min-h-[min(62vh,640px)] flex-col bg-[color:var(--color-primary)]"
+            : "bg-[color:var(--color-primary)]"
+        }`}
+      >
+        {article.heroimage ? (
+          <>
+            <Image
+              src={article.heroimage}
+              alt={article.title}
+              fill
+              className="z-0 object-cover"
+              sizes="100vw"
+              priority
+              loading="eager"
+            />
+            <div
+              className="hero-overlay absolute inset-0 z-[1]"
+              aria-hidden
+            />
+          </>
+        ) : (
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-30"
+            style={{
+              backgroundImage:
+                "radial-gradient(760px 320px at 78% 18%, rgba(212,160,23,0.28), transparent 55%), radial-gradient(900px 380px at 10% 88%, rgba(255,255,255,0.12), transparent 60%)",
+            }}
+          />
+        )}
+        <div className="container-page relative z-10 pb-16 pt-10 lg:pb-24">
           <RevealOnScroll>
             <nav
               aria-label="Breadcrumb"

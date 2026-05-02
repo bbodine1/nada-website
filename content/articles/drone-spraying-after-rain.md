@@ -1,10 +1,11 @@
 ---
-title: "Drone Spraying After Rain in North Alabama"
-description: "How growers can think through field access, labels, and timing when rain keeps ground rigs parked."
-date: "2026-04-12"
-author: "North Alabama Drone Applicators"
-category: "Field Timing"
-excerpt: "Wet Tennessee Valley soils can close a spray window fast. This article explains when a drone pass may help and what still has to be checked first."
+title: 'Drone Spraying After Rain in North Alabama'
+description: 'How growers can think through field access, labels, and timing when rain keeps ground rigs parked.'
+date: '2026-04-12'
+author: 'North Alabama Drone Applicators'
+category: 'Field Timing'
+excerpt: 'Wet Tennessee Valley soils can close a spray window fast. This article explains when a drone pass may help and what still has to be checked first.'
+heroimage: '/images/news/drone-spraying-after-rain.jpg'
 ---
 
 Rain is part of farming in the Tennessee Valley. The challenge is what happens after the shower moves out: soft headlands, wet holes, and crop stages that keep moving even when a ground rig cannot.

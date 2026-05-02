@@ -85,6 +85,67 @@ create index if not exists interest_leads_submitted_at_idx
   - a new row exists in `interest_leads`
   - a contact appears in GoHighLevel
 
+## Writing a news article
+
+News and educational articles live in `content/articles` as Markdown files with frontmatter metadata.
+
+### 1) Create the file
+
+- Add a new file in `content/articles`.
+- Use a lowercase, hyphenated slug for the filename (example: `spring-drone-spreading-checklist.md`).
+
+### 2) Add metadata (frontmatter)
+
+At the top of the file, include this frontmatter block:
+
+```md
+---
+title: "Your Article Title"
+description: "One-sentence description used for SEO and previews."
+date: "YYYY-MM-DD"
+author: "North Alabama Drone Applicators"
+category: "Drone Spreading"
+excerpt: "Short summary used in article cards and listings."
+heroimage: "/images/your-hero-image.jpg"
+seoimage: "/images/your-seo-image.jpg"
+---
+```
+
+Metadata field details:
+
+- `title`: Headline shown on the article page and in previews.
+- `description`: SEO/meta description; keep it clear and specific (about 140-160 characters is a good target).
+- `date`: Publish date in `YYYY-MM-DD` format.
+- `author`: Display name for the article author (use team/brand name when no individual byline is needed).
+- `category`: Topic label used for grouping/filtering (for example `Drone Spreading` or `Drone Spraying`).
+- `excerpt`: Short teaser shown in article lists/cards; aim for 1-2 sentences.
+- `heroimage` (optional): Full-size hero image shown at the top of the article page. This is also used as the default social/OG image.
+- `seoimage` (optional): Override image used for social sharing metadata (`og:image` and Twitter cards). If omitted, the app falls back to `heroimage`, then `/og-image.png`.
+- Image paths map to `public/` on disk (`/images/file.jpg` → `public/images/file.jpg`).
+
+### 3) Write the article body
+
+- Start body content after the closing `---`.
+- Use Markdown headings (`##`), short paragraphs, and bullet lists for readability.
+- Keep language practical and region-specific when relevant (North Alabama growers, field timing, crop context, etc.).
+
+### 4) Example article starter
+
+```md
+---
+title: "How to Plan a Drone Spreading Pass Before Rain"
+description: "A practical checklist for scheduling drone cover crop spreading when field access is limited."
+date: "2026-05-02"
+author: "North Alabama Drone Applicators"
+category: "Drone Spreading"
+excerpt: "Use this checklist to decide when a pre-rain drone spreading window is a good fit for your acres."
+heroimage: "/images/pre-rain-spreading-hero.jpg"
+seoimage: "/images/pre-rain-spreading-og.jpg"
+---
+
+Opening paragraph goes here.
+```
+
 ## MCP setup check (Supabase + GoHighLevel)
 
 This project includes a local `.mcp.json` with both MCP servers configured:

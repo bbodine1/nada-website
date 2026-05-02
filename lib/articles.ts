@@ -47,6 +47,8 @@ export type Article = {
   author: string;
   category: string;
   excerpt: string;
+  heroimage?: string;
+  seoimage?: string;
   readingTime: string;
   content: string;
   blocks: MarkdownBlock[];
@@ -109,9 +111,9 @@ function parseInline(text: string): MarkdownInline[] {
   const tokens: MarkdownInline[] = [];
   const pattern = /(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g;
   let cursor = 0;
-  let match: RegExpExecArray | null;
+  let match = pattern.exec(text);
 
-  while ((match = pattern.exec(text)) !== null) {
+  while (match !== null) {
     if (match.index > cursor) {
       tokens.push({ type: "text", value: text.slice(cursor, match.index) });
     }
@@ -129,6 +131,7 @@ function parseInline(text: string): MarkdownInline[] {
     }
 
     cursor = match.index + value.length;
+    match = pattern.exec(text);
   }
 
   if (cursor < text.length) {
