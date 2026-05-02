@@ -33,6 +33,8 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
   const exploreRef = useRef<HTMLDivElement>(null);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuPanelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -64,6 +66,31 @@ export function SiteHeader() {
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [exploreOpen]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const isInsideMobileMenu = (target: Node) =>
+      !!(
+        mobileMenuButtonRef.current?.contains(target) ||
+        mobileMenuPanelRef.current?.contains(target)
+      );
+
+    const onPointerDown = (e: MouseEvent) => {
+      if (!isInsideMobileMenu(e.target as Node)) setOpen(false);
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
 
   const bareNavLinkClass = scrolled
     ? "text-[color:var(--fg-muted)] hover:text-[color:var(--color-primary)]"
@@ -188,8 +215,10 @@ export function SiteHeader() {
             Get Field-Fit Assessment
           </Link>
           <button
+            ref={mobileMenuButtonRef}
             type="button"
             aria-expanded={open}
+            aria-controls="mobile-nav-panel"
             aria-label="Toggle menu"
             onClick={() => setOpen((s) => !s)}
             className={`inline-flex h-10 w-10 items-center justify-center rounded-lg xl:hidden ${
@@ -217,9 +246,21 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {open && (
-        <div className="border-t border-[color:var(--border)] bg-[color:var(--background)] xl:hidden">
-          <div className="container-page flex flex-col gap-1 py-3">
+      <div
+        ref={mobileMenuPanelRef}
+        id="mobile-nav-panel"
+        aria-hidden={!open}
+        className={`xl:hidden grid overflow-hidden transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none motion-reduce:duration-0 ${
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        }`}
+      >
+        <div className="min-h-0 overflow-hidden border-t border-[color:var(--border)] bg-[color:var(--background)]">
+          <div
+            className={`container-page flex flex-col gap-1 py-3 transition-opacity duration-300 ease-out motion-reduce:transition-none motion-reduce:duration-0 ${
+              open ? "opacity-100 delay-75 motion-reduce:delay-0" : "opacity-0"
+            }`}
+            inert={open ? undefined : true}
+          >
             {navLinks.map((item) => (
               <Link
                 key={item.href}
@@ -240,7 +281,7 @@ export function SiteHeader() {
             </Link>
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }
