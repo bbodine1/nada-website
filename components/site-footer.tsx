@@ -31,6 +31,7 @@ export function SiteFooter() {
 						alt="North Alabama Drone Applicators"
 						width={1900}
 						height={649}
+						loading="eager"
 						className="h-auto w-[180px] md:w-[220px] lg:w-[280px] lg:-translate-x-[10px] lg:-translate-y-[20px]"
 					/>
 					<p className="mt-5 max-w-md text-sm leading-relaxed text-[#d4d6c3]">

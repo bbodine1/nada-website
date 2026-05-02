@@ -6,6 +6,7 @@ import { HeroVideo } from '@/components/hero-video'
 import { FaqAccordion } from '@/components/faq-accordion'
 import { LeadInterestForm } from '@/components/lead-interest-form'
 import { RevealOnScroll } from '@/components/reveal-on-scroll'
+import { YoutubeClickPlay } from '@/components/youtube-click-play'
 import { localDroneServicePages } from '@/lib/service-areas'
 
 const problemCards = [
@@ -731,13 +732,9 @@ export default function Home() {
 
 					<RevealOnScroll className="mt-10 overflow-hidden rounded-[var(--radius-xl)] border border-[color:var(--border)] bg-white p-2 shadow-[var(--shadow-lg)]">
 						<div className="relative aspect-video overflow-hidden rounded-[calc(var(--radius-xl)_-_0.5rem)]">
-							<iframe
-								className="h-full w-full"
-								src="https://youtube.com/embed/PbglS6ByHVk"
+							<YoutubeClickPlay
+								videoId="PbglS6ByHVk"
 								title="North Alabama drone field biostem application"
-								loading="lazy"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-								allowFullScreen
 							/>
 						</div>
 					</RevealOnScroll>
