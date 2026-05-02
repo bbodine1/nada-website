@@ -1,10 +1,11 @@
 ---
-title: "When Drone Spreading Fits Cover Crop Seeding"
-description: "How North Alabama growers can decide whether drone spreading is a practical option for cover crop seed."
-date: "2026-02-20"
-author: "North Alabama Drone Applicators"
-category: "Drone Spreading"
-excerpt: "Cover crop timing is often a race between harvest, weather, and soil conditions. Drone spreading can help when trafficability is the limiting factor."
+title: 'When Drone Spreading Fits Cover Crop Seeding'
+description: 'How North Alabama growers can decide whether drone spreading is a practical option for cover crop seed.'
+date: '2026-02-20'
+author: 'North Alabama Drone Applicators'
+category: 'Drone Spreading'
+excerpt: 'Cover crop timing is often a race between harvest, weather, and soil conditions. Drone spreading can help when trafficability is the limiting factor.'
+heroimage: '/images/news/agricultural_drone_fertilizer_broadcast.jpg'
 ---
 
 Cover crop seed needs a real establishment window. In North Alabama, that window can tighten quickly when harvest runs long or early rain makes fields soft.
