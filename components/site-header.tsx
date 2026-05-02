@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 /** Single source for mobile menu — keep order stable for familiarity. */
@@ -69,6 +70,11 @@ function HeaderLogo({
 }
 
 export function SiteHeader() {
+  const pathname = usePathname();
+  /** `/` renders a fixed bottom CTA below `md`; avoid duplicating it in the header. */
+  const hideHeaderCtaBelowMdOnHome =
+    pathname === "/" || pathname === "";
+
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
@@ -157,68 +163,100 @@ export function SiteHeader() {
       <div className="container-page">
         {/* Narrow phones (<600px): stacked logo row + full-width CTA */}
         <div className="flex flex-col gap-3 py-3 min-[600px]:hidden xl:hidden">
-          <div className="flex items-center justify-between gap-4">
-            <HeaderLogo
-              scrolled={scrolled}
-              linkClassName="group relative flex min-w-0 flex-1 items-center"
-              logoWidthClassName="w-full max-w-[240px]"
-            />
-            <button
-              ref={mobileMenuButtonNarrowRef}
-              type="button"
-              aria-expanded={open}
-              aria-controls="mobile-nav-panel"
-              aria-label="Toggle menu"
-              onClick={() => setOpen((s) => !s)}
-              className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
-                scrolled
-                  ? "bg-[color:var(--surface-muted)] text-[color:var(--color-primary)]"
-                  : "bg-white/15 text-white ring-1 ring-white/30 backdrop-blur"
-              }`}
-            >
-              <svg
-                viewBox="0 0 24 24"
-                className="h-5 w-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                aria-hidden="true"
-                focusable="false"
+          {/* Logo centered; spacer matches menu width so it stays visually balanced */}
+          <div className="grid grid-cols-[2.75rem_minmax(0,1fr)_2.75rem] items-center gap-2">
+            <span aria-hidden className="block w-11 shrink-0" />
+            <div className="flex min-w-0 justify-center">
+              <HeaderLogo
+                scrolled={scrolled}
+                linkClassName="group relative flex justify-center"
+                logoWidthClassName="w-full max-w-[220px]"
+              />
+            </div>
+            <div className="flex justify-end">
+              <button
+                ref={mobileMenuButtonNarrowRef}
+                type="button"
+                aria-expanded={open}
+                aria-controls="mobile-nav-panel"
+                aria-label="Toggle menu"
+                onClick={() => setOpen((s) => !s)}
+                className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
+                  scrolled
+                    ? "bg-[color:var(--surface-muted)] text-[color:var(--color-primary)]"
+                    : "bg-white/15 text-white ring-1 ring-white/30 backdrop-blur"
+                }`}
               >
-                {open ? (
-                  <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
-                ) : (
-                  <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
-                )}
-              </svg>
-            </button>
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  {open ? (
+                    <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+                  ) : (
+                    <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
+                  )}
+                </svg>
+              </button>
+            </div>
           </div>
-          <Link
-            href="/#lead-form"
-            data-track="header-cta-field-fit"
-            aria-label="Request my field-fit assessment"
-            className="btn btn-accent flex min-h-11 w-full items-center justify-center px-4 py-3 text-center text-sm font-semibold shadow-[var(--shadow-sm)]"
-          >
-            Get Field-Fit Assessment
-          </Link>
-        </div>
-
-        {/* 600px–xl: single-row top bar + menu */}
-        <div className="hidden min-[600px]:flex xl:hidden h-16 items-center justify-between gap-3 lg:h-24">
-          <HeaderLogo
-            scrolled={scrolled}
-            linkClassName="group relative flex min-w-0 shrink items-center"
-            logoWidthClassName="w-[150px] md:w-[190px] lg:w-[220px]"
-          />
-          <div className="flex shrink-0 items-center gap-2">
+          {hideHeaderCtaBelowMdOnHome ? (
+            <div className="hidden w-full md:block">
+              <Link
+                href="/#lead-form"
+                data-track="header-cta-field-fit"
+                aria-label="Request my field-fit assessment"
+                className="btn btn-accent flex min-h-11 w-full items-center justify-center px-4 py-3 text-center text-sm font-semibold shadow-[var(--shadow-sm)]"
+              >
+                Get Field-Fit Assessment
+              </Link>
+            </div>
+          ) : (
             <Link
               href="/#lead-form"
               data-track="header-cta-field-fit"
               aria-label="Request my field-fit assessment"
-              className="btn btn-accent px-3 py-2 text-xs md:px-4 md:text-sm"
+              className="btn btn-accent flex min-h-11 w-full items-center justify-center px-4 py-3 text-center text-sm font-semibold shadow-[var(--shadow-sm)]"
             >
               Get Field-Fit Assessment
             </Link>
+          )}
+        </div>
+
+        {/* 600px–xl: single-row top bar + menu (min-h fits logo aspect ratio; h-16 was too short) */}
+        <div className="hidden min-[600px]:flex xl:hidden min-h-[5.75rem] items-center justify-between gap-3 md:min-h-[6rem] lg:min-h-0 lg:h-24">
+          <HeaderLogo
+            scrolled={scrolled}
+            linkClassName="group relative flex min-w-0 shrink items-center"
+            logoWidthClassName="w-[200px] md:w-[220px] lg:w-[240px]"
+          />
+          <div className="flex shrink-0 items-center gap-2">
+            {hideHeaderCtaBelowMdOnHome ? (
+              <div className="hidden md:contents">
+                <Link
+                  href="/#lead-form"
+                  data-track="header-cta-field-fit"
+                  aria-label="Request my field-fit assessment"
+                  className="btn btn-accent px-3 py-2 text-xs md:px-4 md:text-sm"
+                >
+                  Get Field-Fit Assessment
+                </Link>
+              </div>
+            ) : (
+              <Link
+                href="/#lead-form"
+                data-track="header-cta-field-fit"
+                aria-label="Request my field-fit assessment"
+                className="btn btn-accent px-3 py-2 text-xs md:px-4 md:text-sm"
+              >
+                Get Field-Fit Assessment
+              </Link>
+            )}
             <button
               ref={mobileMenuButtonWideRef}
               type="button"
