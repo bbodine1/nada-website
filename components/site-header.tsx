@@ -28,12 +28,53 @@ const desktopExploreLinks = [
   { href: "/#faq", label: "FAQ" },
 ];
 
+function HeaderLogo({
+  scrolled,
+  linkClassName,
+  logoWidthClassName,
+}: {
+  scrolled: boolean;
+  linkClassName: string;
+  logoWidthClassName: string;
+}) {
+  return (
+    <Link
+      href="/#top"
+      className={linkClassName}
+      aria-label="North Alabama Drone Applicators"
+    >
+      <Image
+        src="/logos/nada-logo-hz-dark.png"
+        alt="North Alabama Drone Applicators"
+        width={1900}
+        height={649}
+        priority
+        loading="eager"
+        className={`h-auto transition-opacity duration-300 ${logoWidthClassName} ${
+          scrolled ? "opacity-0" : "opacity-100"
+        }`}
+      />
+      <Image
+        src="/logos/nada-logo-hz-light.png"
+        alt=""
+        aria-hidden="true"
+        width={1900}
+        height={649}
+        className={`absolute left-0 top-1/2 h-auto -translate-y-1/2 transition-opacity duration-300 ${logoWidthClassName} ${
+          scrolled ? "opacity-100" : "opacity-0"
+        }`}
+      />
+    </Link>
+  );
+}
+
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
   const exploreRef = useRef<HTMLDivElement>(null);
-  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuButtonNarrowRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuButtonWideRef = useRef<HTMLButtonElement>(null);
   const mobileMenuPanelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -72,7 +113,8 @@ export function SiteHeader() {
 
     const isInsideMobileMenu = (target: Node) =>
       !!(
-        mobileMenuButtonRef.current?.contains(target) ||
+        mobileMenuButtonNarrowRef.current?.contains(target) ||
+        mobileMenuButtonWideRef.current?.contains(target) ||
         mobileMenuPanelRef.current?.contains(target)
       );
 
@@ -112,137 +154,183 @@ export function SiteHeader() {
           : "bg-transparent"
       }`}
     >
-      <div className="container-page flex h-16 items-center justify-between lg:h-24 xl:h-28">
-        <Link
-          href="/#top"
-          className="group relative flex items-center"
-          aria-label="North Alabama Drone Applicators"
-        >
-          <Image
-            src="/logos/nada-logo-hz-dark.png"
-            alt="North Alabama Drone Applicators"
-            width={1900}
-            height={649}
-            priority
-            loading="eager"
-            className={`h-auto w-[150px] transition-opacity duration-300 md:w-[190px] lg:w-[230px] xl:w-[300px] ${
-              scrolled ? "opacity-0" : "opacity-100"
-            }`}
-          />
-          <Image
-            src="/logos/nada-logo-hz-light.png"
-            alt=""
-            aria-hidden="true"
-            width={1900}
-            height={649}
-            className={`absolute left-0 top-1/2 h-auto w-[150px] -translate-y-1/2 transition-opacity duration-300 md:w-[190px] lg:w-[230px] xl:w-[300px] ${
-              scrolled ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        </Link>
-
-        <nav
-          aria-label="Primary"
-          className="hidden items-center gap-5 xl:flex"
-        >
-          {desktopPrimaryLinks.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`whitespace-nowrap text-sm font-medium transition-colors ${bareNavLinkClass}`}
-            >
-              {item.label}
-            </Link>
-          ))}
-
-          <div ref={exploreRef} className="relative">
+      <div className="container-page">
+        {/* Narrow phones (<600px): stacked logo row + full-width CTA */}
+        <div className="flex flex-col gap-3 py-3 min-[600px]:hidden xl:hidden">
+          <div className="flex items-center justify-between gap-4">
+            <HeaderLogo
+              scrolled={scrolled}
+              linkClassName="group relative flex min-w-0 flex-1 items-center"
+              logoWidthClassName="w-full max-w-[240px]"
+            />
             <button
+              ref={mobileMenuButtonNarrowRef}
               type="button"
-              id="desktop-nav-explore-trigger"
-              aria-expanded={exploreOpen}
-              aria-controls="desktop-nav-explore-panel"
-              aria-haspopup="true"
-              onClick={() => setExploreOpen((v) => !v)}
-              className={`inline-flex items-center gap-1 whitespace-nowrap text-sm font-medium transition-colors ${bareNavLinkClass}`}
+              aria-expanded={open}
+              aria-controls="mobile-nav-panel"
+              aria-label="Toggle menu"
+              onClick={() => setOpen((s) => !s)}
+              className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
+                scrolled
+                  ? "bg-[color:var(--surface-muted)] text-[color:var(--color-primary)]"
+                  : "bg-white/15 text-white ring-1 ring-white/30 backdrop-blur"
+              }`}
             >
-              Explore
               <svg
-                viewBox="0 0 20 20"
+                viewBox="0 0 24 24"
+                className="h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
                 aria-hidden="true"
-                className={`h-4 w-4 shrink-0 transition-transform duration-200 ${exploreOpen ? "rotate-180" : ""}`}
+                focusable="false"
               >
-                <path
-                  fill="currentColor"
-                  fillRule="evenodd"
-                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.94a.75.75 0 111.08 1.04l-4.24 4.5a.75.75 0 01-1.08 0l-4.24-4.5a.75.75 0 01.02-1.06z"
-                  clipRule="evenodd"
-                />
+                {open ? (
+                  <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+                ) : (
+                  <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
+                )}
               </svg>
             </button>
-
-            {exploreOpen ? (
-              <section
-                id="desktop-nav-explore-panel"
-                aria-labelledby="desktop-nav-explore-trigger"
-                className="absolute right-0 top-full z-50 min-w-48 pt-2"
-              >
-                <div
-                  className={`overflow-hidden rounded-lg py-1 ${dropdownPanelClass}`}
-                >
-                  {desktopExploreLinks.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setExploreOpen(false)}
-                      className={`block whitespace-nowrap px-4 py-2 text-sm font-medium transition-colors ${dropdownItemClass}`}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              </section>
-            ) : null}
           </div>
-        </nav>
-
-        <div className="flex items-center gap-2">
           <Link
             href="/#lead-form"
             data-track="header-cta-field-fit"
             aria-label="Request my field-fit assessment"
-            className="btn btn-accent hidden px-4 py-2 text-sm xl:inline-flex"
+            className="btn btn-accent flex min-h-11 w-full items-center justify-center px-4 py-3 text-center text-sm font-semibold shadow-[var(--shadow-sm)]"
           >
             Get Field-Fit Assessment
           </Link>
-          <button
-            ref={mobileMenuButtonRef}
-            type="button"
-            aria-expanded={open}
-            aria-controls="mobile-nav-panel"
-            aria-label="Toggle menu"
-            onClick={() => setOpen((s) => !s)}
-            className={`inline-flex h-10 w-10 items-center justify-center rounded-lg xl:hidden ${
-              scrolled
-                ? "bg-[color:var(--surface-muted)] text-[color:var(--color-primary)]"
-                : "bg-white/15 text-white ring-1 ring-white/30 backdrop-blur"
-            }`}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              aria-hidden="true"
-              focusable="false"
+        </div>
+
+        {/* 600px–xl: single-row top bar + menu */}
+        <div className="hidden min-[600px]:flex xl:hidden h-16 items-center justify-between gap-3 lg:h-24">
+          <HeaderLogo
+            scrolled={scrolled}
+            linkClassName="group relative flex min-w-0 shrink items-center"
+            logoWidthClassName="w-[150px] md:w-[190px] lg:w-[220px]"
+          />
+          <div className="flex shrink-0 items-center gap-2">
+            <Link
+              href="/#lead-form"
+              data-track="header-cta-field-fit"
+              aria-label="Request my field-fit assessment"
+              className="btn btn-accent px-3 py-2 text-xs md:px-4 md:text-sm"
             >
-              {open ? (
-                <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
-              ) : (
-                <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
-              )}
-            </svg>
-          </button>
+              Get Field-Fit Assessment
+            </Link>
+            <button
+              ref={mobileMenuButtonWideRef}
+              type="button"
+              aria-expanded={open}
+              aria-controls="mobile-nav-panel"
+              aria-label="Toggle menu"
+              onClick={() => setOpen((s) => !s)}
+              className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
+                scrolled
+                  ? "bg-[color:var(--surface-muted)] text-[color:var(--color-primary)]"
+                  : "bg-white/15 text-white ring-1 ring-white/30 backdrop-blur"
+              }`}
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                aria-hidden="true"
+                focusable="false"
+              >
+                {open ? (
+                  <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+                ) : (
+                  <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
+                )}
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Desktop: single row */}
+        <div className="hidden h-28 items-center justify-between gap-6 xl:flex">
+          <HeaderLogo
+            scrolled={scrolled}
+            linkClassName="group relative flex shrink-0 items-center"
+            logoWidthClassName="w-[230px] xl:w-[300px]"
+          />
+
+          <nav
+            aria-label="Primary"
+            className="flex min-w-0 flex-1 items-center justify-center gap-5"
+          >
+            {desktopPrimaryLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`whitespace-nowrap text-sm font-medium transition-colors ${bareNavLinkClass}`}
+              >
+                {item.label}
+              </Link>
+            ))}
+
+            <div ref={exploreRef} className="relative">
+              <button
+                type="button"
+                id="desktop-nav-explore-trigger"
+                aria-expanded={exploreOpen}
+                aria-controls="desktop-nav-explore-panel"
+                aria-haspopup="true"
+                onClick={() => setExploreOpen((v) => !v)}
+                className={`inline-flex items-center gap-1 whitespace-nowrap text-sm font-medium transition-colors ${bareNavLinkClass}`}
+              >
+                Explore
+                <svg
+                  viewBox="0 0 20 20"
+                  aria-hidden="true"
+                  className={`h-4 w-4 shrink-0 transition-transform duration-200 ${exploreOpen ? "rotate-180" : ""}`}
+                >
+                  <path
+                    fill="currentColor"
+                    fillRule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.94a.75.75 0 111.08 1.04l-4.24 4.5a.75.75 0 01-1.08 0l-4.24-4.5a.75.75 0 01.02-1.06z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+
+              {exploreOpen ? (
+                <section
+                  id="desktop-nav-explore-panel"
+                  aria-labelledby="desktop-nav-explore-trigger"
+                  className="absolute right-0 top-full z-50 min-w-48 pt-2"
+                >
+                  <div
+                    className={`overflow-hidden rounded-lg py-1 ${dropdownPanelClass}`}
+                  >
+                    {desktopExploreLinks.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setExploreOpen(false)}
+                        className={`block whitespace-nowrap px-4 py-2 text-sm font-medium transition-colors ${dropdownItemClass}`}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+            </div>
+          </nav>
+
+          <Link
+            href="/#lead-form"
+            data-track="header-cta-field-fit"
+            aria-label="Request my field-fit assessment"
+            className="btn btn-accent shrink-0 px-4 py-2 text-sm"
+          >
+            Get Field-Fit Assessment
+          </Link>
         </div>
       </div>
 

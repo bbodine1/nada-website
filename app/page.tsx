@@ -193,43 +193,53 @@ const economicProofPoints = [
 	},
 ] as const
 
+const homeLocalBusinessJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'LocalBusiness',
+	name: 'North Alabama Drone Applicators',
+	url: 'https://www.northaldroneapplicators.com/',
+	description:
+		'Managed agricultural drone spraying and spreading for North Alabama farms, including herbicide, fungicide, foliar, seed, fertilizer, lime, and pasture applications.',
+	areaServed: [
+		'Madison County, Alabama',
+		'Limestone County, Alabama',
+		'Morgan County, Alabama',
+		'Cullman County, Alabama',
+		'Lawrence County, Alabama',
+	],
+	makesOffer: [
+		{
+			'@type': 'Offer',
+			itemOffered: {
+				'@type': 'Service',
+				name: 'Drone herbicide spraying',
+				serviceType: 'Agricultural herbicide application',
+			},
+		},
+		{
+			'@type': 'Offer',
+			itemOffered: {
+				'@type': 'Service',
+				name: 'Drone spreading',
+				serviceType: 'Agricultural dry product application',
+			},
+		},
+	],
+} as const
+
 export default function Home() {
 	return (
 		<div className="text-[color:var(--foreground)]">
+			{/* JSON-LD requires raw script text; escape `<` in serialized JSON (see other app routes). */}
 			<script
 				type="application/ld+json"
+				// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD must use raw script body; schema is static and `<` is escaped.
 				dangerouslySetInnerHTML={{
-					__html: JSON.stringify({
-						'@context': 'https://schema.org',
-						'@type': 'LocalBusiness',
-						name: 'North Alabama Drone Applicators',
-						url: 'https://www.northaldroneapplicators.com/',
-						description:
-							'Managed agricultural drone spraying and spreading for North Alabama farms, including herbicide, fungicide, foliar, seed, fertilizer, lime, and pasture applications.',
-						areaServed: ['Madison County, Alabama', 'Limestone County, Alabama', 'Morgan County, Alabama', 'Cullman County, Alabama', 'Lawrence County, Alabama'],
-						makesOffer: [
-							{
-								'@type': 'Offer',
-								itemOffered: {
-									'@type': 'Service',
-									name: 'Drone herbicide spraying',
-									serviceType: 'Agricultural herbicide application',
-								},
-							},
-							{
-								'@type': 'Offer',
-								itemOffered: {
-									'@type': 'Service',
-									name: 'Drone spreading',
-									serviceType: 'Agricultural dry product application',
-								},
-							},
-						],
-					}),
+					__html: JSON.stringify(homeLocalBusinessJsonLd).replace(/</g, '\\u003c'),
 				}}
 			/>
 			{/* Hero ---------------------------------------------------------- */}
-			<section className="relative flex min-h-[100vh] items-end overflow-hidden pt-20">
+			<section className="relative flex min-h-[100vh] items-end overflow-hidden pt-48 min-[600px]:pt-24">
 				<HeroVideo />
 				<div className="hero-overlay absolute inset-0" />
 
