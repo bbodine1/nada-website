@@ -124,33 +124,29 @@ export default function NewsPage() {
           {remainingArticles.length > 0 ? (
             <div className="mt-8 grid gap-5 md:grid-cols-2">
               {remainingArticles.map((article) => (
-                <RevealOnScroll
+                <Link
                   key={article.slug}
-                  className="h-full"
+                  href={`/news/${article.slug}`}
+                  className="group flex h-full flex-col rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-white p-6 shadow-[var(--shadow-sm)] transition hover:-translate-y-1 hover:border-[color:var(--border-strong)] hover:shadow-[var(--shadow)]"
                 >
-                  <Link
-                    href={`/news/${article.slug}`}
-                    className="group flex h-full flex-col rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-white p-6 shadow-[var(--shadow-sm)] transition hover:-translate-y-1 hover:border-[color:var(--border-strong)] hover:shadow-[var(--shadow)]"
-                  >
-                    <span className="eyebrow w-fit">{article.category}</span>
-                    <p className="mt-5 text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--fg-subtle)]">
-                      {formatArticleDate(article.date)} · {article.readingTime}
-                    </p>
-                    <h2 className="mt-4 font-heading text-2xl font-semibold text-[color:var(--color-primary)]">
-                      {article.title}
-                    </h2>
-                    <p className="mt-4 flex-1 text-sm leading-6 text-[color:var(--fg-muted)]">{article.excerpt}</p>
-                    <span className="mt-6 inline-flex font-semibold text-[color:var(--color-primary)]">
-                      Read article
-                      <span
-                        aria-hidden="true"
-                        className="ml-2 transition-transform group-hover:translate-x-1"
-                      >
-                        -&gt;
-                      </span>
+                  <span className="eyebrow w-fit">{article.category}</span>
+                  <p className="mt-5 text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--fg-subtle)]">
+                    {formatArticleDate(article.date)} · {article.readingTime}
+                  </p>
+                  <h2 className="mt-4 font-heading text-2xl font-semibold text-[color:var(--color-primary)]">
+                    {article.title}
+                  </h2>
+                  <p className="mt-4 flex-1 text-sm leading-6 text-[color:var(--fg-muted)]">{article.excerpt}</p>
+                  <span className="mt-6 inline-flex font-semibold text-[color:var(--color-primary)]">
+                    Read article
+                    <span
+                      aria-hidden="true"
+                      className="ml-2 transition-transform group-hover:translate-x-1"
+                    >
+                      -&gt;
                     </span>
-                  </Link>
-                </RevealOnScroll>
+                  </span>
+                </Link>
               ))}
             </div>
           ) : null}

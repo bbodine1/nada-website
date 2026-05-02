@@ -71,24 +71,27 @@ export function MarkdownContent({ blocks }: { blocks: MarkdownBlock[] }) {
         }
 
         if (block.type === "list") {
-          const ListTag = block.ordered ? "ol" : "ul";
-
           return (
-            <ListTag
+            <div
               key={`list-${index}`}
-              className={`mt-5 space-y-3 pl-5 text-[color:var(--foreground)] ${
-                block.ordered ? "list-decimal" : "list-disc"
-              }`}
+              role="list"
+              className="mt-5 space-y-3 text-[color:var(--foreground)]"
             >
               {block.items.map((item, itemIndex) => (
-                <li
+                <div
                   key={`item-${itemIndex}`}
-                  className="pl-1 leading-7"
+                  role="listitem"
+                  className="flex items-start gap-3 leading-7"
                 >
-                  <MarkdownInlineContent nodes={item} />
-                </li>
+                  <span className="mt-0.5 inline-flex h-7 w-8 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-accent-100)] text-sm font-bold text-[color:var(--color-primary)]">
+                    {block.ordered ? `${itemIndex + 1}.` : "-"}
+                  </span>
+                  <span className="flex-1">
+                    <MarkdownInlineContent nodes={item} />
+                  </span>
+                </div>
               ))}
-            </ListTag>
+            </div>
           );
         }
 
