@@ -8,6 +8,7 @@ const services = [
 	{ label: 'Crop Applicators', href: '/crop-applicators' },
 	{ label: 'Herbicide Application', href: '/herbicide-application' },
 	{ label: 'Drone Spreading', href: '/#services' },
+	{ label: 'News & Articles', href: '/news' },
 	{ label: 'Fall 2026 Priority List', href: '/#lead-form' },
 	{ label: 'Free Spray + Spread Guide', href: '/#spray-spread-guide' },
 ]
@@ -104,6 +105,12 @@ export function SiteFooter() {
 							className="hover:text-white"
 						>
 							FAQ
+						</Link>
+						<Link
+							href="/news"
+							className="hover:text-white"
+						>
+							News
 						</Link>
 						<Link
 							href="/privacy"
