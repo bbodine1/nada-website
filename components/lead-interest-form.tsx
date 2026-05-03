@@ -5,7 +5,8 @@ import { type FormEvent, useState } from "react";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
-const PDF_PATH = "/downloads/nada-spray-spread-overview.pdf";
+const PDF_PATH =
+	"/downloads/North_Alabama_Drone_Applicators_Field_Guide_2026.pdf";
 
 export function LeadInterestForm() {
 	const [state, setState] = useState<FormState>("idle");

@@ -9,8 +9,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "eslint",
-		"build:pdf": "node scripts/build-overview-pdf.mjs"
+		"lint": "eslint"
 	},
 	"dependencies": {
 		"@supabase/supabase-js": "^2.105.1",
@@ -28,7 +27,6 @@
 		"@types/react-dom": "^19.2.3",
 		"eslint": "^10.3.0",
 		"eslint-config-next": "16.2.4",
-		"pdfkit": "^0.18.0",
 		"tailwindcss": "^4.2.4",
 		"typescript": "^6.0.3"
 	}

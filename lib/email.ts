@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 
 const PDF_URL =
-	"https://northalabamadroneapplicators.com/downloads/nada-spray-spread-overview.pdf";
+	"https://www.northalabamadroneapplicators.com/downloads/North_Alabama_Drone_Applicators_Field_Guide_2026.pdf";
 
 type SubmissionEmailPayload = {
 	firstName: string;

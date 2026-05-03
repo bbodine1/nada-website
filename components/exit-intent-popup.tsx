@@ -12,7 +12,8 @@ import {
 type FormState = "idle" | "submitting" | "success" | "error";
 
 const SHOWN_SESSION_KEY = "nada_exit_intent_shown";
-const PDF_PATH = "/downloads/nada-spray-spread-overview.pdf";
+const PDF_PATH =
+	"/downloads/North_Alabama_Drone_Applicators_Field_Guide_2026.pdf";
 const MOBILE_SENTINEL_KEY = "nadaExitSentinel";
 
 function hasShownInSession(): boolean {
