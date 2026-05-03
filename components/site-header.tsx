@@ -29,6 +29,18 @@ const desktopExploreLinks = [
   { href: "/#faq", label: "FAQ" },
 ];
 
+/** Omit header lead CTA below `md` — those routes keep in-page CTAs on small screens; bar + xl still show it. */
+function suppressHeaderLeadCtaBelowMd(pathname: string | null): boolean {
+  if (!pathname) return false;
+  const onNews =
+    pathname === "/news" || pathname.startsWith("/news/");
+  return (
+    pathname.startsWith("/crop-applicators") ||
+    pathname.startsWith("/herbicide-application") ||
+    onNews
+  );
+}
+
 function HeaderLogo({
   scrolled,
   linkClassName,
@@ -71,8 +83,9 @@ function HeaderLogo({
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const suppressLeadCtaBelowMdRoutes = suppressHeaderLeadCtaBelowMd(pathname);
   /** `/` renders a fixed bottom CTA below `md`; avoid duplicating it in the header. */
-  const hideHeaderCtaBelowMdOnHome =
+  const hideDupHeaderCtaBelowMdOnHome =
     pathname === "/" || pathname === "";
 
   const [scrolled, setScrolled] = useState(false);
@@ -205,8 +218,19 @@ export function SiteHeader() {
               </button>
             </div>
           </div>
-          {hideHeaderCtaBelowMdOnHome ? (
-            <div className="hidden w-full md:block">
+          {!suppressLeadCtaBelowMdRoutes &&
+            (hideDupHeaderCtaBelowMdOnHome ? (
+              <div className="hidden w-full md:block">
+                <Link
+                  href="/#lead-form"
+                  data-track="header-cta-field-fit"
+                  aria-label="Request my field-fit assessment"
+                  className="btn btn-accent flex min-h-11 w-full items-center justify-center px-4 py-3 text-center text-sm font-semibold shadow-[var(--shadow-sm)]"
+                >
+                  Get Field-Fit Assessment
+                </Link>
+              </div>
+            ) : (
               <Link
                 href="/#lead-form"
                 data-track="header-cta-field-fit"
@@ -215,17 +239,7 @@ export function SiteHeader() {
               >
                 Get Field-Fit Assessment
               </Link>
-            </div>
-          ) : (
-            <Link
-              href="/#lead-form"
-              data-track="header-cta-field-fit"
-              aria-label="Request my field-fit assessment"
-              className="btn btn-accent flex min-h-11 w-full items-center justify-center px-4 py-3 text-center text-sm font-semibold shadow-[var(--shadow-sm)]"
-            >
-              Get Field-Fit Assessment
-            </Link>
-          )}
+            ))}
         </div>
 
         {/* 600px–xl: single-row top bar + menu (min-h fits logo aspect ratio; h-16 was too short) */}
@@ -236,7 +250,8 @@ export function SiteHeader() {
             logoWidthClassName="w-[200px] md:w-[220px] lg:w-[240px]"
           />
           <div className="flex shrink-0 items-center gap-2">
-            {hideHeaderCtaBelowMdOnHome ? (
+            {suppressLeadCtaBelowMdRoutes ||
+            hideDupHeaderCtaBelowMdOnHome ? (
               <div className="hidden md:contents">
                 <Link
                   href="/#lead-form"
@@ -397,14 +412,27 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              href="/#lead-form"
-              onClick={() => setOpen(false)}
-              className="btn btn-accent mt-2 w-full"
-              aria-label="Request my field-fit assessment"
-            >
-              Get Field-Fit Assessment
-            </Link>
+            {suppressLeadCtaBelowMdRoutes ? (
+              <div className="hidden md:block">
+                <Link
+                  href="/#lead-form"
+                  onClick={() => setOpen(false)}
+                  className="btn btn-accent mt-2 w-full"
+                  aria-label="Request my field-fit assessment"
+                >
+                  Get Field-Fit Assessment
+                </Link>
+              </div>
+            ) : (
+              <Link
+                href="/#lead-form"
+                onClick={() => setOpen(false)}
+                className="btn btn-accent mt-2 w-full"
+                aria-label="Request my field-fit assessment"
+              >
+                Get Field-Fit Assessment
+              </Link>
+            )}
           </div>
         </div>
       </div>

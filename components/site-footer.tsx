@@ -1,5 +1,8 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import { localDroneServicePages } from '@/lib/service-areas'
 
@@ -14,8 +17,17 @@ const services = [
 ]
 
 export function SiteFooter() {
+	const pathname = usePathname()
+	/** Home `md:hidden` fixed bottom CTA clears footer links / copyright row */
+	const mobileStickyCtaClearance =
+		pathname === '/' || pathname === ''
+			? 'max-md:pb-[calc(5.75rem+env(safe-area-inset-bottom,0px))]'
+			: ''
+
 	return (
-		<footer className="relative overflow-hidden bg-[color:var(--color-primary)] text-[#e8e6d8]">
+		<footer
+			className={`relative overflow-hidden bg-[color:var(--color-primary)] text-[#e8e6d8] ${mobileStickyCtaClearance}`}
+		>
 			<div
 				aria-hidden
 				className="pointer-events-none absolute inset-0 opacity-25"

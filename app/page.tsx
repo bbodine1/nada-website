@@ -288,12 +288,6 @@ export default function Home() {
 								>
 									Request Cost Ranges + Guide
 								</CtaButton>
-								<a
-									href="/herbicide-application"
-									className="btn btn-outline"
-								>
-									Compare Herbicide Options
-								</a>
 							</div>
 
 							<div className="mt-10 flex flex-wrap items-center gap-2 text-sm text-white/85">
