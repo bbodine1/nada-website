@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -56,21 +57,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: "en_US",
       type: "website",
       images: [
-        {
-          url: "/og-image.png",
-          secureUrl: "/og-image.png",
-          type: "image/png",
-          width: 1200,
-          height: 630,
-          alt: `${page.title} service area`,
-        },
+        page.heroImage
+          ? {
+              url: page.heroImage,
+              alt: page.title,
+            }
+          : {
+              url: "/og-image.png",
+              secureUrl: "/og-image.png",
+              type: "image/png" as const,
+              width: 1200,
+              height: 630,
+              alt: "North Alabama Drone Applicators",
+            },
       ],
     },
     twitter: {
       card: "summary_large_image",
       title: page.title,
       description: page.metaDescription,
-      images: ["/og-image.png"],
+      images: [page.heroImage ?? "/og-image.png"],
     },
   };
 }
@@ -136,16 +142,40 @@ export default async function LocalServicePage({ params }: PageProps) {
     <div className="text-[color:var(--foreground)]">
       <JsonLd data={jsonLd} />
 
-      <section className="relative overflow-hidden bg-[color:var(--color-primary)] pt-28 text-white lg:pt-36">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-30"
-          style={{
-            backgroundImage:
-              "radial-gradient(760px 320px at 78% 18%, rgba(212,160,23,0.28), transparent 55%), radial-gradient(900px 380px at 10% 88%, rgba(255,255,255,0.12), transparent 60%)",
-          }}
-        />
-        <div className="container-page relative grid items-center gap-12 pb-16 pt-10 lg:grid-cols-[1.08fr_0.92fr] lg:pb-24">
+      <section
+        className={`relative overflow-hidden pt-28 text-white lg:pt-36 ${
+          page.heroImage
+            ? "flex min-h-[min(62vh,640px)] flex-col bg-[color:var(--color-primary)]"
+            : "bg-[color:var(--color-primary)]"
+        }`}
+      >
+        {page.heroImage ? (
+          <>
+            <Image
+              src={page.heroImage}
+              alt={page.title}
+              fill
+              className="z-0 object-cover"
+              sizes="100vw"
+              priority
+              loading="eager"
+            />
+            <div
+              className="hero-overlay absolute inset-0 z-[1]"
+              aria-hidden
+            />
+          </>
+        ) : (
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-30"
+            style={{
+              backgroundImage:
+                "radial-gradient(760px 320px at 78% 18%, rgba(212,160,23,0.28), transparent 55%), radial-gradient(900px 380px at 10% 88%, rgba(255,255,255,0.12), transparent 60%)",
+            }}
+          />
+        )}
+        <div className="container-page relative z-10 grid items-center gap-12 pb-16 pt-10 lg:grid-cols-[1.08fr_0.92fr] lg:pb-24">
           <RevealOnScroll>
             <nav
               aria-label="Breadcrumb"
