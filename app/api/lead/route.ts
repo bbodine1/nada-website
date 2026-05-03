@@ -1,198 +1,182 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 import { sendSubmissionEmails } from "@/lib/email";
 import { upsertGhlContact } from "@/lib/ghl";
 import { getSupabaseAdminClient } from "@/lib/supabase";
 
 const allowedCounties = new Set([
-  "Cullman",
-  "Lawrence",
-  "Limestone",
-  "Madison",
-  "Morgan",
-  "Other",
+	"Cullman",
+	"Lawrence",
+	"Limestone",
+	"Madison",
+	"Morgan",
+	"Other",
 ]);
 
 const ipRequestStore = new Map<string, number[]>();
 
 type LeadPayload = {
-  stage?: unknown;
-  fullName?: unknown;
-  email?: unknown;
-  phone?: unknown;
-  county?: unknown;
-  cropTypes?: unknown;
-  acreageRange?: unknown;
-  preferredContactMethod?: unknown;
-  notes?: unknown;
-  consent?: unknown;
-  companyName?: unknown;
-  requestPdf?: unknown;
+	stage?: unknown;
+	fullName?: unknown;
+	email?: unknown;
+	phone?: unknown;
+	county?: unknown;
+	cropTypes?: unknown;
+	acreageRange?: unknown;
+	preferredContactMethod?: unknown;
+	notes?: unknown;
+	consent?: unknown;
+	companyName?: unknown;
+	requestPdf?: unknown;
 };
 
 function asTrimmedString(value: unknown): string {
-  return typeof value === "string" ? value.trim() : "";
+	return typeof value === "string" ? value.trim() : "";
 }
 
 function isValidEmail(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const oneMinuteAgo = now - 60_000;
-  const history = (ipRequestStore.get(ip) ?? []).filter((timestamp) => timestamp > oneMinuteAgo);
-  history.push(now);
-  ipRequestStore.set(ip, history);
-  return history.length > 5;
+	const now = Date.now();
+	const oneMinuteAgo = now - 60_000;
+	const history = (ipRequestStore.get(ip) ?? []).filter(
+		(timestamp) => timestamp > oneMinuteAgo,
+	);
+	history.push(now);
+	ipRequestStore.set(ip, history);
+	return history.length > 5;
 }
 
 function validatePayload(body: LeadPayload) {
-  const stage =
-    asTrimmedString(body.stage) === "step1_capture" ? "step1_capture" : "final_submit";
-  const fullName = asTrimmedString(body.fullName);
-  const email = asTrimmedString(body.email).toLowerCase();
-  const phone = asTrimmedString(body.phone) || null;
-  const county = asTrimmedString(body.county) || "Other";
-  const cropTypes = asTrimmedString(body.cropTypes) || "Not provided";
-  const acreageRange = asTrimmedString(body.acreageRange) || null;
-  const preferredContactMethod = asTrimmedString(body.preferredContactMethod) || null;
-  const notes = asTrimmedString(body.notes) || null;
-  const consent = body.consent === true;
-  const companyName = asTrimmedString(body.companyName);
-  const requestPdf = body.requestPdf === true;
+	const fullName = asTrimmedString(body.fullName);
+	const email = asTrimmedString(body.email).toLowerCase();
+	const phone = asTrimmedString(body.phone) || null;
+	const county = asTrimmedString(body.county) || "Other";
+	const cropTypes = asTrimmedString(body.cropTypes) || "Not provided";
+	const acreageRange = asTrimmedString(body.acreageRange) || null;
+	const preferredContactMethod =
+		asTrimmedString(body.preferredContactMethod) || null;
+	const notes = asTrimmedString(body.notes) || null;
+	const consent = body.consent === true;
+	const companyName = asTrimmedString(body.companyName);
+	const requestPdf = body.requestPdf === true;
 
-  if (companyName) {
-    throw new Error("Spam submission rejected.");
-  }
-  if (!fullName || fullName.length < 2) {
-    throw new Error("Please provide your full name.");
-  }
-  if (!isValidEmail(email)) {
-    throw new Error("Please provide a valid email address.");
-  }
-  if (county && !allowedCounties.has(county)) {
-    throw new Error("Please select a valid county in our service area.");
-  }
+	if (companyName) {
+		throw new Error("Spam submission rejected.");
+	}
+	if (!fullName || fullName.length < 2) {
+		throw new Error("Please provide your first name (at least 2 characters).");
+	}
+	if (!isValidEmail(email)) {
+		throw new Error("Please provide a valid email address.");
+	}
+	if (county && !allowedCounties.has(county)) {
+		throw new Error("Please select a valid county in our service area.");
+	}
 
-  return {
-    stage,
-    fullName,
-    email,
-    phone,
-    county,
-    cropTypes,
-    acreageRange,
-    preferredContactMethod,
-    notes,
-    consent,
-    requestPdf,
-  };
+	return {
+		fullName,
+		email,
+		phone,
+		county,
+		cropTypes,
+		acreageRange,
+		preferredContactMethod,
+		notes,
+		consent,
+		requestPdf,
+	};
 }
 
 export async function POST(request: NextRequest) {
-  try {
-    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-    if (isRateLimited(ip)) {
-      return NextResponse.json(
-        { error: "Too many requests. Please wait a minute and try again." },
-        { status: 429 },
-      );
-    }
+	try {
+		const ip =
+			request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+			"unknown";
+		if (isRateLimited(ip)) {
+			return NextResponse.json(
+				{ error: "Too many requests. Please wait a minute and try again." },
+				{ status: 429 },
+			);
+		}
 
-    const body = (await request.json()) as LeadPayload;
-    const parsed = validatePayload(body);
-    const supabase = getSupabaseAdminClient();
+		const body = (await request.json()) as LeadPayload;
+		const parsed = validatePayload(body);
+		const supabase = getSupabaseAdminClient();
 
-    if (parsed.stage === "step1_capture") {
-      const step1Notes = parsed.requestPdf
-        ? "Captured at step 1 | PDF requested"
-        : "Captured at step 1";
-      const { error } = await supabase.from("interest_leads").insert({
-        full_name: parsed.fullName,
-        email: parsed.email,
-        phone: null,
-        county: "Other",
-        crop_types: "Not provided",
-        acreage_range: null,
-        preferred_contact_method: null,
-        notes: step1Notes,
-        consent: true,
-        source: "website_step1",
-        submitted_at: new Date().toISOString(),
-      });
+		const { data: existingLead } = await supabase
+			.from("interest_leads")
+			.select("id")
+			.eq("email", parsed.email)
+			.order("submitted_at", { ascending: false })
+			.limit(1)
+			.maybeSingle();
 
-      if (error) {
-        throw new Error(`Database insert failed: ${error.message}`);
-      }
+		let error: { message: string } | null = null;
+		const notesWithPdf = [
+			parsed.notes,
+			parsed.requestPdf ? "PDF requested: yes" : "PDF requested: no",
+		]
+			.filter(Boolean)
+			.join("\n");
+		const leadPayload = {
+			full_name: parsed.fullName,
+			email: parsed.email,
+			phone: parsed.phone,
+			county: parsed.county,
+			crop_types: parsed.cropTypes,
+			acreage_range: parsed.acreageRange,
+			preferred_contact_method: parsed.preferredContactMethod,
+			notes: notesWithPdf || null,
+			consent: parsed.consent,
+			source: "website_final",
+			submitted_at: new Date().toISOString(),
+		};
 
-      return NextResponse.json({ ok: true, captured: true });
-    }
+		if (existingLead?.id) {
+			const updateResult = await supabase
+				.from("interest_leads")
+				.update(leadPayload)
+				.eq("id", existingLead.id);
+			error = updateResult.error;
+		} else {
+			const insertResult = await supabase
+				.from("interest_leads")
+				.insert(leadPayload);
+			error = insertResult.error;
+		}
 
-    const { data: existingLead } = await supabase
-      .from("interest_leads")
-      .select("id")
-      .eq("email", parsed.email)
-      .order("submitted_at", { ascending: false })
-      .limit(1)
-      .maybeSingle();
+		if (error) {
+			throw new Error(`Database insert failed: ${error.message}`);
+		}
 
-    let error: { message: string } | null = null;
-    const notesWithPdf = [parsed.notes, parsed.requestPdf ? "PDF requested: yes" : "PDF requested: no"]
-      .filter(Boolean)
-      .join("\n");
-    const leadPayload = {
-      full_name: parsed.fullName,
-      email: parsed.email,
-      phone: parsed.phone,
-      county: parsed.county,
-      crop_types: parsed.cropTypes,
-      acreage_range: parsed.acreageRange,
-      preferred_contact_method: parsed.preferredContactMethod,
-      notes: notesWithPdf || null,
-      consent: parsed.consent,
-      source: "website_final",
-      submitted_at: new Date().toISOString(),
-    };
+		await upsertGhlContact({
+			fullName: parsed.fullName,
+			email: parsed.email,
+			phone: parsed.phone,
+			county: parsed.county,
+			cropTypes: parsed.cropTypes,
+			acreageRange: parsed.acreageRange,
+			preferredContactMethod: parsed.preferredContactMethod,
+			notes: notesWithPdf || null,
+		});
+		await sendSubmissionEmails({
+			firstName: parsed.fullName.split(" ")[0] || "there",
+			email: parsed.email,
+			county: parsed.county,
+			cropTypes: parsed.cropTypes,
+			primaryInterest: parsed.preferredContactMethod || "Not provided",
+			requestPdf: parsed.requestPdf,
+		});
 
-    if (existingLead?.id) {
-      const updateResult = await supabase
-        .from("interest_leads")
-        .update(leadPayload)
-        .eq("id", existingLead.id);
-      error = updateResult.error;
-    } else {
-      const insertResult = await supabase.from("interest_leads").insert(leadPayload);
-      error = insertResult.error;
-    }
-
-    if (error) {
-      throw new Error(`Database insert failed: ${error.message}`);
-    }
-
-    await upsertGhlContact({
-      fullName: parsed.fullName,
-      email: parsed.email,
-      phone: parsed.phone,
-      county: parsed.county,
-      cropTypes: parsed.cropTypes,
-      acreageRange: parsed.acreageRange,
-      preferredContactMethod: parsed.preferredContactMethod,
-      notes: notesWithPdf || null,
-    });
-    await sendSubmissionEmails({
-      firstName: parsed.fullName.split(" ")[0] || "there",
-      email: parsed.email,
-      county: parsed.county,
-      cropTypes: parsed.cropTypes,
-      primaryInterest: parsed.preferredContactMethod || "Not provided",
-      requestPdf: parsed.requestPdf,
-    });
-
-    return NextResponse.json({ ok: true });
-  } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Something went wrong while submitting the form.";
-    return NextResponse.json({ error: message }, { status: 400 });
-  }
+		return NextResponse.json({ ok: true });
+	} catch (error) {
+		const message =
+			error instanceof Error
+				? error.message
+				: "Something went wrong while submitting the form.";
+		return NextResponse.json({ error: message }, { status: 400 });
+	}
 }

@@ -1,13 +1,14 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import Image from "next/image";
+import Link from "next/link";
+import { FaqAccordion } from "@/components/faq-accordion";
+import { HeroVideo } from "@/components/hero-video";
+import { LeadInterestForm } from "@/components/lead-interest-form";
+import { RevealOnScroll } from "@/components/reveal-on-scroll";
+import { YoutubeClickPlay } from "@/components/youtube-click-play";
+import { localDroneServicePages } from "@/lib/service-areas";
 
-import { CtaButton } from '@/components/cta-lead-popup'
-import { HeroVideo } from '@/components/hero-video'
-import { FaqAccordion } from '@/components/faq-accordion'
-import { LeadInterestForm } from '@/components/lead-interest-form'
-import { RevealOnScroll } from '@/components/reveal-on-scroll'
-import { YoutubeClickPlay } from '@/components/youtube-click-play'
-import { localDroneServicePages } from '@/lib/service-areas'
+const CUSTOM_FIELD_REVIEW_MAILTO =
+	"mailto:info@northaldroneapplicators.com?subject=Custom%20field%20review%20request";
 
 const problemCards = [
 	{
@@ -20,14 +21,8 @@ const problemCards = [
 				stroke="currentColor"
 				strokeWidth="1.8"
 			>
-				<path
-					d="M4 15c1.5-2.5 4-4 8-4s6.5 1.5 8 4"
-					strokeLinecap="round"
-				/>
-				<path
-					d="M8 19c1-1.5 2.5-2 4-2s3 .5 4 2"
-					strokeLinecap="round"
-				/>
+				<path d="M4 15c1.5-2.5 4-4 8-4s6.5 1.5 8 4" strokeLinecap="round" />
+				<path d="M8 19c1-1.5 2.5-2 4-2s3 .5 4 2" strokeLinecap="round" />
 				<path
 					d="M12 3v4M9 5l3-3 3 3"
 					strokeLinecap="round"
@@ -35,9 +30,9 @@ const problemCards = [
 				/>
 			</svg>
 		),
-		title: 'Tennessee Valley Weather Doesn’t Wait',
-		body: 'Pop-up showers and humid air leave red clay holding water—sometimes the rig can’t roll for days. When the window opens, you need a pass that isn’t tied to someone else’s queue.',
-		bullet: 'Drone application can go when ground equipment still can’t.',
+		title: "Tennessee Valley Weather Doesn’t Wait",
+		body: "Pop-up showers and humid air leave red clay holding water—sometimes the rig can’t roll for days. When the window opens, you need a pass that isn’t tied to someone else’s queue.",
+		bullet: "Drone application can go when ground equipment still can’t.",
 	},
 	{
 		icon: (
@@ -54,15 +49,12 @@ const problemCards = [
 					strokeLinecap="round"
 					strokeLinejoin="round"
 				/>
-				<path
-					d="M3 21h18"
-					strokeLinecap="round"
-				/>
+				<path d="M3 21h18" strokeLinecap="round" />
 			</svg>
 		),
-		title: 'Uneven Ground, Uneven Needs',
-		body: 'River bottoms, end rows, and wet holes don’t all need the same rate. Spray and spread where the field calls for it—without dragging a rig through mud or tearing up headlands.',
-		bullet: 'Target product placement without fighting terrain.',
+		title: "Uneven Ground, Uneven Needs",
+		body: "River bottoms, end rows, and wet holes don’t all need the same rate. Spray and spread where the field calls for it—without dragging a rig through mud or tearing up headlands.",
+		bullet: "Target product placement without fighting terrain.",
 	},
 	{
 		icon: (
@@ -74,158 +66,168 @@ const problemCards = [
 				stroke="currentColor"
 				strokeWidth="1.8"
 			>
-				<circle
-					cx="12"
-					cy="12"
-					r="8"
-				/>
-				<path
-					d="M12 7v5l3 2"
-					strokeLinecap="round"
-				/>
+				<circle cx="12" cy="12" r="8" />
+				<path d="M12 7v5l3 2" strokeLinecap="round" />
 			</svg>
 		),
-		title: 'Every Gallon and Pound Has to Earn Its Keep',
-		body: 'Margins are tight. Whether it’s liquid chemistry or dry product, placement beats blanket passes—especially when the window is short and the ground won’t cooperate.',
-		bullet: 'Protect yield without wasting inputs.',
+		title: "Every Gallon and Pound Has to Earn Its Keep",
+		body: "Margins are tight. Whether it’s liquid chemistry or dry product, placement beats blanket passes—especially when the window is short and the ground won’t cooperate.",
+		bullet: "Protect yield without wasting inputs.",
 	},
-] as const
+] as const;
 
 const explainerStats = [
 	{
-		value: 'Tight',
-		suffix: 'windows',
-		label: 'Spray when it counts',
-		detail: 'Get liquid on the crop when the label and weather line up—not when the queue finally opens.',
+		value: "Tight",
+		suffix: "windows",
+		label: "Spray when it counts",
+		detail:
+			"Get liquid on the crop when the label and weather line up—not when the queue finally opens.",
 	},
 	{
-		value: 'Even',
-		suffix: 'patterns',
-		label: 'Spread with control',
-		detail: 'Dry product where you need it: cover crop seed, fertilizer, lime, and pasture overseeding.',
+		value: "Even",
+		suffix: "patterns",
+		label: "Spread with control",
+		detail:
+			"Dry product where you need it: cover crop seed, fertilizer, lime, and pasture overseeding.",
 	},
 	{
-		value: 'Less',
-		suffix: 'ruts',
-		label: 'Keep mud off the rows',
-		detail: 'Stay off wet ground that would bury a ground rig—same season, less compaction.',
+		value: "Less",
+		suffix: "ruts",
+		label: "Keep mud off the rows",
+		detail:
+			"Stay off wet ground that would bury a ground rig—same season, less compaction.",
 	},
-] as const
+] as const;
 
 const testimonials = [
 	{
-		quote: 'We got cover on end rows and wet holes the rig would’ve torn up. Didn’t have to wait on the co-op line.',
-		name: 'J. Hartselle',
-		county: 'Limestone County',
-		crop: 'Cotton and corn',
+		quote:
+			"We got cover on end rows and wet holes the rig would’ve torn up. Didn’t have to wait on the co-op line.",
+		name: "J. Hartselle",
+		county: "Limestone County",
+		crop: "Cotton and corn",
 	},
 	{
-		quote: 'After a gully washer, we still got a fungicide pass in when the rig couldn’t have touched it.',
-		name: 'R. Tanner',
-		county: 'Madison County',
-		crop: 'Soybeans and wheat',
+		quote:
+			"After a gully washer, we still got a fungicide pass in when the rig couldn’t have touched it.",
+		name: "R. Tanner",
+		county: "Madison County",
+		crop: "Soybeans and wheat",
 	},
 	{
-		quote: 'Spread lime where we needed it without burying the sprayer. Same field, less guesswork.',
-		name: 'C. Green',
-		county: 'Cullman County',
-		crop: 'Corn and double-crop soybeans',
+		quote:
+			"Spread lime where we needed it without burying the sprayer. Same field, less guesswork.",
+		name: "C. Green",
+		county: "Cullman County",
+		crop: "Corn and double-crop soybeans",
 	},
-] as const
+] as const;
 
 const trustItems = [
 	{
-		title: 'FAA Part 107',
-		detail: 'Certified commercial drone pilots, fully insured for agricultural operations.',
+		title: "FAA Part 107",
+		detail:
+			"Certified commercial drone pilots, fully insured for agricultural operations.",
 	},
 	{
-		title: 'Managed Service',
-		detail: 'We bring the aircraft, fuel, and crew. You stay focused on the farm.',
+		title: "Managed Service",
+		detail:
+			"We bring the aircraft, fuel, and crew. You stay focused on the farm.",
 	},
 	{
-		title: 'North Alabama Only',
-		detail: 'Routes built around Madison, Limestone, Morgan, Cullman & Lawrence counties.',
+		title: "North Alabama Only",
+		detail:
+			"Routes built around Madison, Limestone, Morgan, Cullman & Lawrence counties.",
 	},
-] as const
+] as const;
 
 const opsComparison = [
 	{
-		approach: 'Ground Rig',
-		access: 'Strong on dry, open ground; limited when fields stay soft after rain.',
-		precision: 'Good section control, but harder in irregular edges and tight wet pockets.',
-		risk: 'Highest compaction and rut risk in soft Tennessee Valley conditions.',
-		speed: 'Fast once in-field, slower when weather or soil delays access.',
-		bestFit: 'Broad-acre passes when field conditions support equipment traffic.',
+		approach: "Ground Rig",
+		access:
+			"Strong on dry, open ground; limited when fields stay soft after rain.",
+		precision:
+			"Good section control, but harder in irregular edges and tight wet pockets.",
+		risk: "Highest compaction and rut risk in soft Tennessee Valley conditions.",
+		speed: "Fast once in-field, slower when weather or soil delays access.",
+		bestFit:
+			"Broad-acre passes when field conditions support equipment traffic.",
 	},
 	{
-		approach: 'Traditional Aerial',
-		access: 'Excellent access regardless of soil trafficability.',
-		precision: 'Strong on broad passes; less flexible for small or odd-shaped patches.',
-		risk: 'No wheel traffic, so no compaction from application equipment.',
-		speed: 'Very fast coverage when aircraft slot and route are available.',
-		bestFit: 'Large acre blocks and time-sensitive full-field applications.',
+		approach: "Traditional Aerial",
+		access: "Excellent access regardless of soil trafficability.",
+		precision:
+			"Strong on broad passes; less flexible for small or odd-shaped patches.",
+		risk: "No wheel traffic, so no compaction from application equipment.",
+		speed: "Very fast coverage when aircraft slot and route are available.",
+		bestFit: "Large acre blocks and time-sensitive full-field applications.",
 	},
 	{
-		approach: 'Drone Application',
-		access: 'Excellent in wet fields, end rows, and areas where rigs cannot travel.',
-		precision: 'High control on irregular boundaries, turn rows, and targeted zones.',
-		risk: 'No wheel traffic in-crop and minimal ground disturbance at treatment area.',
-		speed: 'Fast to launch for focused jobs; scales through coordinated route planning.',
-		bestFit: 'Field edges, wet zones, patch treatment, and weather-tight spray/spread windows.',
+		approach: "Drone Application",
+		access:
+			"Excellent in wet fields, end rows, and areas where rigs cannot travel.",
+		precision:
+			"High control on irregular boundaries, turn rows, and targeted zones.",
+		risk: "No wheel traffic in-crop and minimal ground disturbance at treatment area.",
+		speed:
+			"Fast to launch for focused jobs; scales through coordinated route planning.",
+		bestFit:
+			"Field edges, wet zones, patch treatment, and weather-tight spray/spread windows.",
 	},
-] as const
+] as const;
 
 const economicProofPoints = [
 	{
-		title: 'Timing protection when rain stalls rigs',
+		title: "Timing protection when rain stalls rigs",
 		detail:
-			'Indicative outcome: preserve a fungicide or foliar timing window on acres that stay too soft for ground entry. Value depends on crop stage, pressure, and field access.',
+			"Indicative outcome: preserve a fungicide or foliar timing window on acres that stay too soft for ground entry. Value depends on crop stage, pressure, and field access.",
 	},
 	{
-		title: 'Compaction and rework reduction',
+		title: "Compaction and rework reduction",
 		detail:
-			'Indicative outcome: fewer rut repairs and less stand disturbance in wet pockets, end rows, and soft headlands compared with heavy in-field traffic.',
+			"Indicative outcome: fewer rut repairs and less stand disturbance in wet pockets, end rows, and soft headlands compared with heavy in-field traffic.",
 	},
 	{
-		title: 'Better use of partial-field passes',
+		title: "Better use of partial-field passes",
 		detail:
-			'Indicative outcome: target irregular or hard-to-reach acres without paying for a blanket pass. Final quote and economics are field-specific.',
+			"Indicative outcome: target irregular or hard-to-reach acres without paying for a blanket pass. Final quote and economics are field-specific.",
 	},
-] as const
+] as const;
 
 const homeLocalBusinessJsonLd = {
-	'@context': 'https://schema.org',
-	'@type': 'LocalBusiness',
-	name: 'North Alabama Drone Applicators',
-	url: 'https://www.northaldroneapplicators.com/',
+	"@context": "https://schema.org",
+	"@type": "LocalBusiness",
+	name: "North Alabama Drone Applicators",
+	url: "https://www.northaldroneapplicators.com/",
 	description:
-		'Managed agricultural drone spraying and spreading for North Alabama farms, including herbicide, fungicide, foliar, seed, fertilizer, lime, and pasture applications.',
+		"Managed agricultural drone spraying and spreading for North Alabama farms, including herbicide, fungicide, foliar, seed, fertilizer, lime, and pasture applications.",
 	areaServed: [
-		'Madison County, Alabama',
-		'Limestone County, Alabama',
-		'Morgan County, Alabama',
-		'Cullman County, Alabama',
-		'Lawrence County, Alabama',
+		"Madison County, Alabama",
+		"Limestone County, Alabama",
+		"Morgan County, Alabama",
+		"Cullman County, Alabama",
+		"Lawrence County, Alabama",
 	],
 	makesOffer: [
 		{
-			'@type': 'Offer',
+			"@type": "Offer",
 			itemOffered: {
-				'@type': 'Service',
-				name: 'Drone herbicide spraying',
-				serviceType: 'Agricultural herbicide application',
+				"@type": "Service",
+				name: "Drone herbicide spraying",
+				serviceType: "Agricultural herbicide application",
 			},
 		},
 		{
-			'@type': 'Offer',
+			"@type": "Offer",
 			itemOffered: {
-				'@type': 'Service',
-				name: 'Drone spreading',
-				serviceType: 'Agricultural dry product application',
+				"@type": "Service",
+				name: "Drone spreading",
+				serviceType: "Agricultural dry product application",
 			},
 		},
 	],
-} as const
+} as const;
 
 export default function Home() {
 	return (
@@ -235,7 +237,10 @@ export default function Home() {
 				type="application/ld+json"
 				// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD must use raw script body; schema is static and `<` is escaped.
 				dangerouslySetInnerHTML={{
-					__html: JSON.stringify(homeLocalBusinessJsonLd).replace(/</g, '\\u003c'),
+					__html: JSON.stringify(homeLocalBusinessJsonLd).replace(
+						/</g,
+						"\\u003c",
+					),
 				}}
 			/>
 			{/* Hero ---------------------------------------------------------- */}
@@ -250,22 +255,27 @@ export default function Home() {
 								Fall 2026 · North Alabama
 							</span>
 							<h1 className="mt-5 font-heading text-4xl font-semibold text-white sm:text-5xl lg:text-6xl">
-								You already know crop application.
-								<br />
-								<span className="gradient-text">See where drone passes win on your acres.</span>
+								See Exactly Where Drone Spraying Pays Off On Your Fields
 							</h1>
+							<p className="mt-4 max-w-xl text-lg leading-8 text-[#e8e8e8]">
+								Wet fields. Missed spray windows. Crop damage from tires.
+								<br />
+								This quick guide shows when drones actually save time and
+								protect yield — and when they don&apos;t.
+							</p>
 							<p className="mt-5 max-w-xl text-lg leading-8 text-[#e8e8e8]">
-								We work with experienced North Alabama growers and applicators to map where drone spraying and
-								spreading outperforms rigs or traditional aerial. Share your operation details and we&apos;ll follow up
-								with a practical field-fit and cost-range conversation for Fall 2026 routing.
+								If you&apos;re dealing with wet fields, tight spray windows, or
+								crops you don&apos;t want to run over, this guide shows you
+								exactly when drone application is the better option.
 							</p>
 							<div className="mt-8 flex flex-wrap gap-3">
-								<CtaButton
-									data-track="hero-cta-field-fit"
-									aria-label="Request my field-fit assessment"
-									className="btn btn-accent"
+								<Link
+									href="#lead-form"
+									data-track="hero-cta-download-guide"
+									aria-label="Download the free field guide"
+									className="btn btn-accent inline-flex items-center gap-2"
 								>
-									Get My Field-Fit Assessment
+									Download the Free Field Guide
 									<svg
 										viewBox="0 0 20 20"
 										className="h-4 w-4"
@@ -280,28 +290,31 @@ export default function Home() {
 											strokeLinejoin="round"
 										/>
 									</svg>
-								</CtaButton>
-								<CtaButton
-									data-track="hero-cta-cost-range"
-									aria-label="Request spray and spread cost ranges"
-									className="btn btn-outline"
+								</Link>
+								<a
+									href={CUSTOM_FIELD_REVIEW_MAILTO}
+									data-track="hero-cta-custom-review"
+									aria-label="Request a custom field review by email"
+									className="btn btn-outline border-white/40 text-white hover:border-white/70 hover:bg-white/10"
 								>
-									Request Cost Ranges + Guide
-								</CtaButton>
+									Request a Custom Field Review
+								</a>
 							</div>
 
 							<div className="mt-10 flex flex-wrap items-center gap-2 text-sm text-white/85">
-								<span className="chip chip-dark">✓ Spray &amp; spread this season</span>
+								<span className="chip chip-dark">
+									✓ Built for Tennessee Valley growing conditions
+								</span>
 								<span className="chip chip-dark">✓ FAA Part 107</span>
 								<span className="chip chip-dark">✓ 5 Alabama counties</span>
+								<span className="chip chip-dark">
+									✓ Designed for real field decisions, not theory
+								</span>
 							</div>
 						</RevealOnScroll>
 
 						<RevealOnScroll className="w-full">
-							<div
-								id="lead-form"
-								className="scroll-mt-28"
-							>
+							<div id="lead-form" className="scroll-mt-28">
 								<LeadInterestForm />
 							</div>
 						</RevealOnScroll>
@@ -338,51 +351,72 @@ export default function Home() {
 			>
 				<div className="container-page">
 					<RevealOnScroll>
-						<span className="eyebrow eyebrow-dot">Operational Fit Comparison</span>
+						<span className="eyebrow eyebrow-dot">
+							Operational Fit Comparison
+						</span>
 						<h2 className="mt-4 max-w-3xl font-heading text-3xl font-semibold text-[color:var(--color-primary)] sm:text-4xl">
 							Where each application approach fits best.
 						</h2>
 						<p className="mt-4 max-w-3xl text-lg text-[color:var(--fg-muted)]">
-							You do not need to replace proven tools. Use drones where access, precision, and timing pressure make
-							the biggest difference on your acres.
+							You do not need to replace proven tools. Use drones where access,
+							precision, and timing pressure make the biggest difference on your
+							acres.
 						</p>
 					</RevealOnScroll>
 
 					<div className="mt-10 grid gap-5 lg:grid-cols-3">
-						{opsComparison.map(item => (
+						{opsComparison.map((item) => (
 							<RevealOnScroll
 								key={item.approach}
 								className="rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-white p-6 shadow-[var(--shadow-sm)]"
 							>
-								<p className="font-heading text-xl font-semibold text-[color:var(--color-primary)]">{item.approach}</p>
+								<p className="font-heading text-xl font-semibold text-[color:var(--color-primary)]">
+									{item.approach}
+								</p>
 								<ul className="mt-4 space-y-3 text-sm text-[color:var(--fg-muted)]">
 									<li>
-										<span className="font-semibold text-[color:var(--foreground)]">Access:</span> {item.access}
+										<span className="font-semibold text-[color:var(--foreground)]">
+											Access:
+										</span>{" "}
+										{item.access}
 									</li>
 									<li>
-										<span className="font-semibold text-[color:var(--foreground)]">Precision:</span> {item.precision}
+										<span className="font-semibold text-[color:var(--foreground)]">
+											Precision:
+										</span>{" "}
+										{item.precision}
 									</li>
 									<li>
-										<span className="font-semibold text-[color:var(--foreground)]">Compaction Risk:</span> {item.risk}
+										<span className="font-semibold text-[color:var(--foreground)]">
+											Compaction Risk:
+										</span>{" "}
+										{item.risk}
 									</li>
 									<li>
-										<span className="font-semibold text-[color:var(--foreground)]">Turn-Around:</span> {item.speed}
+										<span className="font-semibold text-[color:var(--foreground)]">
+											Turn-Around:
+										</span>{" "}
+										{item.speed}
 									</li>
 									<li>
-										<span className="font-semibold text-[color:var(--foreground)]">Best Fit:</span> {item.bestFit}
+										<span className="font-semibold text-[color:var(--foreground)]">
+											Best Fit:
+										</span>{" "}
+										{item.bestFit}
 									</li>
 								</ul>
 							</RevealOnScroll>
 						))}
 					</div>
 					<div className="mt-8">
-						<CtaButton
-							data-track="comparison-cta-evaluate"
-							aria-label="Request field-fit comparison for my acres"
-							className="btn btn-accent"
+						<Link
+							href="#lead-form"
+							data-track="comparison-cta-download-guide"
+							aria-label="Download the free field guide"
+							className="btn btn-accent inline-flex"
 						>
-							Request My Field Comparison
-						</CtaButton>
+							Download the Free Field Guide
+						</Link>
 					</div>
 				</div>
 			</section>
@@ -396,55 +430,61 @@ export default function Home() {
 							What drone application can protect or save.
 						</h2>
 						<p className="mt-4 max-w-3xl text-lg text-[color:var(--fg-muted)]">
-							These are indicative field outcomes, not blanket promises. Final pricing and ROI are field-dependent and
-							quoted per job.
+							These are indicative field outcomes, not blanket promises. Final
+							pricing and ROI are field-dependent and quoted per job.
 						</p>
 					</RevealOnScroll>
 					<div className="mt-10 grid gap-5 md:grid-cols-3">
-						{economicProofPoints.map(point => (
+						{economicProofPoints.map((point) => (
 							<RevealOnScroll
 								key={point.title}
 								className="rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-[color:var(--surface-muted)] p-6"
 							>
-								<p className="font-heading text-lg font-semibold text-[color:var(--color-primary)]">{point.title}</p>
-								<p className="mt-3 text-sm text-[color:var(--fg-muted)]">{point.detail}</p>
+								<p className="font-heading text-lg font-semibold text-[color:var(--color-primary)]">
+									{point.title}
+								</p>
+								<p className="mt-3 text-sm text-[color:var(--fg-muted)]">
+									{point.detail}
+								</p>
 							</RevealOnScroll>
 						))}
 					</div>
 					<div className="mt-8">
-						<CtaButton
-							data-track="economics-cta-guide"
-							aria-label="Get indicative spray and spread ranges by field"
+						<Link
+							href="#lead-form"
+							data-track="economics-cta-download-guide"
+							aria-label="Download the free field guide"
 							className="btn btn-accent inline-flex"
 						>
-							Get Indicative Cost Ranges
-						</CtaButton>
+							Download the Free Field Guide
+						</Link>
 					</div>
 				</div>
 			</section>
 
 			{/* Problems ------------------------------------------------------ */}
-			<section
-				id="problems"
-				className="section-pad topo-bg grain"
-			>
+			<section id="problems" className="section-pad topo-bg grain">
 				<div className="container-page">
 					<RevealOnScroll>
 						<span className="eyebrow eyebrow-dot">The Reality Out Here</span>
 						<h2 className="mt-4 max-w-3xl font-heading text-3xl font-semibold text-[color:var(--color-primary)] sm:text-4xl lg:text-[2.75rem]">
 							North Alabama farming is getting harder.
 							<br />
-							<span className="text-[color:var(--foreground)]">Your tools should get smarter.</span>
+							<span className="text-[color:var(--foreground)]">
+								Your tools should get smarter.
+							</span>
 						</h2>
 						<p className="mt-5 max-w-3xl text-lg text-[color:var(--fg-muted)]">
-							Between river bottoms, rolling ground, and humidity off the Gulf, the Tennessee Valley keeps you guessing.
-							Across Madison, Limestone, Morgan, Cullman, and Lawrence Counties—same problems: narrow spray windows,
-							rising input costs, and fields that don’t all behave the same.
+							Between river bottoms, rolling ground, and humidity off the Gulf,
+							the Tennessee Valley keeps you guessing. Across Madison,
+							Limestone, Morgan, Cullman, and Lawrence Counties—same problems:
+							narrow spray windows, rising input costs, and fields that don’t
+							all behave the same.
 						</p>
 					</RevealOnScroll>
 
 					<div className="mt-12 grid gap-5 lg:grid-cols-3">
-						{problemCards.map(item => (
+						{problemCards.map((item) => (
 							<RevealOnScroll key={item.title}>
 								<article className="topo-card flex h-full flex-col p-7">
 									<div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[color:var(--color-primary)] text-[color:var(--color-accent-100)] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
@@ -453,7 +493,9 @@ export default function Home() {
 									<h3 className="mt-5 font-heading text-xl font-semibold text-[color:var(--color-primary)]">
 										{item.title}
 									</h3>
-									<p className="mt-3 text-[color:var(--fg-muted)]">{item.body}</p>
+									<p className="mt-3 text-[color:var(--fg-muted)]">
+										{item.body}
+									</p>
 									<div className="mt-auto pt-5">
 										<p className="flex items-start gap-2 border-t border-[color:var(--border)] pt-4 text-sm font-medium text-[color:var(--color-primary)]">
 											<svg
@@ -475,10 +517,7 @@ export default function Home() {
 			</section>
 
 			{/* Services ------------------------------------------------------ */}
-			<section
-				id="services"
-				className="section-pad bg-white"
-			>
+			<section id="services" className="section-pad bg-white">
 				<div className="container-page">
 					<RevealOnScroll>
 						<span className="eyebrow eyebrow-dot">What We Do</span>
@@ -486,8 +525,10 @@ export default function Home() {
 							Two ways we show up in your fields.
 						</h2>
 						<p className="mt-4 max-w-3xl text-lg text-[color:var(--fg-muted)]">
-							We fly for you—you don’t buy the drone, fuel it, or chase regulations alone. Fall 2026 focus: precision
-							spray and dry spreading for cotton, corn, soybeans, wheat, hay, and pasture where it fits your operation.
+							We fly for you—you don’t buy the drone, fuel it, or chase
+							regulations alone. Fall 2026 focus: precision spray and dry
+							spreading for cotton, corn, soybeans, wheat, hay, and pasture
+							where it fits your operation.
 						</p>
 					</RevealOnScroll>
 
@@ -512,20 +553,19 @@ export default function Home() {
 								Precision Spray Applications
 							</h3>
 							<p className="mt-4 text-[color:var(--fg-muted)]">
-								Fungicide, herbicide, and foliar passes on cotton, corn, soybeans, and wheat—plus hay and forage where
-								it makes sense. Aerial application shines on end rows, tree lines, ditches, and patches where a ground
-								rig tears ground or can’t turn without hitting a fence.
+								Fungicide, herbicide, and foliar passes on cotton, corn,
+								soybeans, and wheat—plus hay and forage where it makes sense.
+								Aerial application shines on end rows, tree lines, ditches, and
+								patches where a ground rig tears ground or can’t turn without
+								hitting a fence.
 							</p>
 							<ul className="mt-6 space-y-3 text-sm text-[color:var(--foreground)]">
 								{[
-									'Fit tighter spray windows and stacked weather days',
-									'Protect sensitive ground and buffer zones',
-									'Reduce compaction in wet seasons',
-								].map(line => (
-									<li
-										key={line}
-										className="flex items-start gap-3"
-									>
+									"Fit tighter spray windows and stacked weather days",
+									"Protect sensitive ground and buffer zones",
+									"Reduce compaction in wet seasons",
+								].map((line) => (
+									<li key={line} className="flex items-start gap-3">
 										<span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-primary-100)] text-[color:var(--color-primary)]">
 											<svg
 												aria-hidden="true"
@@ -564,19 +604,18 @@ export default function Home() {
 								Drone Spreading (Dry Product)
 							</h3>
 							<p className="mt-4 text-[color:var(--fg-muted)]">
-								Cover crop seed, dry fertilizer, lime, and pasture overseeding—placed where your plan calls for it,
-								without rutting headlands or waiting on ground equipment when the field is still holding water.
+								Cover crop seed, dry fertilizer, lime, and pasture
+								overseeding—placed where your plan calls for it, without rutting
+								headlands or waiting on ground equipment when the field is still
+								holding water.
 							</p>
 							<ul className="mt-6 space-y-3 text-sm text-[color:var(--foreground)]">
 								{[
-									'Reach wet or tight spots without burying a rig',
-									'Reduce compaction compared to heavy equipment in soft seasons',
-									'Pair spreading with your spray program for one coordinated route',
-								].map(line => (
-									<li
-										key={line}
-										className="flex items-start gap-3"
-									>
+									"Reach wet or tight spots without burying a rig",
+									"Reduce compaction compared to heavy equipment in soft seasons",
+									"Pair spreading with your spray program for one coordinated route",
+								].map((line) => (
+									<li key={line} className="flex items-start gap-3">
 										<span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-primary-100)] text-[color:var(--color-primary)]">
 											<svg
 												aria-hidden="true"
@@ -605,13 +644,14 @@ export default function Home() {
 							County-specific drone spray and spread pages.
 						</h2>
 						<p className="mt-4 max-w-3xl text-lg text-[color:var(--fg-muted)]">
-							Start with the page for your county to see common crops, field conditions, use cases, and the right
-							next step for a practical field-fit review.
+							Start with the page for your county to see common crops, field
+							conditions, use cases, and the right next step after you read the
+							field guide.
 						</p>
 					</RevealOnScroll>
 
 					<div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
-						{localDroneServicePages.map(page => (
+						{localDroneServicePages.map((page) => (
 							<RevealOnScroll
 								key={page.slug}
 								className="rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-white p-5 shadow-[var(--shadow-sm)]"
@@ -623,7 +663,8 @@ export default function Home() {
 									{page.title}
 								</h3>
 								<p className="mt-3 text-sm leading-6 text-[color:var(--fg-muted)]">
-									{page.crops.slice(0, 3).join(', ')} and local field-fit review.
+									{page.crops.slice(0, 3).join(", ")} and local application
+									context.
 								</p>
 								<Link
 									href={`/local-services/${page.slug}`}
@@ -637,7 +678,7 @@ export default function Home() {
 				</div>
 			</section>
 
-			{/* Spray + Spread Guide ----------------------------------------- */}
+			{/* Field guide --------------------------------------------------- */}
 			<section
 				id="spray-spread-guide"
 				className="section-pad bg-[color:var(--surface-muted)]"
@@ -656,25 +697,24 @@ export default function Home() {
 							</div>
 						</RevealOnScroll>
 						<RevealOnScroll>
-							<span className="eyebrow eyebrow-dot">Fall 2026 Overview</span>
+							<span className="eyebrow eyebrow-dot">Free download</span>
 							<h2 className="mt-4 font-heading text-3xl font-semibold text-[color:var(--color-primary)] sm:text-4xl">
-								Get the Spray + Spread overview (PDF).
+								Where Drone Application Pays Off (North Alabama Field Guide)
 							</h2>
 							<p className="mt-4 text-lg text-[color:var(--fg-muted)]">
-								Benefits for North Alabama acres, preliminary cost-per-acre bands, and where we&apos;re headed—after you
-								tell us you&apos;re interested. Submit the short form and we&apos;ll email you the guide.
+								A short PDF built for real field decisions: when drone spraying
+								and spreading saves time and yield on your acres, when rigs or
+								traditional aerial still win, and what indicative cost bands
+								look like in our service counties.
 							</p>
 							<ul className="mt-6 space-y-3 text-sm text-[color:var(--foreground)]">
 								{[
-									'Why drone application fits Tennessee Valley weather and terrain',
-									'What we fly this season: spray + spread only',
-									'Indicative pricing ranges (preliminary—final quote per field)',
-									'Roadmap: Fall 2026 launch and what comes next',
-								].map(line => (
-									<li
-										key={line}
-										className="flex items-start gap-3"
-									>
+									"Tennessee Valley weather, wet holes, and tight spray windows",
+									"What we fly this season: spray + spread only",
+									"Indicative per-acre bands (final quote is always field-specific)",
+									"Fall 2026 routing snapshot for North Alabama growers",
+								].map((line) => (
+									<li key={line} className="flex items-start gap-3">
 										<span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-primary-100)] text-[color:var(--color-primary)]">
 											<svg
 												aria-hidden="true"
@@ -690,12 +730,13 @@ export default function Home() {
 								))}
 							</ul>
 							<div className="mt-8">
-								<CtaButton
-									data-track="guide-cta-request-pdf"
-									aria-label="Request the spray and spread PDF and field-fit review"
-									className="btn btn-accent inline-flex"
+								<Link
+									href="#lead-form"
+									data-track="guide-cta-download"
+									aria-label="Download the free field guide"
+									className="btn btn-accent inline-flex items-center gap-2"
 								>
-									Request the PDF + Field Review
+									Download the Free Field Guide
 									<svg
 										aria-hidden="true"
 										viewBox="0 0 20 20"
@@ -710,7 +751,7 @@ export default function Home() {
 											strokeLinejoin="round"
 										/>
 									</svg>
-								</CtaButton>
+								</Link>
 							</div>
 						</RevealOnScroll>
 					</div>
@@ -718,10 +759,7 @@ export default function Home() {
 			</section>
 
 			{/* Explainer ---------------------------------------------------- */}
-			<section
-				id="explainer"
-				className="section-pad topo-bg grain"
-			>
+			<section id="explainer" className="section-pad topo-bg grain">
 				<div className="container-page max-w-5xl">
 					<RevealOnScroll className="text-center">
 						<span className="eyebrow eyebrow-dot">See It Working</span>
@@ -729,8 +767,9 @@ export default function Home() {
 							Spray and spread, on your schedule.
 						</h2>
 						<p className="mx-auto mt-4 max-w-2xl text-[color:var(--fg-muted)]">
-							Liquid passes when the label and weather line up; dry product when the field needs it—without the ruts and
-							delays that come with ground rigs in a wet Tennessee Valley season.
+							Liquid passes when the label and weather line up; dry product when
+							the field needs it—without the ruts and delays that come with
+							ground rigs in a wet Tennessee Valley season.
 						</p>
 					</RevealOnScroll>
 
@@ -744,17 +783,23 @@ export default function Home() {
 					</RevealOnScroll>
 
 					<div className="mt-10 grid gap-4 sm:grid-cols-3">
-						{explainerStats.map(row => (
+						{explainerStats.map((row) => (
 							<RevealOnScroll
 								key={row.label}
 								className="rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-white p-6"
 							>
 								<p className="font-heading text-3xl font-semibold text-[color:var(--color-primary)]">
 									{row.value}
-									<span className="ml-1 text-base font-medium text-[color:var(--fg-subtle)]">{row.suffix}</span>
+									<span className="ml-1 text-base font-medium text-[color:var(--fg-subtle)]">
+										{row.suffix}
+									</span>
 								</p>
-								<p className="mt-2 text-sm font-semibold text-[color:var(--foreground)]">{row.label}</p>
-								<p className="mt-2 text-sm text-[color:var(--fg-muted)]">{row.detail}</p>
+								<p className="mt-2 text-sm font-semibold text-[color:var(--foreground)]">
+									{row.label}
+								</p>
+								<p className="mt-2 text-sm text-[color:var(--fg-muted)]">
+									{row.detail}
+								</p>
 							</RevealOnScroll>
 						))}
 					</div>
@@ -764,7 +809,7 @@ export default function Home() {
 			{/* Trust --------------------------------------------------------- */}
 			<section className="bg-white py-12">
 				<div className="container-page grid gap-6 md:grid-cols-3">
-					{trustItems.map(item => (
+					{trustItems.map((item) => (
 						<div
 							key={item.title}
 							className="flex items-start gap-4 rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-[color:var(--surface-muted)] p-5"
@@ -790,8 +835,12 @@ export default function Home() {
 								</svg>
 							</span>
 							<div>
-								<p className="font-heading text-lg font-semibold text-[color:var(--color-primary)]">{item.title}</p>
-								<p className="mt-1 text-sm text-[color:var(--fg-muted)]">{item.detail}</p>
+								<p className="font-heading text-lg font-semibold text-[color:var(--color-primary)]">
+									{item.title}
+								</p>
+								<p className="mt-1 text-sm text-[color:var(--fg-muted)]">
+									{item.detail}
+								</p>
 							</div>
 						</div>
 					))}
@@ -811,21 +860,24 @@ export default function Home() {
 								Farmers across North Alabama are paying attention.
 							</h2>
 							<p className="mt-4 text-[color:var(--fg-muted)]">
-								We’re building our Fall 2026 route map for spray and spread across Madison, Limestone, Morgan, Cullman,
-								and Lawrence Counties—Alabama only. Share your acres and goals, and we&apos;ll follow up with a practical
-								field-fit conversation.
+								We&apos;re building our Fall 2026 route map for spray and spread
+								across Madison, Limestone, Morgan, Cullman, and Lawrence
+								Counties—Alabama only. Grab the field guide first; if it fits
+								your operation, we&apos;ll help you find the right next step.
 							</p>
 						</div>
-						<CtaButton
+						<Link
+							href="#lead-form"
 							className="btn btn-ghost"
-							data-track="testimonials-cta-field-fit"
+							data-track="testimonials-cta-download-guide"
+							aria-label="Download the free field guide"
 						>
-							Request a field-fit call
-						</CtaButton>
+							Download the Free Field Guide
+						</Link>
 					</RevealOnScroll>
 
 					<div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-						{testimonials.map(testimonial => (
+						{testimonials.map((testimonial) => (
 							<RevealOnScroll
 								key={testimonial.name}
 								className="flex h-full flex-col rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-white p-7 shadow-[var(--shadow-sm)]"
@@ -838,16 +890,20 @@ export default function Home() {
 								>
 									<path d="M11 8c-3.3 0-6 2.7-6 6v10h10V14H9c0-1.1.9-2 2-2V8Zm16 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-1.1.9-2 2-2V8Z" />
 								</svg>
-								<p className="mt-4 text-[color:var(--foreground)]">“{testimonial.quote}”</p>
+								<p className="mt-4 text-[color:var(--foreground)]">
+									“{testimonial.quote}”
+								</p>
 								<div className="mt-6 flex items-center justify-between border-t border-[color:var(--border)] pt-4">
 									<div>
-										<p className="font-semibold text-[color:var(--foreground)]">{testimonial.name}</p>
+										<p className="font-semibold text-[color:var(--foreground)]">
+											{testimonial.name}
+										</p>
 										<p className="text-xs text-[color:var(--fg-subtle)]">
 											{testimonial.county} · {testimonial.crop}
 										</p>
 									</div>
 									<div className="flex gap-0.5 text-[color:var(--color-accent)]">
-										{[1, 2, 3, 4, 5].map(star => (
+										{[1, 2, 3, 4, 5].map((star) => (
 											<svg
 												aria-hidden="true"
 												key={star}
@@ -865,10 +921,14 @@ export default function Home() {
 					</div>
 
 					<div className="mt-10 rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-white p-5 text-sm text-[color:var(--fg-muted)]">
-						<p className="font-semibold text-[color:var(--foreground)]">Built for practical, no-hype decisions.</p>
+						<p className="font-semibold text-[color:var(--foreground)]">
+							Built for practical, no-hype decisions.
+						</p>
 						<p className="mt-2">
-							We&apos;ll tell you where drone passes likely help, where your current rig or aircraft remains the better
-							play, and what indicative per-acre ranges look like before you commit to anything.
+							We&apos;ll tell you where drone passes likely help, where your
+							current rig or aircraft remains the better play, and what
+							indicative per-acre ranges look like before you commit to
+							anything.
 						</p>
 					</div>
 				</div>
@@ -888,7 +948,8 @@ export default function Home() {
 					aria-hidden
 					className="pointer-events-none absolute inset-0"
 					style={{
-						backgroundImage: 'radial-gradient(700px 320px at 85% 20%, rgba(212,160,23,0.22), transparent 55%)',
+						backgroundImage:
+							"radial-gradient(700px 320px at 85% 20%, rgba(212,160,23,0.22), transparent 55%)",
 					}}
 				/>
 				<div className="container-page relative z-10 grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
@@ -897,23 +958,21 @@ export default function Home() {
 							Fall 2026 · Early Access
 						</span>
 						<h2 className="mt-4 font-heading text-3xl font-semibold text-white sm:text-4xl lg:text-[2.75rem]">
-							Request a free field-fit assessment.
+							Get the free field guide—then decide what&apos;s next.
 						</h2>
 						<p className="mt-5 max-w-xl text-[#d3ebc9]">
-							North Alabama Drone Applicators is a managed service—we bring certified pilots and insured equipment to
-							your farm, not a shopping list for you to buy. This season we&apos;re onboarding Tennessee Valley
-							operations for Fall 2026: drone spraying, drone spreading, or both.
+							See where drone spraying and spreading saves time and yield on
+							North Alabama acres—and where it doesn&apos;t. When you&apos;re
+							ready for a closer look at your fields, you can reach out for a
+							custom field review after you read it.
 						</p>
 						<ul className="mt-6 space-y-3 text-sm text-[#e9f0dd]">
 							{[
-								'No contract today — just a conversation about your acres.',
-								'We route leads by county and crop, so you’re already on the list when season hits.',
-								'Only serving Madison, Limestone, Morgan, Cullman & Lawrence counties.',
-							].map(line => (
-								<li
-									key={line}
-									className="flex items-start gap-3"
-								>
+								"Download takes seconds; the PDF is built for real field decisions.",
+								"Managed Fall 2026 service—we bring pilots, aircraft, and insurance, not a gear shopping list.",
+								"Only serving Madison, Limestone, Morgan, Cullman & Lawrence counties.",
+							].map((line) => (
+								<li key={line} className="flex items-start gap-3">
 									<span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-accent)] text-[color:var(--color-primary)]">
 										<svg
 											aria-hidden="true"
@@ -928,13 +987,14 @@ export default function Home() {
 								</li>
 							))}
 						</ul>
-						<div className="mt-8">
-							<CtaButton
-								data-track="final-cta-field-fit"
-								aria-label="Request my field-fit assessment"
-								className="btn btn-accent"
+						<div className="mt-8 flex flex-wrap gap-3">
+							<Link
+								href="#lead-form"
+								data-track="final-cta-download-guide"
+								aria-label="Download the free field guide"
+								className="btn btn-accent inline-flex items-center gap-2"
 							>
-								Get My Field-Fit Assessment
+								Download the Free Field Guide
 								<svg
 									aria-hidden="true"
 									viewBox="0 0 20 20"
@@ -949,31 +1009,33 @@ export default function Home() {
 										strokeLinejoin="round"
 									/>
 								</svg>
-							</CtaButton>
+							</Link>
+							<a
+								href={CUSTOM_FIELD_REVIEW_MAILTO}
+								data-track="final-cta-custom-review"
+								aria-label="Request a custom field review by email"
+								className="btn btn-outline border-white/40 text-white hover:border-white/70 hover:bg-white/10"
+							>
+								Request a Custom Field Review
+							</a>
 						</div>
 					</div>
 
 					<div className="relative">
 						<div className="absolute inset-0 -m-2 rounded-[var(--radius-xl)] bg-[color:var(--color-accent)]/15 blur-2xl" />
 						<div className="relative overflow-hidden rounded-[var(--radius-xl)] border border-white/20 bg-white/[0.06] p-6 text-white backdrop-blur">
-							<p className="font-heading text-xl font-semibold">Why leave your spot to chance?</p>
+							<p className="font-heading text-xl font-semibold">
+								Why leave your spot to chance?
+							</p>
 							<p className="mt-3 text-sm text-[#d3ebc9]">
-								Routes are built in advance. Our bandwidth on any given day depends on who’s already on the list and how
-								close their acres are to our next stop.
+								Routes are built in advance. Our bandwidth on any given day
+								depends on who’s already on the list and how close their acres
+								are to our next stop.
 							</p>
 							<div className="mt-6 grid grid-cols-3 gap-3 text-center">
-								<Metric
-									label="Counties"
-									value="5"
-								/>
-								<Metric
-									label="Services"
-									value="2"
-								/>
-								<Metric
-									label="Launch"
-									value="Fall ’26"
-								/>
+								<Metric label="Counties" value="5" />
+								<Metric label="Services" value="2" />
+								<Metric label="Launch" value="Fall ’26" />
 							</div>
 						</div>
 					</div>
@@ -981,10 +1043,7 @@ export default function Home() {
 			</section>
 
 			{/* FAQ ---------------------------------------------------------- */}
-			<section
-				id="faq"
-				className="section-pad bg-[color:var(--background)]"
-			>
+			<section id="faq" className="section-pad bg-[color:var(--background)]">
 				<div className="container-page max-w-4xl">
 					<RevealOnScroll>
 						<span className="eyebrow eyebrow-dot">FAQ</span>
@@ -992,8 +1051,9 @@ export default function Home() {
 							Questions from North Alabama farmers.
 						</h2>
 						<p className="mt-4 text-[color:var(--fg-muted)]">
-							Short, direct answers to the things growers ask most often. Not here? Drop it in the notes field when you
-							request your field-fit assessment.
+							Short, direct answers to the things growers ask most often. Not
+							here? Grab the field guide above, then reply to our email with
+							your question—we read every note.
 						</p>
 					</RevealOnScroll>
 					<div className="mt-10">
@@ -1004,23 +1064,27 @@ export default function Home() {
 
 			{/* Mobile sticky CTA --------------------------------------------- */}
 			<div className="fixed inset-x-0 bottom-0 z-40 border-t border-[color:var(--border)] bg-white/95 p-3 backdrop-blur md:hidden">
-				<CtaButton
-					data-track="mobile-sticky-cta-field-fit"
-					aria-label="Request field-fit assessment and spray spread guide"
-					className="btn btn-accent w-full"
+				<Link
+					href="#lead-form"
+					data-track="mobile-sticky-cta-download-guide"
+					aria-label="Download the free field guide"
+					className="btn btn-accent inline-flex w-full items-center justify-center gap-2"
 				>
-					Get Field-Fit + Cost Guide →
-				</CtaButton>
+					Download the Free Field Guide
+					<span aria-hidden>→</span>
+				</Link>
 			</div>
 		</div>
-	)
+	);
 }
 
 function Metric({ label, value }: { label: string; value: string }) {
 	return (
 		<div className="rounded-xl bg-white/10 p-3">
 			<p className="font-heading text-xl font-semibold text-white">{value}</p>
-			<p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#c9d3b7]">{label}</p>
+			<p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#c9d3b7]">
+				{label}
+			</p>
 		</div>
-	)
+	);
 }

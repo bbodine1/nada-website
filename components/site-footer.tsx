@@ -1,28 +1,31 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import { localDroneServicePages } from '@/lib/service-areas'
+import { localDroneServicePages } from "@/lib/service-areas";
 
 const services = [
-	{ label: 'Drone Spraying', href: '/#services' },
-	{ label: 'Crop Applicators', href: '/crop-applicators' },
-	{ label: 'Herbicide Application', href: '/herbicide-application' },
-	{ label: 'Drone Spreading', href: '/#services' },
-	{ label: 'News & Articles', href: '/news' },
-	{ label: 'Fall 2026 Priority List', href: '/#lead-form' },
-	{ label: 'Free Spray + Spread Guide', href: '/#spray-spread-guide' },
-]
+	{ label: "Drone Spraying", href: "/#services" },
+	{ label: "Crop Applicators", href: "/crop-applicators" },
+	{ label: "Herbicide Application", href: "/herbicide-application" },
+	{ label: "Drone Spreading", href: "/#services" },
+	{ label: "News & Articles", href: "/news" },
+	{ label: "Fall 2026 Priority List", href: "/#lead-form" },
+	{
+		label: "Where Drone Application Pays Off (Field Guide)",
+		href: "/#spray-spread-guide",
+	},
+];
 
 export function SiteFooter() {
-	const pathname = usePathname()
+	const pathname = usePathname();
 	/** Home `md:hidden` fixed bottom CTA clears footer links / copyright row */
 	const mobileStickyCtaClearance =
-		pathname === '/' || pathname === ''
-			? 'max-md:pb-[calc(5.75rem+env(safe-area-inset-bottom,0px))]'
-			: ''
+		pathname === "/" || pathname === ""
+			? "max-md:pb-[calc(5.75rem+env(safe-area-inset-bottom,0px))]"
+			: "";
 
 	return (
 		<footer
@@ -33,7 +36,7 @@ export function SiteFooter() {
 				className="pointer-events-none absolute inset-0 opacity-25"
 				style={{
 					backgroundImage:
-						'radial-gradient(700px 320px at 10% 0%, rgba(212,160,23,0.25), transparent 60%), radial-gradient(900px 380px at 90% 100%, rgba(255,255,255,0.08), transparent 55%)',
+						"radial-gradient(700px 320px at 10% 0%, rgba(212,160,23,0.25), transparent 60%), radial-gradient(900px 380px at 90% 100%, rgba(255,255,255,0.08), transparent 55%)",
 				}}
 			/>
 			<div className="container-page relative grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr]">
@@ -47,8 +50,9 @@ export function SiteFooter() {
 						className="h-auto w-[180px] md:w-[220px] lg:w-[280px] lg:-translate-x-[10px] lg:-translate-y-[20px]"
 					/>
 					<p className="mt-5 max-w-md text-sm leading-relaxed text-[#d4d6c3]">
-						Managed drone spray and spreading for row-crop and pasture acres across the Tennessee Valley — certified
-						pilots, insured equipment, routes built for North Alabama.
+						Managed drone spray and spreading for row-crop and pasture acres
+						across the Tennessee Valley — certified pilots, insured equipment,
+						routes built for North Alabama.
 					</p>
 					<div className="mt-5 flex flex-wrap gap-2 text-xs">
 						<span className="chip chip-dark">FAA Part 107</span>
@@ -58,9 +62,11 @@ export function SiteFooter() {
 				</div>
 
 				<div>
-					<p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#c9d3b7]">Services</p>
+					<p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#c9d3b7]">
+						Services
+					</p>
 					<ul className="mt-4 space-y-2 text-sm">
-						{services.map(item => (
+						{services.map((item) => (
 							<li key={item.label}>
 								<Link
 									href={item.href}
@@ -74,9 +80,11 @@ export function SiteFooter() {
 				</div>
 
 				<div>
-					<p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#c9d3b7]">Service Area</p>
+					<p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#c9d3b7]">
+						Service Area
+					</p>
 					<ul className="mt-4 space-y-2 text-sm">
-						{localDroneServicePages.map(page => (
+						{localDroneServicePages.map((page) => (
 							<li
 								key={page.slug}
 								className="flex items-center gap-2 text-[#e8e6d8]/90"
@@ -105,41 +113,29 @@ export function SiteFooter() {
 
 			<div className="relative border-t border-white/10">
 				<div className="container-page flex flex-col items-start justify-between gap-3 py-6 text-xs text-[#c9d3b7] md:flex-row md:items-center">
-					<p>© {new Date().getFullYear()} North Alabama Drone Applicators. All rights reserved.</p>
+					<p>
+						© {new Date().getFullYear()} North Alabama Drone Applicators. All
+						rights reserved.
+					</p>
 					<div className="flex flex-wrap gap-5">
-						<Link
-							href="/#lead-form"
-							className="hover:text-white"
-						>
+						<Link href="/#lead-form" className="hover:text-white">
 							Contact
 						</Link>
-						<Link
-							href="/#faq"
-							className="hover:text-white"
-						>
+						<Link href="/#faq" className="hover:text-white">
 							FAQ
 						</Link>
-						<Link
-							href="/news"
-							className="hover:text-white"
-						>
+						<Link href="/news" className="hover:text-white">
 							News
 						</Link>
-						<Link
-							href="/privacy"
-							className="hover:text-white"
-						>
+						<Link href="/privacy" className="hover:text-white">
 							Privacy
 						</Link>
-						<Link
-							href="/terms"
-							className="hover:text-white"
-						>
+						<Link href="/terms" className="hover:text-white">
 							Terms
 						</Link>
 					</div>
 				</div>
 			</div>
 		</footer>
-	)
+	);
 }
