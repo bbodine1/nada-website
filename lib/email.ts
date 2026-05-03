@@ -45,7 +45,7 @@ export async function sendSubmissionEmails(payload: SubmissionEmailPayload) {
 		subject: "Your North Alabama field guide is ready",
 		html: `
       <p>Hi ${payload.firstName},</p>
-      <p>Thanks for your interest in Fall 2026 drone spraying and spreading with North Alabama Drone Applicators.</p>
+      <p>Thanks for your interest in drone spraying and spreading with North Alabama Drone Applicators.</p>
       <p>Here&apos;s what you asked us to send:</p>
       ${pdfBlock}
       <p>If you want a closer look at your fields after you read it, just reply to this email—we&apos;ll help you find the right next step.</p>

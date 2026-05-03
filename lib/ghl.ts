@@ -40,7 +40,7 @@ export async function upsertGhlContact(payload: GhlLeadPayload) {
       lastName: lastName || undefined,
       email: payload.email,
       phone: payload.phone || undefined,
-      tags: ["north-alabama-drone-applicators", "fall-2026-interest", countyTag],
+      tags: ["north-alabama-drone-applicators", "north-alabama-service-interest", countyTag],
       source: "website_lead_form",
       customFields: [
         { key: "county", field_value: payload.county || "Other" },

@@ -1,10 +1,10 @@
 # North Alabama Drone Applicators Website
 
-Marketing and lead-capture website for collecting early-interest from growers in North Alabama for the Fall 2026 launch.
+Marketing and lead-capture website for collecting early-interest from growers in North Alabama for managed drone spray and spread services.
 
 ## Features
 
-- Single-page landing experience focused on agricultural drone spraying and spreading (Fall 2026 season).
+- Single-page landing experience focused on agricultural drone spraying and spreading in the Tennessee Valley.
 - Lead interest form for Madison, Limestone, Morgan, Cullman, and Lawrence counties.
 - Server-side lead endpoint with validation, honeypot filtering, and basic rate limiting.
 - Dual integration: Supabase storage + GoHighLevel contact sync.

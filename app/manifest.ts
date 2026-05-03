@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "North Alabama Drone Applicators",
     short_name: "NADA",
     description:
-      "Drone spraying and spreading for Tennessee Valley farms. Join the Fall 2026 priority list and request a free overview PDF.",
+      "Drone spraying and spreading for Tennessee Valley farms. Join the interest list and download the free North Alabama field guide.",
     start_url: "/",
     scope: "/",
     display: "standalone",

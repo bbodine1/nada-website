@@ -12,7 +12,7 @@ const services = [
 	{ label: "Herbicide Application", href: "/herbicide-application" },
 	{ label: "Drone Spreading", href: "/#services" },
 	{ label: "News & Articles", href: "/news" },
-	{ label: "Fall 2026 Priority List", href: "/#lead-form" },
+	{ label: "Join the interest list", href: "/#lead-form" },
 	{
 		label: "Where Drone Application Pays Off (Field Guide)",
 		href: "/#spray-spread-guide",

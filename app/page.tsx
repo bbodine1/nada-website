@@ -252,7 +252,7 @@ export default function Home() {
 					<div className="grid items-start gap-10 lg:grid-cols-[1.15fr_0.85fr]">
 						<RevealOnScroll className="max-w-2xl">
 							<span className="eyebrow eyebrow-dot border-white/20 bg-white/10 text-white backdrop-blur">
-								Fall 2026 · North Alabama
+								Spray &amp; spread · North Alabama
 							</span>
 							<h1 className="mt-5 font-heading text-4xl font-semibold text-white sm:text-5xl lg:text-6xl">
 								See Exactly Where Drone Spraying Pays Off On Your Fields
@@ -526,7 +526,7 @@ export default function Home() {
 						</h2>
 						<p className="mt-4 max-w-3xl text-lg text-[color:var(--fg-muted)]">
 							We fly for you—you don’t buy the drone, fuel it, or chase
-							regulations alone. Fall 2026 focus: precision spray and dry
+							regulations alone. Our focus: precision spray and dry
 							spreading for cotton, corn, soybeans, wheat, hay, and pasture
 							where it fits your operation.
 						</p>
@@ -712,7 +712,7 @@ export default function Home() {
 									"Tennessee Valley weather, wet holes, and tight spray windows",
 									"What we fly this season: spray + spread only",
 									"Indicative per-acre bands (final quote is always field-specific)",
-									"Fall 2026 routing snapshot for North Alabama growers",
+									"How we're building routes for North Alabama growers",
 								].map((line) => (
 									<li key={line} className="flex items-start gap-3">
 										<span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-primary-100)] text-[color:var(--color-primary)]">
@@ -860,7 +860,7 @@ export default function Home() {
 								Farmers across North Alabama are paying attention.
 							</h2>
 							<p className="mt-4 text-[color:var(--fg-muted)]">
-								We&apos;re building our Fall 2026 route map for spray and spread
+								We&apos;re building our spray-and-spread route map
 								across Madison, Limestone, Morgan, Cullman, and Lawrence
 								Counties—Alabama only. Grab the field guide first; if it fits
 								your operation, we&apos;ll help you find the right next step.
@@ -955,7 +955,7 @@ export default function Home() {
 				<div className="container-page relative z-10 grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
 					<div>
 						<span className="eyebrow eyebrow-dot border-white/20 bg-white/10 text-white backdrop-blur">
-							Fall 2026 · Early Access
+							Early access · North Alabama
 						</span>
 						<h2 className="mt-4 font-heading text-3xl font-semibold text-white sm:text-4xl lg:text-[2.75rem]">
 							Get the free field guide—then decide what&apos;s next.
@@ -969,7 +969,7 @@ export default function Home() {
 						<ul className="mt-6 space-y-3 text-sm text-[#e9f0dd]">
 							{[
 								"Download takes seconds; the PDF is built for real field decisions.",
-								"Managed Fall 2026 service—we bring pilots, aircraft, and insurance, not a gear shopping list.",
+								"Managed service—we bring pilots, aircraft, and insurance, not a gear shopping list.",
 								"Only serving Madison, Limestone, Morgan, Cullman & Lawrence counties.",
 							].map((line) => (
 								<li key={line} className="flex items-start gap-3">
@@ -1035,7 +1035,7 @@ export default function Home() {
 							<div className="mt-6 grid grid-cols-3 gap-3 text-center">
 								<Metric label="Counties" value="5" />
 								<Metric label="Services" value="2" />
-								<Metric label="Launch" value="Fall ’26" />
+								<Metric label="Rollout" value="Ongoing" />
 							</div>
 						</div>
 					</div>

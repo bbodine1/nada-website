@@ -314,7 +314,7 @@ export default function HerbicideApplicationPage() {
               Herbicide application help for Tennessee Valley crop acres.
             </h2>
             <p className="mt-4 text-[color:var(--fg-muted)]">
-              We are building Fall 2026 routing for Madison, Limestone, Morgan, Cullman, and Lawrence Counties. Tell
+              We are building county-by-county routing for Madison, Limestone, Morgan, Cullman, and Lawrence Counties. Tell
               us your crop, weed pressure, herbicide plan, acreage, and timing window so we can evaluate whether drone
               spraying is a fit alongside your current ground rig or aerial program.
             </p>

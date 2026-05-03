@@ -22,7 +22,7 @@ doc.pipe(stream);
 
 doc.fontSize(22).fillColor("#1e3a0f").text("North Alabama Drone Applicators", { align: "center" });
 doc.moveDown(0.3);
-doc.fontSize(14).fillColor("#333").text("Fall 2026 Spray + Spread Overview", { align: "center" });
+doc.fontSize(14).fillColor("#333").text("North Alabama Spray + Spread Overview", { align: "center" });
 doc.moveDown(0.5);
 doc.fontSize(9).fillColor("#666").text("Preliminary information for Tennessee Valley growers — not a contract or final quote.", {
   align: "center",
@@ -44,7 +44,7 @@ doc.moveDown(1.2);
 
 section("What we fly this season");
 doc.text(
-  "Fall 2026 focus: precision drone spraying and drone spreading only. Examples include labeled liquid applications (herbicide, fungicide, insecticide, foliar nutrients per label and your consultant) and dry spreading such as cover crop seed, dry fertilizer, lime, and pasture overseeding. Other services (e.g. mapping) are not offered this season — join our list for future expansions.",
+  "Our focus: precision drone spraying and drone spreading only. Examples include labeled liquid applications (herbicide, fungicide, insecticide, foliar nutrients per label and your consultant) and dry spreading such as cover crop seed, dry fertilizer, lime, and pasture overseeding. Other services (e.g. mapping) are not offered this season — join our list for future expansions.",
   { lineGap: 2 },
 );
 doc.moveDown(1.2);
@@ -73,7 +73,7 @@ doc.moveDown(1);
 
 section("Where this business is headed");
 doc.text(
-  "We are building a managed service for North Alabama: certified Part 107 pilots, insured operations, and routes planned around Madison, Limestone, Morgan, Cullman, and Lawrence counties. Fall 2026 is our launch window for spray and spread; additional services may follow in 2027 and beyond as we scale crews and equipment.",
+  "We are building a managed service for North Alabama: certified Part 107 pilots, insured operations, and routes planned around Madison, Limestone, Morgan, Cullman, and Lawrence counties. Spray and spread are our core launch services; additional offerings may follow as we scale crews and equipment.",
   { lineGap: 2 },
 );
 doc.moveDown(1.2);
