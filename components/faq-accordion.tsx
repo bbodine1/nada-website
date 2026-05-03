@@ -2,7 +2,12 @@
 
 import { useState } from "react";
 
-const faqItems = [
+export type FaqAccordionItem = {
+  question: string;
+  answer: string;
+};
+
+const defaultFaqItems: FaqAccordionItem[] = [
   {
     question: "Do drones replace my ground rig or airplane program?",
     answer:
@@ -50,7 +55,12 @@ const faqItems = [
   },
 ];
 
-export function FaqAccordion() {
+type FaqAccordionProps = {
+  items?: FaqAccordionItem[];
+};
+
+export function FaqAccordion({ items }: FaqAccordionProps) {
+  const faqItems = items ?? defaultFaqItems;
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
@@ -73,7 +83,16 @@ export function FaqAccordion() {
                 {item.question}
               </span>
               <span className="accordion-chevron">
-                <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  viewBox="0 0 16 16"
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  aria-hidden
+                  focusable={false}
+                >
+                  <title>Toggle answer</title>
                   <path d="M8 3v10M3 8h10" strokeLinecap="round" />
                 </svg>
               </span>

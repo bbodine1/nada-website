@@ -11,7 +11,7 @@ import {
 	useState,
 } from "react";
 
-import { LeadInterestForm } from "@/components/lead-interest-form";
+import { AssessmentRequestForm } from "@/components/assessment-request-form";
 
 type CtaPopupContextValue = {
 	isOpen: boolean;
@@ -157,9 +157,9 @@ export function CtaLeadPopup() {
 					<span aria-hidden>&times;</span>
 				</button>
 				<h2 id="cta-lead-popup-title" className="sr-only">
-					Download the free North Alabama field guide
+					Request a field-fit assessment — county, crop, acreage, and target pass
 				</h2>
-				<LeadInterestForm />
+				<AssessmentRequestForm />
 			</div>
 		</div>
 	);

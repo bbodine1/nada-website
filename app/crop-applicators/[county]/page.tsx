@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { CtaButton } from "@/components/cta-lead-popup";
+import { FaqAccordion } from "@/components/faq-accordion";
+import { JsonLd } from "@/components/json-ld";
 import { RevealOnScroll } from "@/components/reveal-on-scroll";
 import { cropApplicatorServiceAreas, getCropApplicatorServiceArea } from "@/lib/service-areas";
 
@@ -11,13 +13,6 @@ type PageProps = {
     county: string;
   }>;
 };
-
-const applicationNeeds = [
-  "Herbicide, fungicide, insecticide, or foliar nutrient spray timing",
-  "Wet ground, soft headlands, end rows, patches, or field edges a rig should not rut",
-  "Broad-acre work where crop dusting or a ground rig may still be the stronger option",
-  "Cover crop seed, dry fertilizer, lime, or pasture overseeding where drone spreading fits",
-] as const;
 
 const methodComparison = [
   {
@@ -48,9 +43,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {};
   }
 
+  const desc = area.cropApplicatorMetaDescription;
+
   return {
     title: `Crop Applicators in ${area.label} | Drone, Crop Dusting & Ground Rig Spraying`,
-    description: `${area.label} crop applicator help for farmers comparing drone spraying, crop dusting, and ground rig spraying. Request a practical field-fit review.`,
+    description: desc,
     alternates: {
       canonical: `/crop-applicators/${area.slug}`,
     },
@@ -64,7 +61,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ],
     openGraph: {
       title: `Crop Applicators in ${area.label}`,
-      description: `Drone spraying, crop dusting, and ground rig spraying guidance for ${area.label} farmers.`,
+      description: desc,
       url: `/crop-applicators/${area.slug}`,
       siteName: "North Alabama Drone Applicators",
       locale: "en_US",
@@ -83,7 +80,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: "summary_large_image",
       title: `Crop Applicators in ${area.label}`,
-      description: `Compare drone spraying, crop dusting, and ground rig spraying for ${area.label} farms.`,
+      description: desc,
       images: ["/og-image.png"],
     },
   };
@@ -96,6 +93,8 @@ export default async function CountyCropApplicatorPage({ params }: PageProps) {
   if (!area) {
     notFound();
   }
+
+  const countyFaqItems = [...area.countyFaq];
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -136,17 +135,25 @@ export default async function CountyCropApplicatorPage({ params }: PageProps) {
           "@type": "AdministrativeArea",
           name: area.label,
         },
-        description: `Drone spraying and spreading field-fit reviews for ${area.label} farmers comparing crop dusting, ground rig spraying, and drone application.`,
+        description: area.cropApplicatorMetaDescription,
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: countyFaqItems.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
       },
     ],
   };
 
   return (
     <div className="text-[color:var(--foreground)]">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={jsonLd} />
 
       <section className="relative overflow-hidden bg-[color:var(--color-primary)] pt-28 text-white lg:pt-36">
         <div
@@ -185,10 +192,10 @@ export default async function CountyCropApplicatorPage({ params }: PageProps) {
             <h1 className="mt-5 font-heading text-4xl font-semibold text-white sm:text-5xl lg:text-6xl">
               Crop applicators in {area.label} for drone spraying, crop dusting, and ground rig decisions.
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-[#e8e8e8]">
-              North Alabama Drone Applicators helps {area.county} County farmers near {area.nearby} decide where drone
-              spraying or spreading fits the job. If a ground rig or crop duster is the better tool for the field, we
-              will say so.
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-[#e8e8e8]">{area.leadParagraph}</p>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-white/85">
+              If a ground rig or crop duster is the better tool for your acres, we will say so—we match the applicator to
+              the field, not the other way around.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <CtaButton
@@ -199,10 +206,10 @@ export default async function CountyCropApplicatorPage({ params }: PageProps) {
                 Request {area.county} County Review
               </CtaButton>
               <Link
-                href="#field-fit"
+                href="#local-detail"
                 className="btn btn-outline"
               >
-                See Field-Fit Factors
+                Local towns, crops, and conditions
               </Link>
             </div>
           </RevealOnScroll>
@@ -233,24 +240,129 @@ export default async function CountyCropApplicatorPage({ params }: PageProps) {
       </section>
 
       <section
+        id="local-detail"
+        className="section-pad bg-white"
+      >
+        <div className="container-page grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+          <RevealOnScroll>
+            <span className="eyebrow eyebrow-dot">{area.county} County towns</span>
+            <h2 className="mt-4 font-heading text-3xl font-semibold text-[color:var(--color-primary)] sm:text-4xl">
+              Local communities we route conversations around.
+            </h2>
+            <p className="mt-4 text-lg text-[color:var(--fg-muted)]">
+              Farms across {area.county} County often benchmark from{' '}
+              <span className="font-medium text-[color:var(--foreground)]">{area.nearby}</span>.
+            </p>
+          </RevealOnScroll>
+
+          <RevealOnScroll>
+            <ul className="flex flex-wrap gap-2">
+              {area.towns.map((town) => (
+                <li
+                  key={town}
+                  className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-muted)] px-4 py-2 text-sm font-medium text-[color:var(--color-primary)]"
+                >
+                  {town}
+                </li>
+              ))}
+            </ul>
+          </RevealOnScroll>
+        </div>
+
+        <div className="container-page mt-14 grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-x-12">
+          <RevealOnScroll>
+            <span className="eyebrow eyebrow-dot">{area.county} County crops</span>
+            <h3 className="mt-4 font-heading text-2xl font-semibold text-[color:var(--color-primary)] sm:text-3xl">
+              Common crops on field-fit reviews.
+            </h3>
+            <p className="mt-4 text-lg text-[color:var(--fg-muted)]">
+              Typical conversations include {area.crops.slice(0, -1).join(", ")}, and {area.crops.at(-1)}—still checked
+              field-by-field for stage, labels, weather, and access.
+            </p>
+          </RevealOnScroll>
+
+          <RevealOnScroll>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {area.crops.map((crop) => (
+                <div
+                  key={crop}
+                  className="rounded-[var(--radius)] border border-[color:var(--border)] bg-[color:var(--surface-muted)] p-4 font-medium capitalize text-[color:var(--color-primary)]"
+                >
+                  {crop}
+                </div>
+              ))}
+            </div>
+          </RevealOnScroll>
+        </div>
+      </section>
+
+      <section className="section-pad topo-bg grain">
+        <div className="container-page grid gap-10 lg:grid-cols-2">
+          <RevealOnScroll>
+            <span className="eyebrow eyebrow-dot">Local field conditions</span>
+            <h2 className="mt-4 font-heading text-3xl font-semibold text-[color:var(--color-primary)] sm:text-4xl">
+              Why {area.county} County acres sometimes need a different applicator plan.
+            </h2>
+            <ul className="mt-6 space-y-3">
+              {area.fieldConditions.map((condition) => (
+                <li
+                  key={condition}
+                  className="rounded-[var(--radius)] border border-[color:var(--border)] bg-white p-4 text-sm leading-6 text-[color:var(--fg-muted)] shadow-[var(--shadow-sm)]"
+                >
+                  {condition}
+                </li>
+              ))}
+            </ul>
+          </RevealOnScroll>
+
+          <RevealOnScroll>
+            <span className="eyebrow eyebrow-dot">County-specific use cases</span>
+            <h2 className="mt-4 font-heading text-3xl font-semibold text-[color:var(--color-primary)] sm:text-4xl">
+              Situations we discuss with {area.county} County growers.
+            </h2>
+            <ul className="mt-6 space-y-3">
+              {area.useCases.map((useCase) => (
+                <li
+                  key={useCase}
+                  className="flex items-start gap-3 rounded-[var(--radius)] border border-[color:var(--border)] bg-white p-4 text-sm leading-6 text-[color:var(--foreground)] shadow-[var(--shadow-sm)]"
+                >
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-primary-100)] text-[color:var(--color-primary)]">
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 16 16"
+                      className="h-3 w-3"
+                      fill="currentColor"
+                    >
+                      <path d="M6.5 11.5L3 8l1.4-1.4 2.1 2.1L11.6 3.5 13 4.9z" />
+                    </svg>
+                  </span>
+                  <span>{useCase}</span>
+                </li>
+              ))}
+            </ul>
+          </RevealOnScroll>
+        </div>
+      </section>
+
+      <section
         id="field-fit"
         className="section-pad bg-white"
       >
         <div className="container-page grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
           <RevealOnScroll>
-            <span className="eyebrow eyebrow-dot">{area.county} County field fit</span>
+            <span className="eyebrow eyebrow-dot">{area.county} County checklist</span>
             <h2 className="mt-4 font-heading text-3xl font-semibold text-[color:var(--color-primary)] sm:text-4xl">
-              Application advice for {area.fieldContext}.
+              Requests we evaluate before recommending drone, rig, or airplane work.
             </h2>
             <p className="mt-4 text-lg text-[color:var(--fg-muted)]">
-              {area.routeNote} We look at crop stage, product label, acres, weather, access, buffers, and timing before
-              recommending any application method.
+              We look at crop stage, product label, acres, weather, access, buffers, and timing before recommending any
+              application method.
             </p>
           </RevealOnScroll>
 
           <RevealOnScroll>
             <ul className="grid gap-3">
-              {applicationNeeds.map((need) => (
+              {area.applicationChecklist.map((need) => (
                 <li
                   key={need}
                   className="flex items-start gap-3 rounded-[var(--radius)] border border-[color:var(--border)] bg-[color:var(--surface-muted)] p-4 text-sm text-[color:var(--foreground)]"
@@ -280,6 +392,7 @@ export default async function CountyCropApplicatorPage({ params }: PageProps) {
             <h2 className="mt-4 max-w-3xl font-heading text-3xl font-semibold text-[color:var(--color-primary)] sm:text-4xl">
               Match the applicator to the job, not the other way around.
             </h2>
+            <p className="mt-4 max-w-3xl text-lg text-[color:var(--fg-muted)]">{area.methodComparisonIntro}</p>
           </RevealOnScroll>
 
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
@@ -292,6 +405,26 @@ export default async function CountyCropApplicatorPage({ params }: PageProps) {
                 <p className="mt-3 text-sm leading-6 text-[color:var(--fg-muted)]">{item.fit}</p>
               </RevealOnScroll>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="county-faq"
+        className="section-pad bg-white"
+      >
+        <div className="container-page max-w-3xl">
+          <RevealOnScroll>
+            <span className="eyebrow eyebrow-dot">{area.county} County FAQ</span>
+            <h2 className="mt-4 font-heading text-3xl font-semibold text-[color:var(--color-primary)] sm:text-4xl">
+              Questions we hear from {area.county} County farmers.
+            </h2>
+            <p className="mt-4 text-lg text-[color:var(--fg-muted)]">
+              Answers are written for local context—still grounded in labels, weather, and stewarded application decisions.
+            </p>
+          </RevealOnScroll>
+          <div className="mt-10">
+            <FaqAccordion items={countyFaqItems} />
           </div>
         </div>
       </section>

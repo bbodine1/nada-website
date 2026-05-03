@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { CtaButton } from "@/components/cta-lead-popup";
+import { FaqAccordion } from "@/components/faq-accordion";
+import { JsonLd } from "@/components/json-ld";
 import { RevealOnScroll } from "@/components/reveal-on-scroll";
 import { getLocalDroneServicePage, localDroneServicePages } from "@/lib/service-areas";
 
@@ -116,15 +118,23 @@ export default async function LocalServicePage({ params }: PageProps) {
         },
         description: page.metaDescription,
       },
+      {
+        "@type": "FAQPage",
+        mainEntity: [...page.countyFaq].map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      },
     ],
   };
 
   return (
     <div className="text-[color:var(--foreground)]">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={jsonLd} />
 
       <section className="relative overflow-hidden bg-[color:var(--color-primary)] pt-28 text-white lg:pt-36">
         <div
@@ -156,10 +166,11 @@ export default async function LocalServicePage({ params }: PageProps) {
             <h1 className="mt-5 font-heading text-4xl font-semibold text-white sm:text-5xl lg:text-6xl">
               {page.title}
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-[#e8e8e8]">
-              North Alabama Drone Applicators reviews {page.county} County fields near {page.nearby} for practical
-              drone spray and spread work. We look at the crop, field condition, product plan, and timing window before
-              recommending a drone pass.
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-[#e8e8e8]">{page.leadParagraph}</p>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-white/85">
+              This page focuses on {page.serviceType.toLowerCase()}. North Alabama Drone Applicators still confirms crop,
+              field condition, product plan, labels, and weather before recommending any drone pass—or redirecting you to
+              a rig or airplane when that is the stewarded choice.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <CtaButton
@@ -173,7 +184,7 @@ export default async function LocalServicePage({ params }: PageProps) {
                 href="#local-fit"
                 className="btn btn-outline"
               >
-                See Local Fit
+                See towns and crops
               </Link>
             </div>
           </RevealOnScroll>
@@ -186,7 +197,7 @@ export default async function LocalServicePage({ params }: PageProps) {
                   page.title,
                   `${page.serviceType} ${page.county} County AL`,
                   `Agricultural drone services ${page.county} County Alabama`,
-                  `Farm drone application near ${page.nearby.split(",")[0]}`,
+                  `Farm drone application near ${page.towns[0]}`,
                 ].map((term) => (
                   <li
                     key={term}
@@ -208,13 +219,39 @@ export default async function LocalServicePage({ params }: PageProps) {
       >
         <div className="container-page grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
           <RevealOnScroll>
-            <span className="eyebrow eyebrow-dot">{page.county} County crops</span>
+            <span className="eyebrow eyebrow-dot">{page.county} County towns</span>
             <h2 className="mt-4 font-heading text-3xl font-semibold text-[color:var(--color-primary)] sm:text-4xl">
-              Built around local crops and field conditions.
+              Local communities around these reviews.
             </h2>
             <p className="mt-4 text-lg text-[color:var(--fg-muted)]">
-              Common crop reviews include {page.crops.slice(0, -1).join(", ")}, and {page.crops.at(-1)}. Every request
-              is checked against field access, weather, product fit, and whether the application belongs on a drone.
+              Typical routing conversations reference farms near{' '}
+              <span className="font-medium text-[color:var(--foreground)]">{page.nearby}</span>.
+            </p>
+          </RevealOnScroll>
+
+          <RevealOnScroll>
+            <ul className="flex flex-wrap gap-2">
+              {page.towns.map((town) => (
+                <li
+                  key={town}
+                  className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-muted)] px-4 py-2 text-sm font-medium text-[color:var(--color-primary)]"
+                >
+                  {town}
+                </li>
+              ))}
+            </ul>
+          </RevealOnScroll>
+        </div>
+
+        <div className="container-page mt-14 grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-x-12">
+          <RevealOnScroll>
+            <span className="eyebrow eyebrow-dot">{page.county} County crops</span>
+            <h3 className="mt-4 font-heading text-2xl font-semibold text-[color:var(--color-primary)] sm:text-3xl">
+              Built around common local crops.
+            </h3>
+            <p className="mt-4 text-lg text-[color:var(--fg-muted)]">
+              Common crop reviews include {page.crops.slice(0, -1).join(", ")}, and {page.crops.at(-1)}. Every request is
+              checked against field access, weather, product fit, and whether the application belongs on a drone.
             </p>
           </RevealOnScroll>
 
@@ -298,6 +335,27 @@ export default async function LocalServicePage({ params }: PageProps) {
                 <p className="text-sm font-medium leading-6 text-[color:var(--foreground)]">{factor}</p>
               </RevealOnScroll>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="county-faq"
+        className="section-pad topo-bg grain"
+      >
+        <div className="container-page max-w-3xl">
+          <RevealOnScroll>
+            <span className="eyebrow eyebrow-dot">{page.county} County FAQ</span>
+            <h2 className="mt-4 font-heading text-3xl font-semibold text-[color:var(--color-primary)] sm:text-4xl">
+              Local questions about {page.serviceType.toLowerCase()}.
+            </h2>
+            <p className="mt-4 text-lg text-[color:var(--fg-muted)]">
+              Same county-focused answers as our crop applicator pages—tailored to how {page.county} County farms actually
+              run.
+            </p>
+          </RevealOnScroll>
+          <div className="mt-10 rounded-[var(--radius-lg)] border border-[color:var(--border)] bg-white p-2 shadow-[var(--shadow-sm)]">
+            <FaqAccordion items={[...page.countyFaq]} />
           </div>
         </div>
       </section>

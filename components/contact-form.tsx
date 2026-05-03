@@ -2,16 +2,9 @@
 
 import { type FormEvent, useState } from "react";
 
-type FormState = "idle" | "submitting" | "success" | "error";
+import { SERVICE_AREA_COUNTIES } from "@/lib/service-area-counties";
 
-const COUNTIES = [
-	"Cullman",
-	"Lawrence",
-	"Limestone",
-	"Madison",
-	"Morgan",
-	"Other",
-] as const;
+type FormState = "idle" | "submitting" | "success" | "error";
 
 export function ContactForm() {
 	const [state, setState] = useState<FormState>("idle");
@@ -157,7 +150,7 @@ export function ContactForm() {
 						className="field"
 						defaultValue="Other"
 					>
-						{COUNTIES.map((c) => (
+						{SERVICE_AREA_COUNTIES.map((c) => (
 							<option key={c} value={c}>
 								{c === "Other" ? "Other / outside listed counties" : `${c} County, AL`}
 							</option>

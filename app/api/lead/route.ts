@@ -2,16 +2,8 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { sendSubmissionEmails } from "@/lib/email";
 import { upsertGhlContact } from "@/lib/ghl";
+import { SERVICE_AREA_COUNTY_SET } from "@/lib/service-area-counties";
 import { getSupabaseAdminClient } from "@/lib/supabase";
-
-const allowedCounties = new Set([
-	"Cullman",
-	"Lawrence",
-	"Limestone",
-	"Madison",
-	"Morgan",
-	"Other",
-]);
 
 const ipRequestStore = new Map<string, number[]>();
 
@@ -66,13 +58,16 @@ function validatePayload(body: LeadPayload) {
 	if (companyName) {
 		throw new Error("Spam submission rejected.");
 	}
+	if (!consent) {
+		throw new Error("Please confirm we may contact you about your inquiry.");
+	}
 	if (!fullName || fullName.length < 2) {
 		throw new Error("Please provide your first name (at least 2 characters).");
 	}
 	if (!isValidEmail(email)) {
 		throw new Error("Please provide a valid email address.");
 	}
-	if (county && !allowedCounties.has(county)) {
+	if (county && !SERVICE_AREA_COUNTY_SET.has(county)) {
 		throw new Error("Please select a valid county in our service area.");
 	}
 
@@ -115,6 +110,7 @@ export async function POST(request: NextRequest) {
 			.maybeSingle();
 
 		let error: { message: string } | null = null;
+		// Client-provided notes (e.g. target pass); PDF flag appended for ops inbox / CRM.
 		const notesWithPdf = [
 			parsed.notes,
 			parsed.requestPdf ? "PDF requested: yes" : "PDF requested: no",
@@ -164,11 +160,15 @@ export async function POST(request: NextRequest) {
 		});
 		await sendSubmissionEmails({
 			firstName: parsed.fullName.split(" ")[0] || "there",
+			fullName: parsed.fullName,
 			email: parsed.email,
+			phone: parsed.phone,
 			county: parsed.county,
 			cropTypes: parsed.cropTypes,
+			acreageRange: parsed.acreageRange,
 			primaryInterest: parsed.preferredContactMethod || "Not provided",
 			requestPdf: parsed.requestPdf,
+			notes: notesWithPdf || null,
 		});
 
 		return NextResponse.json({ ok: true });

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { CtaButton } from "@/components/cta-lead-popup";
+import { JsonLd } from "@/components/json-ld";
 import { RevealOnScroll } from "@/components/reveal-on-scroll";
 
 const serviceArea = ["Madison", "Limestone", "Morgan", "Cullman", "Lawrence"] as const;
@@ -153,10 +154,7 @@ const jsonLd = {
 export default function HerbicideApplicationPage() {
   return (
     <div className="text-[color:var(--foreground)]">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
 
       <section className="relative overflow-hidden bg-[color:var(--color-primary)] pt-28 text-white lg:pt-36">
         <div

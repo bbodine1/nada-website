@@ -2,16 +2,8 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { sendContactEmails } from "@/lib/email";
 import { upsertGhlContactInquiry } from "@/lib/ghl";
+import { SERVICE_AREA_COUNTY_SET } from "@/lib/service-area-counties";
 import { getSupabaseAdminClient } from "@/lib/supabase";
-
-const allowedCounties = new Set([
-	"Cullman",
-	"Lawrence",
-	"Limestone",
-	"Madison",
-	"Morgan",
-	"Other",
-]);
 
 const ipRequestStore = new Map<string, number[]>();
 
@@ -62,7 +54,7 @@ function validatePayload(body: ContactPayload) {
 	if (!isValidEmail(email)) {
 		throw new Error("Please provide a valid email address.");
 	}
-	if (!allowedCounties.has(county)) {
+	if (!SERVICE_AREA_COUNTY_SET.has(county)) {
 		throw new Error("Please select a valid county in our service area.");
 	}
 	if (message.length < 10) {

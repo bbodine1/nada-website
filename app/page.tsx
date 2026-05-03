@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaqAccordion } from "@/components/faq-accordion";
 import { HeroVideo } from "@/components/hero-video";
+import { JsonLd } from "@/components/json-ld";
 import { LeadInterestForm } from "@/components/lead-interest-form";
 import { RevealOnScroll } from "@/components/reveal-on-scroll";
 import { YoutubeClickPlay } from "@/components/youtube-click-play";
@@ -229,17 +230,7 @@ const homeLocalBusinessJsonLd = {
 export default function Home() {
 	return (
 		<div className="text-[color:var(--foreground)]">
-			{/* JSON-LD requires raw script text; escape `<` in serialized JSON (see other app routes). */}
-			<script
-				type="application/ld+json"
-				// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD must use raw script body; schema is static and `<` is escaped.
-				dangerouslySetInnerHTML={{
-					__html: JSON.stringify(homeLocalBusinessJsonLd).replace(
-						/</g,
-						"\\u003c",
-					),
-				}}
-			/>
+			<JsonLd data={homeLocalBusinessJsonLd} />
 			{/* Hero ---------------------------------------------------------- */}
 			<section className="relative flex min-h-[100vh] items-end overflow-hidden pt-48 min-[600px]:pt-24">
 				<HeroVideo />

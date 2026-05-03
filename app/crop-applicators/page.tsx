@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { CtaButton } from "@/components/cta-lead-popup";
+import { JsonLd } from "@/components/json-ld";
 import { RevealOnScroll } from "@/components/reveal-on-scroll";
 import { cropApplicatorServiceAreas } from "@/lib/service-areas";
 
@@ -152,10 +153,7 @@ const jsonLd = {
 export default function CropApplicatorsPage() {
   return (
     <div className="text-[color:var(--foreground)]">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={jsonLd} />
 
       <section className="relative overflow-hidden bg-[color:var(--color-primary)] pt-28 text-white lg:pt-36">
         <div
@@ -291,7 +289,7 @@ export default function CropApplicatorsPage() {
                   {area.label}
                 </h3>
                 <p className="mt-3 text-sm leading-6 text-[color:var(--fg-muted)]">
-                  Serving farms near {area.nearby}. We review {area.fieldContext}.
+                  Serving farms near {area.nearby}. {area.hubSummary}
                 </p>
                 <Link
                   href={`/crop-applicators/${area.slug}`}

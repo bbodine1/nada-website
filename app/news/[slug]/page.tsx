@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { CtaButton } from "@/components/cta-lead-popup";
+import { JsonLd } from "@/components/json-ld";
 import { MarkdownContent } from "@/components/markdown-content";
 import { RevealOnScroll } from "@/components/reveal-on-scroll";
 import { formatArticleDate, getAllArticles, getArticleBySlug } from "@/lib/articles";
@@ -98,16 +99,9 @@ export default async function ArticlePage({ params }: PageProps) {
       : {}),
   };
 
-  const articleJsonLd = JSON.stringify(jsonLd).replace(/</g, "\\u003c");
-
   return (
     <div className="text-[color:var(--foreground)]">
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-      >
-        {articleJsonLd}
-      </script>
+      <JsonLd data={jsonLd} />
 
       <section
         className={`relative overflow-hidden pt-28 text-white lg:pt-36 ${
