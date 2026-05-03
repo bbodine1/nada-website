@@ -60,3 +60,51 @@ export async function upsertGhlContact(payload: GhlLeadPayload) {
     throw new Error(`GoHighLevel sync failed: ${response.status} ${errorBody}`);
   }
 }
+
+type GhlContactInquiryPayload = {
+  fullName: string;
+  email: string;
+  phone: string | null;
+  county: string;
+  message: string;
+};
+
+export async function upsertGhlContactInquiry(payload: GhlContactInquiryPayload) {
+  const apiKey = getRequiredEnv("GHL_API_KEY");
+  const locationId = getRequiredEnv("GHL_LOCATION_ID");
+
+  const [firstName, ...lastNameParts] = payload.fullName.trim().split(" ");
+  const lastName = lastNameParts.join(" ");
+  const countyTag = payload.county.toLowerCase();
+
+  const response = await fetch(`${GHL_BASE_URL}/contacts/upsert`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+      Version: "2021-07-28",
+    },
+    body: JSON.stringify({
+      locationId,
+      firstName,
+      lastName: lastName || undefined,
+      email: payload.email,
+      phone: payload.phone || undefined,
+      tags: [
+        "north-alabama-drone-applicators",
+        "website-contact-form",
+        countyTag,
+      ],
+      source: "website_contact_form",
+      customFields: [
+        { key: "county", field_value: payload.county },
+        { key: "notes", field_value: payload.message },
+      ],
+    }),
+  });
+
+  if (!response.ok) {
+    const errorBody = await response.text();
+    throw new Error(`GoHighLevel sync failed: ${response.status} ${errorBody}`);
+  }
+}

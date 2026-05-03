@@ -279,7 +279,7 @@ export default function TermsPage() {
 							<p>
 								Questions about these Terms can be sent through our{" "}
 								<Link
-									href="/#lead-form"
+									href="/contact"
 									className="font-medium text-[color:var(--color-primary)] underline underline-offset-2 hover:text-[color:var(--color-accent)]"
 								>
 									contact form
@@ -293,12 +293,9 @@ export default function TermsPage() {
 								<br />
 								Hartselle, AL 35640
 								<br />
-								<a
-									href="mailto:info@northaldroneapplicators.com"
-									className="font-medium text-[color:var(--color-primary)] underline underline-offset-2 hover:text-[color:var(--color-accent)]"
-								>
+								<span className="font-medium text-[color:var(--color-primary)]">
 									info@northaldroneapplicators.com
-								</a>
+								</span>
 								<br />
 								<a
 									href="tel:+12565668522"

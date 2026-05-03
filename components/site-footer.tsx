@@ -118,7 +118,7 @@ export function SiteFooter() {
 						rights reserved.
 					</p>
 					<div className="flex flex-wrap gap-5">
-						<Link href="/#lead-form" className="hover:text-white">
+						<Link href="/contact" className="hover:text-white">
 							Contact
 						</Link>
 						<Link href="/#faq" className="hover:text-white">

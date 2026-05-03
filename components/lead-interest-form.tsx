@@ -1,12 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { type FormEvent, useState } from "react";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
 const PDF_PATH = "/downloads/nada-spray-spread-overview.pdf";
-const CUSTOM_FIELD_REVIEW_MAILTO =
-	"mailto:info@northaldroneapplicators.com?subject=Custom%20field%20review%20request";
 
 export function LeadInterestForm() {
 	const [state, setState] = useState<FormState>("idle");
@@ -208,13 +207,13 @@ export function LeadInterestForm() {
 					)}
 					<p className="text-xs font-normal leading-relaxed text-[color:var(--color-primary)]/95">
 						Want a tailored look at your fields after you read it?{" "}
-						<a
-							href={CUSTOM_FIELD_REVIEW_MAILTO}
+						<Link
+							href="/contact"
 							className="font-semibold underline underline-offset-2 hover:no-underline"
 						>
 							Request a Custom Field Review
-						</a>{" "}
-						by email—we&apos;ll reply with next steps.
+						</Link>{" "}
+						and we&apos;ll reply with next steps.
 					</p>
 				</div>
 			)}

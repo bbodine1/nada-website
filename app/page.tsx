@@ -7,9 +7,6 @@ import { RevealOnScroll } from "@/components/reveal-on-scroll";
 import { YoutubeClickPlay } from "@/components/youtube-click-play";
 import { localDroneServicePages } from "@/lib/service-areas";
 
-const CUSTOM_FIELD_REVIEW_MAILTO =
-	"mailto:info@northaldroneapplicators.com?subject=Custom%20field%20review%20request";
-
 const problemCards = [
 	{
 		icon: (
@@ -291,14 +288,14 @@ export default function Home() {
 										/>
 									</svg>
 								</Link>
-								<a
-									href={CUSTOM_FIELD_REVIEW_MAILTO}
+								<Link
+									href="/contact"
 									data-track="hero-cta-custom-review"
-									aria-label="Request a custom field review by email"
+									aria-label="Request a custom field review"
 									className="btn btn-outline border-white/40 text-white hover:border-white/70 hover:bg-white/10"
 								>
 									Request a Custom Field Review
-								</a>
+								</Link>
 							</div>
 
 							<div className="mt-10 flex flex-wrap items-center gap-2 text-sm text-white/85">
@@ -1010,14 +1007,14 @@ export default function Home() {
 									/>
 								</svg>
 							</Link>
-							<a
-								href={CUSTOM_FIELD_REVIEW_MAILTO}
+							<Link
+								href="/contact"
 								data-track="final-cta-custom-review"
-								aria-label="Request a custom field review by email"
+								aria-label="Request a custom field review"
 								className="btn btn-outline border-white/40 text-white hover:border-white/70 hover:bg-white/10"
 							>
 								Request a Custom Field Review
-							</a>
+							</Link>
 						</div>
 					</div>
 

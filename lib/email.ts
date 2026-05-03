@@ -70,3 +70,64 @@ export async function sendSubmissionEmails(payload: SubmissionEmailPayload) {
     `,
 	});
 }
+
+type ContactEmailPayload = {
+	firstName: string;
+	fullName: string;
+	email: string;
+	phone: string | null;
+	county: string;
+	message: string;
+};
+
+export async function sendContactEmails(payload: ContactEmailPayload) {
+	const apiKey = getEnv("RESEND_API_KEY");
+	const fromEmail = getEnv("RESEND_FROM_EMAIL");
+	const adminEmail = getEnv("ADMIN_NOTIFICATION_EMAIL");
+
+	if (!apiKey || !fromEmail || !adminEmail) {
+		return;
+	}
+
+	const resend = new Resend(apiKey);
+	const phoneLine = payload.phone
+		? `<li><strong>Phone:</strong> ${escapeHtml(payload.phone)}</li>`
+		: "";
+
+	await resend.emails.send({
+		from: fromEmail,
+		to: adminEmail,
+		subject: "New contact form submission",
+		html: `
+      <p>A new message was sent from the website contact form.</p>
+      <ul>
+        <li><strong>Name:</strong> ${escapeHtml(payload.fullName)}</li>
+        <li><strong>Email:</strong> ${escapeHtml(payload.email)}</li>
+        ${phoneLine}
+        <li><strong>County:</strong> ${escapeHtml(payload.county)}</li>
+      </ul>
+      <p><strong>Message</strong></p>
+      <p style="white-space:pre-wrap;">${escapeHtml(payload.message)}</p>
+    `,
+	});
+
+	await resend.emails.send({
+		from: fromEmail,
+		to: payload.email,
+		subject: "We got your message — North Alabama Drone Applicators",
+		html: `
+      <p>Hi ${escapeHtml(payload.firstName)},</p>
+      <p>Thanks for reaching out. We&apos;ve received your message and will get back to you as soon as we can — usually within one business day.</p>
+      <p>If your question is urgent, you can also call us at <strong>256-566-8522</strong>.</p>
+      <p>Thanks,<br/>North Alabama Drone Applicators</p>
+    `,
+	});
+}
+
+function escapeHtml(text: string): string {
+	return text
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;");
+}

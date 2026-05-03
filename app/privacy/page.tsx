@@ -250,7 +250,7 @@ export default function PrivacyPage() {
 								If you have questions about this policy or how we handle your
 								information, you can reach us through our{" "}
 								<Link
-									href="/#lead-form"
+									href="/contact"
 									className="font-medium text-[color:var(--color-primary)] underline underline-offset-2 hover:text-[color:var(--color-accent)]"
 								>
 									contact form

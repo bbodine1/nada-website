@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
 	type FormEvent,
 	useCallback,
@@ -13,8 +14,6 @@ type FormState = "idle" | "submitting" | "success" | "error";
 const SHOWN_SESSION_KEY = "nada_exit_intent_shown";
 const PDF_PATH = "/downloads/nada-spray-spread-overview.pdf";
 const MOBILE_SENTINEL_KEY = "nadaExitSentinel";
-const CUSTOM_FIELD_REVIEW_MAILTO =
-	"mailto:info@northaldroneapplicators.com?subject=Custom%20field%20review%20request";
 
 function hasShownInSession(): boolean {
 	return (
@@ -300,12 +299,12 @@ export function ExitIntentPopup() {
 						</a>
 						<p className="mt-4 text-xs text-[color:var(--fg-muted)]">
 							Want a tailored look at your fields?{" "}
-							<a
-								href={CUSTOM_FIELD_REVIEW_MAILTO}
+							<Link
+								href="/contact"
 								className="font-semibold text-[color:var(--color-primary)] underline"
 							>
 								Request a Custom Field Review
-							</a>
+							</Link>
 						</p>
 						<div className="mt-3">
 							<button
