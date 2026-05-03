@@ -40,6 +40,12 @@ function suppressHeaderLeadCtaBelowMd(pathname: string | null): boolean {
 	);
 }
 
+/** Contact page is the conversion surface — no duplicate header CTA. */
+function hideHeaderLeadCta(pathname: string | null): boolean {
+	if (!pathname) return false;
+	return pathname === "/contact" || pathname.startsWith("/contact/");
+}
+
 function HeaderLogo({
 	scrolled,
 	linkClassName,
@@ -83,6 +89,7 @@ function HeaderLogo({
 export function SiteHeader() {
 	const pathname = usePathname();
 	const suppressLeadCtaBelowMdRoutes = suppressHeaderLeadCtaBelowMd(pathname);
+	const hideHeaderLeadCtaRoutes = hideHeaderLeadCta(pathname);
 	/** `/` renders a fixed bottom CTA below `md`; avoid duplicating it in the header. */
 	const hideDupHeaderCtaBelowMdOnHome = pathname === "/" || pathname === "";
 
@@ -93,6 +100,18 @@ export function SiteHeader() {
 	const mobileMenuButtonNarrowRef = useRef<HTMLButtonElement>(null);
 	const mobileMenuButtonWideRef = useRef<HTMLButtonElement>(null);
 	const mobileMenuPanelRef = useRef<HTMLDivElement>(null);
+	const prevMobileMenuOpenRef = useRef(open);
+
+	useEffect(() => {
+		if (prevMobileMenuOpenRef.current && !open) {
+			const useNarrowButton = window.matchMedia("(max-width: 599px)").matches;
+			const btn = useNarrowButton
+				? mobileMenuButtonNarrowRef.current
+				: mobileMenuButtonWideRef.current;
+			btn?.focus({ preventScroll: true });
+		}
+		prevMobileMenuOpenRef.current = open;
+	}, [open]);
 
 	useEffect(() => {
 		const onScroll = () => setScrolled(window.scrollY > 12);
@@ -167,7 +186,7 @@ export function SiteHeader() {
 		<header
 			className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
 				scrolled
-					? "border-b border-[color:var(--border)] bg-[color:var(--background)]/85 backdrop-blur-md"
+					? "bg-[color:var(--background)]/85 backdrop-blur-md xl:border-b xl:border-[color:var(--border)]"
 					: "bg-transparent"
 			}`}
 		>
@@ -217,6 +236,7 @@ export function SiteHeader() {
 						</div>
 					</div>
 					{!suppressLeadCtaBelowMdRoutes &&
+						!hideHeaderLeadCtaRoutes &&
 						(hideDupHeaderCtaBelowMdOnHome ? (
 							<div className="hidden w-full md:block">
 								<Link
@@ -248,8 +268,19 @@ export function SiteHeader() {
 						logoWidthClassName="w-[200px] md:w-[220px] lg:w-[240px]"
 					/>
 					<div className="flex shrink-0 items-center gap-2">
-						{suppressLeadCtaBelowMdRoutes || hideDupHeaderCtaBelowMdOnHome ? (
-							<div className="hidden md:contents">
+						{!hideHeaderLeadCtaRoutes &&
+							(suppressLeadCtaBelowMdRoutes || hideDupHeaderCtaBelowMdOnHome ? (
+								<div className="hidden md:contents">
+									<Link
+										href="/#lead-form"
+										data-track="header-cta-download-guide"
+										aria-label="Download the free field guide"
+										className="btn btn-accent px-3 py-2 text-xs md:px-4 md:text-sm"
+									>
+										Download the Free Field Guide
+									</Link>
+								</div>
+							) : (
 								<Link
 									href="/#lead-form"
 									data-track="header-cta-download-guide"
@@ -258,17 +289,7 @@ export function SiteHeader() {
 								>
 									Download the Free Field Guide
 								</Link>
-							</div>
-						) : (
-							<Link
-								href="/#lead-form"
-								data-track="header-cta-download-guide"
-								aria-label="Download the free field guide"
-								className="btn btn-accent px-3 py-2 text-xs md:px-4 md:text-sm"
-							>
-								Download the Free Field Guide
-							</Link>
-						)}
+							))}
 						<button
 							ref={mobileMenuButtonWideRef}
 							type="button"
@@ -373,14 +394,16 @@ export function SiteHeader() {
 						</div>
 					</nav>
 
-					<Link
-						href="/#lead-form"
-						data-track="header-cta-download-guide"
-						aria-label="Download the free field guide"
-						className="btn btn-accent shrink-0 px-4 py-2 text-sm"
-					>
-						Download the Free Field Guide
-					</Link>
+					{!hideHeaderLeadCtaRoutes ? (
+						<Link
+							href="/#lead-form"
+							data-track="header-cta-download-guide"
+							aria-label="Download the free field guide"
+							className="btn btn-accent shrink-0 px-4 py-2 text-sm"
+						>
+							Download the Free Field Guide
+						</Link>
+					) : null}
 				</div>
 			</div>
 
@@ -392,7 +415,11 @@ export function SiteHeader() {
 					open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
 				}`}
 			>
-				<div className="min-h-0 overflow-hidden border-t border-[color:var(--border)] bg-[color:var(--background)]">
+				<div
+					className={`min-h-0 overflow-hidden bg-[color:var(--background)] ${
+						open ? "border-t border-[color:var(--border)]" : ""
+					}`}
+				>
 					<div
 						className={`container-page flex flex-col gap-1 py-3 transition-opacity duration-300 ease-out motion-reduce:transition-none motion-reduce:duration-0 ${
 							open ? "opacity-100 delay-75 motion-reduce:delay-0" : "opacity-0"
@@ -409,8 +436,19 @@ export function SiteHeader() {
 								{item.label}
 							</Link>
 						))}
-						{suppressLeadCtaBelowMdRoutes ? (
-							<div className="hidden md:block">
+						{!hideHeaderLeadCtaRoutes &&
+							(suppressLeadCtaBelowMdRoutes ? (
+								<div className="hidden md:block">
+									<Link
+										href="/#lead-form"
+										onClick={() => setOpen(false)}
+										className="btn btn-accent mt-2 w-full"
+										aria-label="Download the free field guide"
+									>
+										Download the Free Field Guide
+									</Link>
+								</div>
+							) : (
 								<Link
 									href="/#lead-form"
 									onClick={() => setOpen(false)}
@@ -419,17 +457,7 @@ export function SiteHeader() {
 								>
 									Download the Free Field Guide
 								</Link>
-							</div>
-						) : (
-							<Link
-								href="/#lead-form"
-								onClick={() => setOpen(false)}
-								className="btn btn-accent mt-2 w-full"
-								aria-label="Download the free field guide"
-							>
-								Download the Free Field Guide
-							</Link>
-						)}
+							))}
 					</div>
 				</div>
 			</div>
